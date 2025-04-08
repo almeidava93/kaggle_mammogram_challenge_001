@@ -1,0 +1,10 @@
+python-gdcm 
+pydicom 
+pylibjpeg 
+kagglehub
+pandas
+matplotlib
+torch
+torchvision
+torchaudio
+toml

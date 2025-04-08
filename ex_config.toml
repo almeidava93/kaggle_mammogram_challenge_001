@@ -1,0 +1,1772 @@
+[exp_001]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.2
+num_attn_heads = 8
+num_encoder_layers = 2
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 10
+
+[exp_002]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.5
+num_attn_heads = 8
+num_encoder_layers = 2
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+
+[exp_003]
+dataset_size = -1
+learning_rate = 1e-5
+weight_decay = 0.0
+dropout = 0.5
+num_attn_heads = 8
+num_encoder_layers = 2
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 20
+
+[exp_004]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0001
+dropout = 0.5
+num_attn_heads = 8
+num_encoder_layers = 2
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+
+[exp_005]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.5
+num_attn_heads = 8
+num_encoder_layers = 2
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "ReLU"
+
+[exp_006]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.5
+num_attn_heads = 8
+num_encoder_layers = 2
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+
+[exp_007]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.7
+num_attn_heads = 8
+num_encoder_layers = 2
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+
+[exp_008]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.9
+num_attn_heads = 8
+num_encoder_layers = 2
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+
+[exp_009]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.7
+num_attn_heads = 8
+num_encoder_layers = 2
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+add_random_transforms = true
+random_transforms_prob = 0.5
+random_transforms_max = 3
+
+[exp_010]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.7
+feature_dim = 512
+img_size = 512
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 10
+num_epochs = 15
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+add_random_transforms = true
+random_transforms_prob = 0.5
+random_transforms_max = 3
+
+[exp_011]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.5
+num_attn_heads = 8
+num_encoder_layers = 2
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+add_random_transforms = true
+random_transforms_prob = 0.5
+random_transforms_max = 3
+
+[exp_012]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.7
+num_attn_heads = 8
+num_encoder_layers = 2
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+add_pre_encoder_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+
+[exp_013]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.7
+num_attn_heads = 8
+num_encoder_layers = 2
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+comment = "after changing age embeddings to a linear projection"
+
+[exp_014]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.7
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 20
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+add_random_transforms = true
+random_transforms_prob = 0.1
+random_transforms_max = 2
+comment = "Based on exp_013. Added random transforms with a small probability. Removed translation from transforms. Let the model train for more epochs."
+
+[exp_015]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.7
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+randomize_image_order = true
+comment = "Based on exp_013. Added image order randomization. Let the model train for more epochs."
+
+[exp_016]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.7
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+randomize_image_order = true
+comment = "Based on exp_013. Added image order randomization. Let the model train for more epochs. Corrected order randomization to be applied only to the training dataset."
+
+[exp_017]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.7
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+cnn_dropout = 0.2
+comment = "Based on exp_013. Added dropout to Resnet blocks."
+
+[exp_018]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.7
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+pos_weight_scaler = 1.5
+comment = "Based on exp_013. Increased pos_weight_scaler to 1.5."
+
+[exp_019]
+dataset_size = -1
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.7
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 20
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+learning_rate_scheduler = "CyclicLR"
+comment = "Based on exp_013. Full dataset. Changed learning rate scheduler."
+
+[exp_020]
+start_from_checkpoint = "model/exp_019/checkpoint_01.pth"
+dataset_size = -1
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.7
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 20
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+learning_rate_scheduler = "CyclicLR"
+comment = "Based on exp_019. Training was interrupted due to PC error. Resumed training."
+
+[exp_021]
+start_from_checkpoint = "model/exp_020/checkpoint_03.pth"
+dataset_size = -1
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.7
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 20
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+learning_rate_scheduler = "ExponentialLR"
+comment = "Based on exp_020. Training was interrupted due to PC error. Resumed training. Changed learning rate scheduler."
+
+[exp_022]
+dataset_size = 200
+learning_rate = 1e-5
+weight_decay = 0.0
+dropout = 0.7
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 20
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+cnn_activation = "GELU"
+learning_rate_scheduler = "CyclicLR"
+comment = "Based on exp_013. CyclicLR scheduler. Changed CNN activation to GELU."
+
+[exp_023]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.7
+num_attn_heads = 8
+num_encoder_layers = 2
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+cnn_activation = "GELU"
+comment = "Based on exp_013. Changed CNN activation to GELU."
+
+[exp_024]
+start_from_checkpoint = "model/exp_023/checkpoint_05.pth"
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.7
+num_attn_heads = 8
+num_encoder_layers = 2
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+cnn_activation = "GELU"
+comment = "Based on exp_023. Training was interrupted due to PC error. Resumed training."
+
+[exp_025]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.7
+num_attn_heads = 8
+num_encoder_layers = 2
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+add_linear_proj_to_embeddings = true
+comment = "Based on exp_013. "
+
+[exp_026]
+start_from_checkpoint = "model/exp_025/checkpoint_15.pth"
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.7
+num_attn_heads = 8
+num_encoder_layers = 2
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 20
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+add_linear_proj_to_embeddings = true
+comment = "Based on exp_025. Continued training for a little longer."
+
+[exp_027]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.7
+num_attn_heads = 8
+num_encoder_layers = 2
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+add_pre_ffn_rms_norm = true
+pre_ffn_rms_norm_dim = 256
+comment = "Based on exp_013. "
+
+[exp_028]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.7
+num_attn_heads = 8
+num_encoder_layers = 2
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+cnn_resnet_n_conv = 3
+comment = "Based on exp_013. Deeper ResNet."
+
+[exp_029]
+start_from_checkpoint = "model/exp_028/checkpoint_15.pth"
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.7
+num_attn_heads = 8
+num_encoder_layers = 2
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 30
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+cnn_resnet_n_conv = 3
+comment = "Based on exp_028. Training for longer."
+
+[exp_030]
+dataset_size = 200
+learning_rate = 0.001
+weight_decay = 0.0
+dropout = 0.5
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+cnn_dropout = 0.5
+comment = "Based on exp_013. Dropout in CNN and FFN. Bigger starting LR."
+
+[exp_031]
+dataset_size = 200
+learning_rate = 0.001
+weight_decay = 0.0
+dropout = 0.6
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+cnn_dropout = 0.6
+comment = "Based on exp_013. Dropout in CNN and FFN. Bigger starting LR."
+
+[exp_032]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.5
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+cnn_dropout = 0.5
+comment = "Based on exp_013. Dropout in CNN and FFN. Bigger starting LR."
+
+[exp_033]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.6
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+cnn_dropout = 0.6
+comment = "Based on exp_013. Dropout in CNN and FFN."
+
+[exp_034]
+start_from_checkpoint = "model/exp_033/checkpoint_15.pth"
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.6
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 30
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+cnn_dropout = 0.6
+comment = "Based on exp_033. Longer training."
+
+[exp_035]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.5
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 30
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+cnn_dropout = 0.5
+cnn_use_rms_norm = true
+comment = "Based on exp_013. Dropout in CNN and FFN. Bigger starting LR."
+
+[exp_036]
+start_from_checkpoint = "model/exp_035/checkpoint_05.pth"
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.5
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 30
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+cnn_dropout = 0.5
+cnn_use_rms_norm = true
+comment = "Based on exp_013. Dropout in CNN and FFN. Bigger starting LR."
+
+[exp_037]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.5
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 10
+num_epochs = 30
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+cnn_dropout = 0.5
+comment = "Based on exp_013. Dropout in CNN and FFN. Bigger starting LR."
+
+[exp_038]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.5
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 15
+num_epochs = 30
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+cnn_dropout = 0.5
+cnn_use_rms_norm = true
+cnn_rms_norms_dims_to_apply = [ -2, -1,]
+comment = "Based on exp_032. Dropout in CNN and FFN. RMSNorm in CNN applied channel wise."
+
+[exp_039]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.6
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 15
+num_epochs = 30
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+cnn_dropout = 0.6
+cnn_use_rms_norm = true
+cnn_rms_norms_dims_to_apply = [ -2, -1,]
+comment = "Based on exp_038. Increased dropout."
+
+[exp_040]
+start_from_checkpoint = "model/exp_039/checkpoint_03.pth"
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.6
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 15
+num_epochs = 30
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+cnn_dropout = 0.6
+cnn_use_rms_norm = true
+cnn_rms_norms_dims_to_apply = [ -2, -1,]
+comment = "Based on exp_038. Increased dropout."
+
+[exp_041]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.7
+feature_dim = 256
+img_size = 224
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+use_vit_b_16 = true
+freeze_pretrained_weights = true
+comment = "Based on exp_013. Use ViT-B/16."
+
+[exp_042]
+start_from_checkpoint = "model/exp_041/checkpoint_11.pth"
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.7
+feature_dim = 256
+img_size = 224
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 5
+num_epochs = 30
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+use_vit_b_16 = true
+freeze_pretrained_weights = false
+comment = "Based on exp_041. Use ViT-B/16, train with no frozen weights with the best model from exp_041."
+
+[exp_043]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.7
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 20
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+remove_dark_pixels = true
+add_padding_pixels = true
+comment = "Based on exp_013. Added additional img transformations to increase the information density of the images."
+
+[exp_044]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.5
+cnn_dropout = 0.5
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 10
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+remove_dark_pixels = true
+add_padding_pixels = true
+comment = "Based on exp_013. Added additional img transformations to increase the information density of the images."
+
+[exp_045]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.5
+cnn_dropout = 0.5
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 10
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+remove_dark_pixels = true
+add_padding_pixels = false
+comment = "Based on exp_013. Added additional img transformations to increase the information density of the images."
+
+[exp_046]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.4
+cnn_dropout = 0.4
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 10
+use_ffn = true
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+remove_dark_pixels = true
+add_padding_pixels = false
+comment = "Based on exp_013. Added additional img transformations to increase the information density of the images."
+
+[exp_047]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.5
+cnn_dropout = 0.5
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 30
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+remove_dark_pixels = true
+add_padding_pixels = false
+comment = "New test using transformer encoder at the top."
+
+[exp_048]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.1
+cnn_dropout = 0.1
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 10
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+remove_dark_pixels = true
+add_padding_pixels = false
+comment = "New test using transformer encoder at the top."
+
+[exp_049]
+start_from_checkpoint = "model/exp_048/checkpoint_10.pth"
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.1
+cnn_dropout = 0.1
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 20
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+remove_dark_pixels = true
+add_padding_pixels = false
+comment = "New test using transformer encoder at the top."
+
+[exp_050]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.2
+cnn_dropout = 0.2
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 10
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+remove_dark_pixels = true
+add_padding_pixels = false
+comment = "New test using transformer encoder at the top."
+
+[exp_051]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.3
+cnn_dropout = 0.3
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+remove_dark_pixels = true
+add_padding_pixels = false
+comment = "New test using transformer encoder at the top."
+
+[exp_052]
+start_from_checkpoint = "model/exp_051/checkpoint_08.pth"
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.3
+cnn_dropout = 0.3
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 15
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+remove_dark_pixels = true
+add_padding_pixels = false
+comment = "New test using transformer encoder at the top."
+
+[exp_053]
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.1
+cnn_dropout = 0.1
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 20
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+remove_dark_pixels = true
+add_padding_pixels = false
+add_random_transforms = true
+random_transforms_prob = 0.1
+random_transforms_max = 1
+randomize_image_order = true
+comment = "New test using transformer encoder at the top."
+
+[exp_058]
+start_from_checkpoint = "model/exp_058/checkpoint_last.pth"
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.1
+cnn_dropout = 0.1
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 10
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+ffn_hidden_dim = 512
+ffn_activation = "GELU"
+remove_dark_pixels = true
+add_padding_pixels = false
+comment = "New test using transformer encoder at the top."
+
+[exp_001.training_curves]
+train_loss = [ 1.4409383893013001, 1.3320579648017883, 1.2525875091552734, 1.2942439079284669, 1.2189216017723083, 1.2805424809455872, 1.1712888658046723, 1.1360002696514129, 1.1142919540405274, 1.0006040692329408,]
+train_acc = [ 0.5049999952316284, 0.5049999952316284, 0.5299999713897705, 0.48500001430511475, 0.5199999809265137, 0.47999998927116394, 0.5550000071525574, 0.5600000023841858, 0.5249999761581421, 0.5849999785423279,]
+train_f1 = [ 0.6597937941551208, 0.6710963249206543, 0.6928104758262634, 0.6531986594200134, 0.6842105388641357, 0.6030534505844116, 0.7119740843772888, 0.7161290049552917, 0.688524603843689, 0.7003610134124756,]
+train_auc = [ 0.5137219429016113, 0.5447544455528259, 0.6744279861450195, 0.6465818881988525, 0.710036039352417, 0.7012665867805481, 0.7312121391296387, 0.7470391392707825, 0.7906767129898071, 0.8463617563247681,]
+val_loss = [ 1.5906090140342712, 1.5055022239685059, 1.5779417753219604, 1.3673895359039308, 1.4766926288604736, 1.2905937910079956, 2.3612717151641847, 2.5662078142166136, 1.3206061482429505, 1.0544319570064544,]
+val_acc = [ 0.10000000149011612, 0.10000000149011612, 0.10000000149011612, 0.10000000149011612, 0.10000000149011612, 0.1599999964237213, 0.10000000149011612, 0.10000000149011612, 0.11999999731779099, 0.49000000953674316,]
+val_f1 = [ 0.1818181872367859, 0.1818181872367859, 0.1818181872367859, 0.1818181872367859, 0.1818181872367859, 0.18446601927280426, 0.1818181872367859, 0.1818181872367859, 0.17757008969783783, 0.16393442451953888,]
+val_auc = [ 0.5058333277702332, 0.5163888931274414, 0.4580555558204651, 0.6227778196334839, 0.5772222280502319, 0.5575000047683716, 0.6525000333786011, 0.641944408416748, 0.6447222232818604, 0.5413888692855835,]
+
+[exp_001.best_results]
+best_epoch = 9
+best_val_loss = 1.0544319570064544
+best_val_auc = 0.5413888692855835
+best_val_acc = 0.49000000953674316
+time_elapsed_min = 43.0
+time_elapsed_sec = 36.56701350212097
+time_elapsed_per_epoch_min = 4.0
+time_elapsed_per_epoch_sec = 21.656701350212074
+
+[exp_002.best_results]
+best_epoch = 7
+best_val_loss = 1.5583
+best_val_auc = 0.6975
+time_elapsed_min = 69.0
+time_elapsed_sec = 52.0
+time_elapsed_per_epoch_min = 4.0
+time_elapsed_per_epoch_sec = 21.0
+
+[exp_003.best_results]
+best_epoch = 1
+best_val_loss = 1.8736301130169961
+best_val_auc = 0.6969797015190125
+time_elapsed_min = 915.0
+time_elapsed_sec = 47.547112464904785
+time_elapsed_per_epoch_min = 152.0
+time_elapsed_per_epoch_sec = 37.92451874415019
+
+[exp_003.training_curves]
+train_loss = [ 1.3916572963548217, 1.3159692095027096, 1.291067016169652, 1.0638321923775669, 0.7116201830344205,]
+train_auc = [ 0.6026793122291565, 0.6780585050582886, 0.7020683288574219, 0.8209913372993469, 0.9109873175621033,]
+val_loss = [ 1.7547847804888872, 1.8736301130169961, 1.646057205646613, 1.2642559658029204, 1.6493891719558955,]
+val_auc = [ 0.6912952065467834, 0.6969797015190125, 0.6791059374809265, 0.669813871383667, 0.6663190126419067,]
+
+[exp_004.best_results]
+best_epoch = 7
+best_val_loss = 1.800122618675232
+best_val_auc = 0.6702777743339539
+time_elapsed_min = 72.0
+time_elapsed_sec = 56.13442802429199
+time_elapsed_per_epoch_min = 4.0
+time_elapsed_per_epoch_sec = 51.74229520161947
+
+[exp_004.training_curves]
+train_loss = [ 1.4899686932563783, 1.3843993902206422, 1.3260693073272705, 1.2477081775665284, 1.1818959653377532, 1.2048344612121582, 1.2253175020217895, 1.1205362975597382, 0.9599592745304107, 0.6898882508277893, 0.558753764629364, 0.5826731815934181, 0.32148714512586596, 0.21416156813502313, 0.17804235816001893,]
+train_auc = [ 0.44931888580322266, 0.46434643864631653, 0.5887999534606934, 0.6627860069274902, 0.7595911026000977, 0.6761616468429565, 0.7478489875793457, 0.7673736810684204, 0.8644864559173584, 0.9377003312110901, 0.9559658765792847, 0.9359862804412842, 0.9741353392601013, 0.9853765964508057, 0.9790979027748108,]
+val_loss = [ 1.5294340014457704, 1.530209743976593, 1.572024369239807, 1.6137521147727967, 1.3672714591026307, 1.36334947347641, 2.6299676418304445, 1.800122618675232, 1.1559923470020295, 1.0485341012477876, 0.9823091626167297, 1.6034395277500153, 1.0769121170043945, 1.285815778374672, 1.3389075517654419,]
+val_auc = [ 0.5641666650772095, 0.5688889026641846, 0.535277783870697, 0.5427777767181396, 0.6150000095367432, 0.6150000095367432, 0.6422222256660461, 0.6702777743339539, 0.4947222173213959, 0.6233333349227905, 0.5519444346427917, 0.6138888597488403, 0.5630555748939514, 0.5761110782623291, 0.5913889408111572,]
+
+[exp_005.best_results]
+best_epoch = 5
+best_val_loss = 1.5646849274635315
+best_val_auc = 0.6816666722297668
+time_elapsed_min = 44.0
+time_elapsed_sec = 18.936664819717407
+time_elapsed_per_epoch_min = 4.0
+time_elapsed_per_epoch_sec = 1.7215149836106605
+
+[exp_005.training_curves]
+train_loss = [ 1.9419398427009582, 1.5697492957115173, 1.2779804348945618, 1.421010637283325, 1.4010821342468263, 1.4105863332748414, 1.2679429709911347, 1.2655841588974, 1.3256153821945191, 1.2084087967872619,]
+train_auc = [ 0.5480925440788269, 0.4746999740600586, 0.621515154838562, 0.5528553128242493, 0.558702826499939, 0.5439895987510681, 0.6875749826431274, 0.6752675175666809, 0.6623604893684387, 0.731792688369751,]
+val_loss = [ 1.6555080533027648, 2.189969873428345, 1.934329891204834, 1.7119579553604125, 1.6303674578666687, 1.5646849274635315, 1.5588201045989991, 1.5557022929191588, 1.4083540916442872, 1.6387502908706666,]
+val_auc = [ 0.46888887882232666, 0.5072221755981445, 0.6344444751739502, 0.6744444370269775, 0.6730555295944214, 0.6816666722297668, 0.6772221922874451, 0.6725000143051147, 0.6663888692855835, 0.6630555987358093,]
+
+[exp_006.best_results]
+best_epoch = 4
+best_val_loss = 1.7166644930839539
+best_val_auc = 0.6938889026641846
+time_elapsed_min = 58.0
+time_elapsed_sec = 42.886093616485596
+time_elapsed_per_epoch_min = 3.0
+time_elapsed_per_epoch_sec = 54.85907290776569
+
+[exp_006.training_curves]
+train_loss = [ 1.7292698740959167, 1.4024925589561463, 1.4586206436157227, 1.4463522553443908, 1.4575674414634705, 1.2492551743984222, 1.3059724926948548, 1.3199807286262513, 1.2709080696105957, 1.2012557864189148, 1.1789692044258118, 1.1604776740074159, 1.0746825337409973, 1.1792982280254365, 1.0741155624389649,]
+train_auc = [ 0.4762580990791321, 0.5503805875778198, 0.5422520637512207, 0.5334133505821228, 0.5158063173294067, 0.7051705121994019, 0.6546618938446045, 0.634253740310669, 0.6756080389022827, 0.7113845348358154, 0.727463960647583, 0.7617042660713196, 0.7869054079055786, 0.7427884340286255, 0.8178271055221558,]
+val_loss = [ 1.389875328540802, 1.8392665028572082, 1.6025352120399474, 1.7347859144210815, 1.7166644930839539, 1.5871052384376525, 1.7825499534606934, 1.5902335405349732, 1.5870119333267212, 1.5710713744163514, 1.4559976696968078, 1.5509068369865417, 1.60999253988266, 1.561380183696747, 1.3474083185195922,]
+val_auc = [ 0.49361109733581543, 0.5063889026641846, 0.6327778100967407, 0.622499942779541, 0.6938889026641846, 0.6816666722297668, 0.6500000357627869, 0.6702777743339539, 0.6811110973358154, 0.6297222375869751, 0.6538889408111572, 0.6480555534362793, 0.6655555367469788, 0.6736111044883728, 0.633055567741394,]
+
+[exp_007.best_results]
+best_epoch = 2
+best_val_loss = 1.350041151046753
+best_val_auc = 0.7099999785423279
+time_elapsed_min = 57.0
+time_elapsed_sec = 36.98182010650635
+time_elapsed_per_epoch_min = 3.0
+time_elapsed_per_epoch_sec = 50.465454673767084
+
+[exp_007.training_curves]
+train_loss = [ 1.7971429705619812, 1.7657671570777893, 1.6657321453094482, 1.7134772896766663, 1.6900343894958496, 1.54989150762558, 1.5748236179351807, 1.4951993227005005, 1.4784446120262147, 1.5168951392173766, 1.4607568979263306, 1.4488369464874267, 1.4076638698577881, 1.485799777507782, 1.3424798488616942,]
+train_auc = [ 0.5460651516914368, 0.48223504424095154, 0.48798078298568726, 0.48264825344085693, 0.4453502297401428, 0.5699721574783325, 0.5314285755157471, 0.5577487945556641, 0.5746365785598755, 0.5276110172271729, 0.587763786315918, 0.5406367778778076, 0.5871678590774536, 0.5272745490074158, 0.6286923885345459,]
+val_loss = [ 1.2655399084091186, 1.3447144985198975, 1.350041151046753, 1.379503881931305, 1.3871402502059937, 1.2613745212554932, 1.2009646534919738, 1.2183805108070374, 1.2240307331085205, 1.2883840441703795, 1.2703142523765565, 1.3055930852890014, 1.3083158493041993, 1.2335660457611084, 1.1915095806121827,]
+val_auc = [ 0.6122222542762756, 0.6491665840148926, 0.7099999785423279, 0.7063888907432556, 0.698055624961853, 0.7036111354827881, 0.6725000143051147, 0.676111102104187, 0.6861110925674438, 0.6877777576446533, 0.6888889074325562, 0.6852778196334839, 0.6738889217376709, 0.67166668176651, 0.6641666889190674,]
+
+[exp_008.best_results]
+best_epoch = 0
+best_val_loss = 0.979575103521347
+best_val_auc = 0.5622222423553467
+time_elapsed_min = 22.0
+time_elapsed_sec = 9.511475324630737
+time_elapsed_per_epoch_min = 3.0
+time_elapsed_per_epoch_sec = 41.58524588743845
+
+[exp_008.training_curves]
+train_loss = [ 4.749626684188843, 7.605135107040406, 6.305859875679016, 4.626179945468903, 4.116648030281067, 4.2262492895126345,]
+train_auc = [ 0.5683092474937439, 0.4727819561958313, 0.5120088458061218, 0.5232523083686829, 0.5461956262588501, 0.503450334072113,]
+val_loss = [ 0.979575103521347, 0.9977018296718597, 0.99793701171875, 0.9950493693351745, 0.9912838876247406,]
+val_auc = [ 0.5622222423553467, 0.48972219228744507, 0.4208332896232605, 0.40888890624046326, 0.38555556535720825,]
+
+[exp_009.best_results]
+best_epoch = 5
+best_val_loss = 1.514087963104248
+best_val_auc = 0.6974999904632568
+time_elapsed_min = 64.0
+time_elapsed_sec = 35.20031237602234
+time_elapsed_per_epoch_min = 4.0
+time_elapsed_per_epoch_sec = 18.346687491734826
+
+[exp_009.training_curves]
+train_loss = [ 1.8876785516738892, 1.8349790453910828, 1.5097035884857177, 1.5233342051506042, 1.6234748244285584, 1.4887892723083496, 1.6003581523895263, 1.4786420464515686, 1.5641418933868407, 1.5633498072624206, 1.5021785497665405, 1.392736268043518, 1.428065872192383, 1.4998039960861207, 1.356772255897522,]
+train_auc = [ 0.507541298866272, 0.5131512880325317, 0.5987318754196167, 0.5612823963165283, 0.5521725416183472, 0.5538864731788635, 0.5501207709312439, 0.5764895081520081, 0.5549516677856445, 0.5263949632644653, 0.5269107818603516, 0.595300018787384, 0.5834383964538574, 0.5257649421691895, 0.6627651453018188,]
+val_loss = [ 1.3529721021652221, 1.5496952056884765, 1.5308674216270446, 1.4941532373428346, 1.530344843864441, 1.514087963104248, 1.4285557627677918, 1.4064903855323792, 1.3214146018028259, 1.239341378211975, 1.2063912987709045, 1.246418535709381, 1.3574055433273315, 1.3743499755859374, 1.3458290934562682,]
+val_auc = [ 0.3961111307144165, 0.48722222447395325, 0.6291666626930237, 0.6811110973358154, 0.6966665983200073, 0.6974999904632568, 0.6930555701255798, 0.6880555748939514, 0.6847221851348877, 0.6844444274902344, 0.6850000023841858, 0.6877777576446533, 0.696388840675354, 0.6911110877990723, 0.6933333277702332,]
+
+[exp_010.best_results]
+best_epoch = 0
+best_val_loss = inf
+best_val_auc = 0
+time_elapsed_min = 5.0
+time_elapsed_sec = 8.825854778289795
+time_elapsed_per_epoch_min = 5.0
+time_elapsed_per_epoch_sec = 8.825854778289795
+
+[exp_010.training_curves]
+train_loss = []
+train_auc = []
+val_loss = []
+val_auc = []
+
+[exp_011.best_results]
+best_epoch = 6
+best_val_loss = 1.2101329922676087
+best_val_auc = 0.6627777814865112
+time_elapsed_min = 103.0
+time_elapsed_sec = 14.764928817749023
+time_elapsed_per_epoch_min = 6.0
+time_elapsed_per_epoch_sec = 52.984328587849916
+
+[exp_011.training_curves]
+train_loss = [ 1.47084321975708, 1.4243925213813782, 1.343416655063629, 1.4238476872444152, 1.3420769095420837, 1.3325958728790284, 1.3162197947502137, 1.2974486470222473, 1.3990769267082215, 1.2168872654438019, 1.1719984591007233, 1.1622045278549193, 1.0184790313243866, 0.7970785915851593, 0.5699757963418961,]
+train_auc = [ 0.485981285572052, 0.47775763273239136, 0.5419167876243591, 0.5247331857681274, 0.5888420939445496, 0.6064703464508057, 0.6361715197563171, 0.6611660718917847, 0.5927750468254089, 0.6654828786849976, 0.7445744276046753, 0.7483748197555542, 0.83610999584198, 0.9218295812606812, 0.9603960514068604,]
+val_loss = [ 1.741146457195282, 1.5175544381141663, 1.7324633717536926, 1.5019081711769104, 1.4166802287101745, 1.6296505808830262, 1.2101329922676087, 2.093486714363098, 1.4610835194587708, 1.6346849203109741, 1.3024469375610352, 1.3707202076911926, 1.0022188007831574, 1.0170555889606476, 1.1142790377140046,]
+val_auc = [ 0.5636110901832581, 0.6458333730697632, 0.5174999833106995, 0.5061111450195312, 0.5900000333786011, 0.54666668176651, 0.6627777814865112, 0.5833333730697632, 0.6538888812065125, 0.6508333086967468, 0.6549999713897705, 0.5486111044883728, 0.569444477558136, 0.6472222208976746, 0.5858333110809326,]
+
+[exp_012.best_results]
+best_epoch = 3
+best_val_loss = 1.9359385013580321
+best_val_auc = 0.6597222089767456
+time_elapsed_min = 70.0
+time_elapsed_sec = 58.58859944343567
+time_elapsed_per_epoch_min = 4.0
+time_elapsed_per_epoch_sec = 43.90590662956237
+
+[exp_012.training_curves]
+train_loss = [ 1.5068328142166139, 1.4180092930793762, 1.4037647724151612, 1.3523262858390808, 1.4350704789161681, 1.3409203886985779, 1.3632249116897583, 1.3357557654380798, 1.319058644771576, 1.3874265789985656, 1.3901403188705443, 1.3476158380508423, 1.3962953805923461, 1.3573398113250732, 1.3694835901260376,]
+train_auc = [ 0.5231000185012817, 0.5058209896087646, 0.5304951667785645, 0.4880480170249939, 0.5063265562057495, 0.528281033039093, 0.5109043717384338, 0.5041264295578003, 0.5704261064529419, 0.5345363616943359, 0.5234845280647278, 0.5478931069374084, 0.48747995495796204, 0.5113511085510254, 0.5258733034133911,]
+val_loss = [ 1.9332772970199585, 2.157181000709534, 2.025719940662384, 1.9359385013580321, 2.006531059741974, 1.9363126516342164, 2.033356475830078, 1.9339661836624145, 1.9957795977592467, 1.8818262934684753, 1.7364179730415343, 1.8408261299133302, 1.9282398462295531, 1.8365291476249694, 1.8938844442367553,]
+val_auc = [ 0.4449999928474426, 0.46166664361953735, 0.5691666603088379, 0.6597222089767456, 0.6561111211776733, 0.6447222232818604, 0.5951389074325562, 0.5808333158493042, 0.5980555415153503, 0.5736111402511597, 0.5409722328186035, 0.6330555081367493, 0.6030555367469788, 0.6316666603088379, 0.5994444489479065,]
+
+[exp_013.best_results]
+best_epoch = 3
+best_val_loss = 1.1662018656730653
+best_val_auc = 0.7169444561004639
+time_elapsed_min = 96.0
+time_elapsed_sec = 55.14902091026306
+time_elapsed_per_epoch_min = 6.0
+time_elapsed_per_epoch_sec = 27.676601394017553
+
+[exp_013.training_curves]
+train_loss = [ 1.7299107432365417, 1.8023959040641784, 1.7559257626533509, 1.5272825837135315, 1.6306787729263306, 1.5562710881233215, 1.4760335087776184, 1.509887307882309, 1.4202029764652253, 1.4391378998756408, 1.4540178179740906, 1.3237542986869812, 1.378099250793457, 1.463910961151123, 1.3433953642845153,]
+train_auc = [ 0.48199278116226196, 0.4873385727405548, 0.4878515899181366, 0.5686274766921997, 0.5005167722702026, 0.5494924783706665, 0.5657206177711487, 0.5192757844924927, 0.6100490093231201, 0.5851629376411438, 0.5613032579421997, 0.659600019454956, 0.5673737525939941, 0.5377537608146667, 0.6441188454627991,]
+val_loss = [ 1.351638090610504, 1.3208857655525208, 1.1789011001586913, 1.1662018656730653, 1.1536807894706727, 1.134902000427246, 1.1618642210960388, 1.1663072466850282, 1.1578436732292174, 1.1574918389320374, 1.178068995475769, 1.1731675744056702, 1.187408196926117, 1.135564649105072, 1.1464566707611084,]
+val_auc = [ 0.48444443941116333, 0.5777777433395386, 0.7136111259460449, 0.7169444561004639, 0.6747221946716309, 0.7058333158493042, 0.6958333253860474, 0.6933333873748779, 0.6950000524520874, 0.7027778029441833, 0.6986111402511597, 0.6966666579246521, 0.6736111640930176, 0.6872222423553467, 0.6986111402511597,]
+
+[exp_014.best_results]
+best_epoch = 10
+best_val_loss = 1.2044726490974427
+best_val_auc = 0.6758333444595337
+time_elapsed_min = 84.0
+time_elapsed_sec = 19.661733388900757
+time_elapsed_per_epoch_min = 4.0
+time_elapsed_per_epoch_sec = 12.983086669445044
+
+[exp_014.training_curves]
+train_loss = [ 1.8766370296478272, 1.7731895089149474, 1.6169500946998596, 1.744333517551422, 1.5975384712219238, 1.5487197279930114, 1.5416216731071473, 1.5000268459320067, 1.3781343579292298, 1.3957281947135924, 1.4714801788330079, 1.506865680217743, 1.3599832773208618, 1.461761224269867, 1.4788647532463073, 1.2998689115047455, 1.431636905670166, 1.4274149656295776, 1.2493005037307738, 1.1959583342075348,]
+train_auc = [ 0.446607768535614, 0.5170334577560425, 0.5423625707626343, 0.4921167492866516, 0.5201022624969482, 0.5427885055541992, 0.5641413927078247, 0.5249521136283875, 0.6179617643356323, 0.6237000226974487, 0.5704023241996765, 0.5299119353294373, 0.6255629658699036, 0.5493944883346558, 0.5354819297790527, 0.6494252681732178, 0.5743709802627563, 0.5831995010375977, 0.7044359445571899, 0.7332931756973267,]
+val_loss = [ 1.2056157469749451, 1.4789771437644958, 1.5625744700431823, 1.5440536737442017, 1.5079250454902648, 1.4620190620422364, 1.3586637258529664, 1.2478188276290894, 1.236331307888031, 1.2449154376983642, 1.2044726490974427, 1.2623689651489258, 1.5385605216026306, 1.2521878242492677, 1.1725308775901795, 1.3004928469657897, 1.2412387490272523, 1.1744903326034546, 1.1851324915885926, 1.3019712686538696,]
+val_auc = [ 0.39916664361953735, 0.39055556058883667, 0.45222222805023193, 0.5663888454437256, 0.6230555772781372, 0.6086111068725586, 0.6144444346427917, 0.6438888907432556, 0.6633332967758179, 0.6747221946716309, 0.6758333444595337, 0.6427778005599976, 0.633055567741394, 0.6597222089767456, 0.6713889241218567, 0.6519443988800049, 0.6738888621330261, 0.6744444370269775, 0.6633333563804626, 0.6438889503479004,]
+
+[exp_015.best_results]
+best_epoch = 5
+best_val_loss = 1.4063847541809082
+best_val_auc = 0.6636110544204712
+time_elapsed_min = 62.0
+time_elapsed_sec = 58.53235721588135
+time_elapsed_per_epoch_min = 4.0
+time_elapsed_per_epoch_sec = 11.902157147725433
+
+[exp_015.training_curves]
+train_loss = [ 2.042911672592163, 1.7966127038002013, 1.6129925012588502, 1.7110673308372497, 1.5021836757659912, 1.6634724736213684, 1.5220418214797973, 1.6361952424049377, 1.45997896194458, 1.5329776406288147, 1.445475697517395, 1.4887686491012573, 1.450599229335785, 1.4564042568206788, 1.3895395159721375,]
+train_auc = [ 0.4387438893318176, 0.4689980745315552, 0.5454999804496765, 0.4715177118778229, 0.5611200332641602, 0.4846484363079071, 0.534853458404541, 0.4851773679256439, 0.5695111751556396, 0.5517765283584595, 0.6012411117553711, 0.5524067878723145, 0.5843634009361267, 0.5728155374526978, 0.6103441715240479,]
+val_loss = [ 1.1683828949928283, 1.336836862564087, 1.3732988715171814, 1.4009308099746705, 1.4536070227622986, 1.4063847541809082, 1.3119791865348815, 1.2566793084144592, 1.2260983467102051, 1.1902774095535278, 1.1713098526000976, 1.1857900500297547, 1.1927396774291992, 1.2098292589187623, 1.159327495098114,]
+val_auc = [ 0.48472222685813904, 0.5291666388511658, 0.5655555725097656, 0.6005555391311646, 0.6583333015441895, 0.6636110544204712, 0.6558333039283752, 0.6397222280502319, 0.6455555558204651, 0.6544444561004639, 0.6536111235618591, 0.6497222185134888, 0.6505556106567383, 0.6549999713897705, 0.6536111235618591,]
+
+[exp_016.best_results]
+best_epoch = 6
+best_val_loss = 1.4492651104927063
+best_val_auc = 0.6800000071525574
+time_elapsed_min = 64.0
+time_elapsed_sec = 16.652570247650146
+time_elapsed_per_epoch_min = 4.0
+time_elapsed_per_epoch_sec = 17.11017134984337
+
+[exp_016.training_curves]
+train_loss = [ 2.4038199901580812, 1.8455435037612915, 2.2467806220054625, 1.6050934016704559, 1.5734615564346313, 1.7198820471763612, 1.5168559432029725, 1.3983505964279175, 1.5299988627433776, 1.4556909084320069, 1.5471795558929444, 1.5295339465141295, 1.495618760585785, 1.634558343887329, 1.5249385952949523,]
+train_auc = [ 0.5384384393692017, 0.5424941778182983, 0.4217980206012726, 0.5227091312408447, 0.5349256992340088, 0.5030503273010254, 0.5785308480262756, 0.6238429546356201, 0.5419671535491943, 0.5723999738693237, 0.5126262903213501, 0.5589974522590637, 0.5249494910240173, 0.49964970350265503, 0.5370833873748779,]
+val_loss = [ 1.1165567994117738, 1.3216718554496765, 1.4545735359191894, 1.5688176155090332, 1.4952251672744752, 1.4826083183288574, 1.4492651104927063, 1.4569695949554444, 1.4651182770729065, 1.4365344285964965, 1.377402663230896, 1.305439531803131, 1.3225995659828187, 1.367907500267029, 1.3283109068870544,]
+val_auc = [ 0.6094444990158081, 0.5638889074325562, 0.522777795791626, 0.5572222471237183, 0.6130555868148804, 0.6458333730697632, 0.6800000071525574, 0.6775000095367432, 0.6716666221618652, 0.6749999523162842, 0.6711111068725586, 0.6666666269302368, 0.6688888669013977, 0.6669444441795349, 0.6741666793823242,]
+
+[exp_017.best_results]
+best_epoch = 4
+best_val_loss = 1.3692855477333068
+best_val_auc = 0.6919444799423218
+time_elapsed_min = 89.0
+time_elapsed_sec = 16.682719230651855
+time_elapsed_per_epoch_min = 5.0
+time_elapsed_per_epoch_sec = 57.11218128204348
+
+[exp_017.training_curves]
+train_loss = [ 1.868093156814575, 2.0058310508728026, 1.6822846293449403, 1.617556059360504, 1.6411972284317016, 1.6970730423927307, 1.7085607647895813, 1.616448426246643, 1.4957358956336975, 1.6510046482086183, 1.4886244773864745, 1.4232355117797852, 1.576651692390442, 1.535989272594452, 1.3793261170387268,]
+train_auc = [ 0.5113877654075623, 0.4212740361690521, 0.568611741065979, 0.5228705406188965, 0.5313125252723694, 0.505696177482605, 0.48674261569976807, 0.5158643126487732, 0.5749198794364929, 0.5033013224601746, 0.5436000227928162, 0.6178617477416992, 0.5005000233650208, 0.5224000215530396, 0.5978947877883911,]
+val_loss = [ 1.1699212312698364, 1.3849623680114747, 1.4123276233673097, 1.419682788848877, 1.3692855477333068, 1.3024118065834045, 1.3113452672958374, 1.2350227117538453, 1.197727906703949, 1.1595659375190734, 1.1579180002212524, 1.1813586592674254, 1.1947483539581298, 1.1884915351867675, 1.3738972783088683,]
+val_auc = [ 0.5625, 0.6127777695655823, 0.6558333039283752, 0.6769444346427917, 0.6919444799423218, 0.6850000023841858, 0.660277783870697, 0.663611114025116, 0.6625000238418579, 0.6508333086967468, 0.6636110544204712, 0.6688889265060425, 0.6686111092567444, 0.6747221946716309, 0.6369444727897644,]
+
+[exp_018.best_results]
+best_epoch = 7
+best_val_loss = 1.614037573337555
+best_val_auc = 0.7052777409553528
+time_elapsed_min = 64.0
+time_elapsed_sec = 30.396320104599
+time_elapsed_per_epoch_min = 4.0
+time_elapsed_per_epoch_sec = 18.026421340306626
+
+[exp_018.training_curves]
+train_loss = [ 2.5812050223350527, 2.2080668687820433, 2.0283995032310487, 2.1942463397979735, 1.9495770454406738, 2.2253191828727723, 1.9279481649398804, 1.8790637850761414, 1.873143231868744, 1.8962416410446168, 1.9281090140342712, 1.7925964951515199, 1.7992078900337218, 1.7364060044288636, 1.7103184461593628,]
+train_auc = [ 0.48130327463150024, 0.49022555351257324, 0.5083299875259399, 0.5197315812110901, 0.5152549147605896, 0.4225761294364929, 0.4956982731819153, 0.5131210088729858, 0.5105014443397522, 0.532617449760437, 0.490200012922287, 0.5109043717384338, 0.5604462027549744, 0.5883588790893555, 0.574848473072052,]
+val_loss = [ 1.396561086177826, 1.7960333466529845, 1.858013653755188, 1.839749777317047, 1.8614310145378112, 1.8353204131126404, 1.6895297527313233, 1.614037573337555, 1.5884627819061279, 1.5488834500312805, 1.5009712815284728, 1.4855812430381774, 1.4521098375320434, 1.43881254196167, 1.4229879140853883,]
+val_auc = [ 0.4186111092567444, 0.43861111998558044, 0.5569444894790649, 0.6305555701255798, 0.6597222089767456, 0.6658333539962769, 0.6877777576446533, 0.7052777409553528, 0.699999988079071, 0.6966666579246521, 0.690833330154419, 0.6877777576446533, 0.6891666650772095, 0.6911110877990723, 0.6927777528762817,]
+
+[exp_019.best_results]
+best_epoch = 0
+best_val_loss = inf
+best_val_auc = 0
+time_elapsed_min = 3.0
+time_elapsed_sec = 15.984128952026367
+time_elapsed_per_epoch_min = 3.0
+time_elapsed_per_epoch_sec = 15.984128952026367
+
+[exp_019.training_curves]
+train_loss = []
+train_auc = []
+val_loss = []
+val_auc = []
+
+[exp_020.best_results]
+best_epoch = 2
+best_val_loss = 1.2816889207029303
+best_val_auc = 0.6854521632194519
+time_elapsed_min = 822.0
+time_elapsed_sec = 15.053168296813965
+time_elapsed_per_epoch_min = 164.0
+time_elapsed_per_epoch_sec = 27.01063365936352
+
+[exp_020.training_curves]
+train_loss = [ 1.4235410910667836, 1.4028355016166185, 1.3833981882683197,]
+train_auc = [ 0.6274926662445068, 0.6397130489349365, 0.6464430093765259,]
+val_loss = [ 1.1838189722984016, 1.2816889207029303, 1.201643157321358,]
+val_auc = [ 0.6842811107635498, 0.6854521632194519, 0.6749889850616455,]
+
+[exp_021.best_results]
+best_epoch = 3
+best_val_loss = 1.1891421094450363
+best_val_auc = 0.688141942024231
+time_elapsed_min = 261.0
+time_elapsed_sec = 58.178627252578735
+time_elapsed_per_epoch_min = 52.0
+time_elapsed_per_epoch_sec = 23.635725450515565
+
+[exp_021.training_curves]
+train_loss = [ 1.3766680146328765,]
+train_auc = [ 0.6528181433677673,]
+val_loss = [ 1.1891421094450363,]
+val_auc = [ 0.688141942024231,]
+
+[exp_022.best_results]
+best_epoch = 0
+best_val_loss = inf
+best_val_auc = 0
+time_elapsed_min = 1.0
+time_elapsed_sec = 4.304190635681152
+time_elapsed_per_epoch_min = 1.0
+time_elapsed_per_epoch_sec = 4.304190635681152
+
+[exp_022.training_curves]
+train_loss = []
+train_auc = []
+val_loss = []
+val_auc = []
+
+[exp_024.best_results]
+best_epoch = 11
+best_val_loss = 1.1659295439720154
+best_val_auc = 0.6869444251060486
+time_elapsed_min = 54.0
+time_elapsed_sec = 18.08629012107849
+time_elapsed_per_epoch_min = 3.0
+time_elapsed_per_epoch_sec = 37.20575267473856
+
+[exp_024.training_curves]
+train_loss = [ 1.6576380372047423, 1.644353461265564, 1.620780098438263, 1.6214449286460877, 1.4587168097496033, 1.5650092840194703, 1.4086254358291626, 1.5509807825088502, 1.3071805000305177, 1.4162363171577455,]
+train_auc = [ 0.4631999731063843, 0.5016502141952515, 0.501750111579895, 0.484524667263031, 0.5521053075790405, 0.4972364902496338, 0.5720028281211853, 0.5447618961334229, 0.6516786217689514, 0.583157479763031,]
+val_loss = [ 1.4833935141563415, 1.3730291843414306, 1.3288584709167481, 1.3319028258323669, 1.4340048551559448, 1.3287539720535277, 1.1659295439720154, 1.1865358471870422, 1.3171626687049867, 1.272272002696991,]
+val_auc = [ 0.5583333373069763, 0.6138888597488403, 0.6430555582046509, 0.6566666960716248, 0.6672222018241882, 0.6822222471237183, 0.6869444251060486, 0.6772222518920898, 0.6691666841506958, 0.6588889360427856,]
+
+[exp_025.best_results]
+best_epoch = 12
+best_val_loss = 1.3657970786094666
+best_val_auc = 0.6738889217376709
+time_elapsed_min = 60.0
+time_elapsed_sec = 17.55709671974182
+time_elapsed_per_epoch_min = 4.0
+time_elapsed_per_epoch_sec = 1.170473114649468
+
+[exp_025.training_curves]
+train_loss = [ 1.843419337272644, 1.864591646194458, 1.5263413429260253, 1.6372366666793823, 1.5362867712974548, 1.6001338481903076, 1.4863914966583252, 1.4096919059753419, 1.4368239164352417, 1.3388283669948577, 1.3957591474056243, 1.331611943244934, 1.4505058884620667, 1.2936635136604309, 1.4290289878845215,]
+train_auc = [ 0.5308778285980225, 0.43089020252227783, 0.5608561038970947, 0.5107386708259583, 0.5568227171897888, 0.47298920154571533, 0.5402762293815613, 0.581129789352417, 0.5446113348007202, 0.6426642537117004, 0.6094235181808472, 0.6433573365211487, 0.559943675994873, 0.66246497631073, 0.6043719053268433,]
+val_loss = [ 1.2380069375038147, 1.4606611609458924, 1.3375908493995667, 1.2935365080833434, 1.3001521825790405, 1.281850242614746, 1.2957825660705566, 1.381730353832245, 1.2870983123779296, 1.2964073061943053, 1.1500349640846252, 1.2437609076499938, 1.3657970786094666, 1.293002474308014, 1.4957397818565368,]
+val_auc = [ 0.3608333468437195, 0.40194442868232727, 0.5608333349227905, 0.5663889050483704, 0.5608333349227905, 0.5519444942474365, 0.6572222709655762, 0.6691666841506958, 0.6694444417953491, 0.6569443941116333, 0.6580555438995361, 0.6716666221618652, 0.6738889217376709, 0.6541666984558105, 0.6427778005599976,]
+
+[exp_026.best_results]
+best_epoch = 0
+best_val_loss = inf
+best_val_auc = 0
+time_elapsed_min = 0.0
+time_elapsed_sec = 25.66761875152588
+time_elapsed_per_epoch_min = 0.0
+time_elapsed_per_epoch_sec = 1.6042261719703674
+
+[exp_026.training_curves]
+train_loss = []
+train_auc = []
+val_loss = []
+val_auc = []
+
+[exp_027.best_results]
+best_epoch = 9
+best_val_loss = 1.4251533627510071
+best_val_auc = 0.6572222113609314
+time_elapsed_min = 55.0
+time_elapsed_sec = 6.979605674743652
+time_elapsed_per_epoch_min = 3.0
+time_elapsed_per_epoch_sec = 56.21282897676741
+
+[exp_027.training_curves]
+train_loss = [ 1.9051365494728087, 1.7910038948059082, 1.6769378423690795, 1.5479434847831726, 1.4516386985778809, 1.5052042365074159, 1.5038379311561585, 1.4970799207687377, 1.3431002616882324, 1.5294886827468872, 1.3782640635967254, 1.3685219883918762, 1.546339762210846, 1.5230278372764587,]
+train_auc = [ 0.5496198534965515, 0.4640176296234131, 0.46195492148399353, 0.49080002307891846, 0.5481192469596863, 0.5418564677238464, 0.5458647012710571, 0.5436543822288513, 0.640064001083374, 0.522544264793396, 0.6079198122024536, 0.597939133644104, 0.5041016340255737, 0.5236414670944214,]
+val_loss = [ 1.0949521839618683, 1.3354692935943604, 1.5054056882858275, 1.581452476978302, 1.513999617099762, 1.4378109335899354, 1.3885409832000732, 1.400539481639862, 1.400100541114807, 1.4251533627510071, 1.4124338030815125, 1.3776776790618896, 1.3713837265968323,]
+val_auc = [ 0.5111111402511597, 0.4352777898311615, 0.48194441199302673, 0.5866667032241821, 0.6394444704055786, 0.6461111307144165, 0.6516666412353516, 0.6524999737739563, 0.6569443941116333, 0.6572222113609314, 0.6516666412353516, 0.65666663646698, 0.6516666412353516,]
+
+[exp_028.best_results]
+best_epoch = 11
+best_val_loss = 1.3550500869750977
+best_val_auc = 0.6700000166893005
+time_elapsed_min = 61.0
+time_elapsed_sec = 49.962483167648315
+time_elapsed_per_epoch_min = 4.0
+time_elapsed_per_epoch_sec = 7.330832211176556
+
+[exp_028.training_curves]
+train_loss = [ 1.8022788166999817, 1.9074893593788147, 1.84709175825119, 1.8925888061523437, 1.6043160200119018, 1.6354011356830598, 1.5762195706367492, 1.614634370803833, 1.4988755106925964, 1.4934387922286987, 1.4953930377960205, 1.4654692888259888, 1.4661571860313416, 1.4666524529457092, 1.3818278551101684,]
+train_auc = [ 0.5174448490142822, 0.5388889312744141, 0.481233149766922, 0.43043655157089233, 0.5339348316192627, 0.5322222113609314, 0.5329323410987854, 0.4707236886024475, 0.5559899210929871, 0.5358017086982727, 0.5166666507720947, 0.5660264492034912, 0.5860507488250732, 0.5284454822540283, 0.5865114331245422,]
+val_loss = [ 1.1243507742881775, 1.3583223938941955, 1.5128263473510741, 1.588116204738617, 1.5887260437011719, 1.484959352016449, 1.4150551915168763, 1.3867607235908508, 1.3275495171546936, 1.284477984905243, 1.3406620621681213, 1.3550500869750977, 1.2763231635093688, 1.2520061612129212, 1.2732683300971985,]
+val_auc = [ 0.5180555582046509, 0.5319444537162781, 0.5911111235618591, 0.5786111354827881, 0.6033333539962769, 0.636388897895813, 0.6416666507720947, 0.6441666483879089, 0.6611111164093018, 0.6630555391311646, 0.6675000190734863, 0.6700000166893005, 0.6691666841506958, 0.6672222018241882, 0.6694444417953491,]
+
+[exp_029.best_results]
+best_epoch = 21
+best_val_loss = 1.2272420406341553
+best_val_auc = 0.6775000095367432
+time_elapsed_min = 85.0
+time_elapsed_sec = 8.255532264709473
+time_elapsed_per_epoch_min = 2.0
+time_elapsed_per_epoch_sec = 50.27518440882366
+
+[exp_029.training_curves]
+train_loss = [ 1.3058765530586243, 1.338916277885437, 1.3667849898338318, 1.3709159970283509, 1.4352869033813476, 1.2665971279144288, 1.377475506067276, 1.1874506950378418, 1.2597947001457215, 1.2808049023151398, 1.2435731291770935, 1.24091956615448, 1.1823654472827911, 1.2030744314193726, 1.1936023950576782,]
+train_auc = [ 0.6102292537689209, 0.6357888579368591, 0.6298519372940063, 0.6397388577461243, 0.5864716172218323, 0.7249599695205688, 0.6244611740112305, 0.7279205322265625, 0.666063666343689, 0.6731771230697632, 0.7010350227355957, 0.6871994733810425, 0.7206777334213257, 0.7200281620025635, 0.7294235229492188,]
+val_loss = [ 1.3976900458335877, 1.3225993514060974, 1.276405942440033, 1.2441313862800598, 1.0792521417140961, 1.1455960750579834, 1.2272420406341553, 1.4969911694526672, 1.270845627784729, 1.2670267343521118, 1.146558368206024, 1.2276497960090638, 1.2761951208114624, 1.1083976864814757, 1.3023249983787537,]
+val_auc = [ 0.6655555963516235, 0.666111171245575, 0.6694444417953491, 0.6458333134651184, 0.6755555272102356, 0.6749999523162842, 0.6775000095367432, 0.6675000190734863, 0.6697221994400024, 0.6669444441795349, 0.6597222089767456, 0.6669444441795349, 0.6683332920074463, 0.6344444155693054, 0.6447222232818604,]
+
+[exp_030.best_results]
+best_epoch = 3
+best_val_loss = 1.3144457936286926
+best_val_auc = 0.6788889169692993
+time_elapsed_min = 56.0
+time_elapsed_sec = 17.834640502929688
+time_elapsed_per_epoch_min = 5.0
+time_elapsed_per_epoch_sec = 37.78346405029299
+
+[exp_030.training_curves]
+train_loss = [ 2.0811978459358214, 1.740493071079254, 1.6620846271514893, 1.3297616720199585, 1.2601628303527832, 1.3090664565563201, 1.2224624633789063, 1.1778328895568848, 1.3103172600269317,]
+train_auc = [ 0.46454545855522156, 0.4789310395717621, 0.5491787195205688, 0.646882176399231, 0.6810680627822876, 0.6504487991333008, 0.7323718070983887, 0.7411110997200012, 0.6936774849891663,]
+val_loss = [ 1.7041394233703613, 5.172218179702758, 2.468195343017578, 1.3144457936286926, 1.7258284211158752, 1.8265294313430787, 1.1218688488006592, 1.0681455612182618, 1.369726824760437,]
+val_auc = [ 0.5013889074325562, 0.4563888907432556, 0.5261111259460449, 0.6788889169692993, 0.6736111640930176, 0.6777778267860413, 0.6599999666213989, 0.6658333539962769, 0.6569444537162781,]
+
+[exp_031.best_results]
+best_epoch = 3
+best_val_loss = 1.5752081155776978
+best_val_auc = 0.6566666960716248
+time_elapsed_min = 47.0
+time_elapsed_sec = 21.698052644729614
+time_elapsed_per_epoch_min = 4.0
+time_elapsed_per_epoch_sec = 44.169805264472984
+
+[exp_031.training_curves]
+train_loss = [ 2.261171305179596, 2.668352210521698, 1.8196802258491516, 1.6535968780517578, 1.5211602985858916, 1.4452993273735046, 1.3943172574043274, 1.372776746749878, 1.3237379312515258,]
+train_auc = [ 0.6078788042068481, 0.5371376872062683, 0.4919871687889099, 0.4694676399230957, 0.5774788856506348, 0.5684000253677368, 0.6209742426872253, 0.6190332174301147, 0.6475000381469727,]
+val_loss = [ 1.3817772626876832, 2.8614498376846313, 2.76818733215332, 1.5752081155776978, 1.4994675636291503, 1.094172066450119, 1.2178707718849182, 1.182916235923767, 1.497181475162506,]
+val_auc = [ 0.5108333230018616, 0.5586110949516296, 0.3541666567325592, 0.6566666960716248, 0.5611110925674438, 0.6133333444595337, 0.6441666483879089, 0.6544444561004639, 0.5811110734939575,]
+
+[exp_032.best_results]
+best_epoch = 4
+best_val_loss = 1.3891334533691406
+best_val_auc = 0.7152777910232544
+time_elapsed_min = 62.0
+time_elapsed_sec = 36.16825580596924
+time_elapsed_per_epoch_min = 4.0
+time_elapsed_per_epoch_sec = 10.411217053731292
+
+[exp_032.training_curves]
+train_loss = [ 1.7464675188064576, 1.511211347579956, 1.455450665950775, 1.3301582217216492, 1.3717984080314636, 1.3858363032341003, 1.2747761011123657, 1.266139769554138, 1.2172617256641387, 1.2729778826236724, 1.2296212434768676, 1.2445588290691376, 1.2641618967056274, 1.1364955246448516, 1.214053738117218,]
+train_auc = [ 0.4800887107849121, 0.5059000253677368, 0.488639771938324, 0.5870392918586731, 0.5722149610519409, 0.5964646339416504, 0.6699000000953674, 0.6554487347602844, 0.7126851081848145, 0.688573956489563, 0.7065435647964478, 0.6872184872627258, 0.7122806906700134, 0.8048243522644043, 0.727619469165802,]
+val_loss = [ 1.769427764415741, 1.8230486750602721, 1.4339693784713745, 1.488858127593994, 1.3891334533691406, 1.2868852376937867, 1.2016441464424132, 1.3561971306800842, 1.3912963390350341, 1.2527533054351807, 1.1515652656555175, 1.236898708343506, 1.3045124650001525, 1.1657454133033753, 1.1270477652549744,]
+val_auc = [ 0.4191666543483734, 0.5461111068725586, 0.6747221946716309, 0.6863889098167419, 0.7152777910232544, 0.7094444036483765, 0.6972222328186035, 0.7036111354827881, 0.7024999856948853, 0.6944444179534912, 0.6866666674613953, 0.696388840675354, 0.6872222423553467, 0.7088888883590698, 0.6977777481079102,]
+
+[exp_033.best_results]
+best_epoch = 13
+best_val_loss = 1.1028306484222412
+best_val_auc = 0.6813889145851135
+time_elapsed_min = 78.0
+time_elapsed_sec = 23.73897385597229
+time_elapsed_per_epoch_min = 5.0
+time_elapsed_per_epoch_sec = 13.58259825706483
+
+[exp_033.training_curves]
+train_loss = [ 1.5572958707809448, 1.5528462409973145, 1.479736053943634, 1.6761027455329895, 1.4696819067001343, 1.4460183262825013, 1.4218919634819032, 1.3165665149688721, 1.4616772890090943, 1.3054505944252015, 1.3238306939601898, 1.2976895332336427, 1.2925531029701234, 1.309566617012024, 1.3498970985412597,]
+train_auc = [ 0.5284210443496704, 0.5396195650100708, 0.4989473819732666, 0.4124208688735962, 0.5808521509170532, 0.5751575231552124, 0.5094263553619385, 0.6539885997772217, 0.5465981960296631, 0.6263735890388489, 0.649337649345398, 0.6575918197631836, 0.6885740160942078, 0.6647932529449463, 0.644511342048645,]
+val_loss = [ 1.4615123748779297, 1.3393971085548402, 1.3615506410598754, 1.3147828102111816, 1.285602056980133, 1.3097305297851562, 1.298408567905426, 1.2839041113853455, 1.1810908317565918, 1.1846973896026611, 1.1815415263175963, 1.191648018360138, 1.1270280599594116, 1.1028306484222412, 1.1180894494056701,]
+val_auc = [ 0.44861114025115967, 0.645277738571167, 0.6725000143051147, 0.64083331823349, 0.6472221612930298, 0.6611111164093018, 0.6719444394111633, 0.6744444370269775, 0.679444432258606, 0.6716666221618652, 0.670555591583252, 0.6644444465637207, 0.679722249507904, 0.6813889145851135, 0.6688889265060425,]
+
+[exp_034.best_results]
+best_epoch = 16
+best_val_loss = 1.2859211206436156
+best_val_auc = 0.6941666603088379
+time_elapsed_min = 48.0
+time_elapsed_sec = 2.530498504638672
+time_elapsed_per_epoch_min = 1.0
+time_elapsed_per_epoch_sec = 46.76038883350513
+
+[exp_034.training_curves]
+train_loss = [ 1.2027404308319092, 1.191482275724411, 1.1996681809425354, 1.2474202156066894, 1.278317779302597, 1.165577781200409, 1.2211401104927062, 1.1868622422218322, 1.0968185544013977, 1.2442782640457153, 1.1305472731590271,]
+train_auc = [ 0.7093709707260132, 0.6842703819274902, 0.717382550239563, 0.6680735945701599, 0.6884195804595947, 0.7470723390579224, 0.7231892347335815, 0.7157895565032959, 0.7527365684509277, 0.6769369840621948, 0.7345981001853943,]
+val_loss = [ 1.1549742579460145, 1.2859211206436156, 1.408824586868286, 1.3429453253746033, 1.0642874121665955, 1.0671698808670045, 1.0957551658153535, 1.1063779592514038, 1.1382307052612304, 1.1186746299266814, 1.0656940817832947,]
+val_auc = [ 0.6891666650772095, 0.6941666603088379, 0.6872222423553467, 0.6638888716697693, 0.6786110997200012, 0.6875, 0.6833333373069763, 0.6649999618530273, 0.6775000095367432, 0.6769444942474365, 0.6852778196334839,]
+
+[exp_035.best_results]
+best_epoch = 0
+best_val_loss = 1.6298738718032837
+best_val_auc = 0.696388840675354
+time_elapsed_min = 35.0
+time_elapsed_sec = 3.8785316944122314
+time_elapsed_per_epoch_min = 7.0
+time_elapsed_per_epoch_sec = 0.7757063388824577
+
+[exp_035.training_curves]
+train_loss = [ 1.472441303730011, 1.3291622638702392, 1.4064843893051147, 1.3114195346832276, 1.418077826499939,]
+train_auc = [ 0.5547119975090027, 0.6093484163284302, 0.5719147324562073, 0.5879666805267334, 0.5831583142280579,]
+val_loss = [ 1.6298738718032837, 1.6969338417053224, 1.5758819103240966, 1.7923502564430236,]
+val_auc = [ 0.696388840675354, 0.6627777814865112, 0.6658333539962769, 0.6613888740539551,]
+
+[exp_036.best_results]
+best_epoch = 12
+best_val_loss = 1.388466441631317
+best_val_auc = 0.6919444799423218
+time_elapsed_min = 107.0
+time_elapsed_sec = 50.46433091163635
+time_elapsed_per_epoch_min = 5.0
+time_elapsed_per_epoch_sec = 40.5507542585072
+
+[exp_036.training_curves]
+train_loss = [ 1.4685317993164062, 1.369503915309906, 1.2507495522499084, 1.3145890951156616, 1.2980618596076965, 1.360064685344696, 1.355580061674118, 1.257042521238327, 1.3000935196876526, 1.255928349494934, 1.2634576320648194, 1.341113317012787, 1.3073913335800171,]
+train_auc = [ 0.46998801827430725, 0.5631077289581299, 0.6597439050674438, 0.6456320285797119, 0.6641656756401062, 0.6296969652175903, 0.6333835124969482, 0.6844684481620789, 0.6339705586433411, 0.6723999977111816, 0.6569423675537109, 0.6270508170127869, 0.6804332733154297,]
+val_loss = [ 1.427463209629059, 1.4739882588386535, 1.5049174070358275, 1.4613813757896423, 1.4072251319885254, 1.2720985531806945, 1.2946542501449585, 1.388466441631317, 1.3913537979125976, 1.434176790714264, 1.4909246921539308, 1.3525208234786987, 1.2640659093856812,]
+val_auc = [ 0.668055534362793, 0.6772221922874451, 0.6705555319786072, 0.6675000190734863, 0.667222261428833, 0.664722204208374, 0.6747221946716309, 0.6919444799423218, 0.6869444847106934, 0.6844444274902344, 0.6863888502120972, 0.6877777576446533, 0.6894444227218628,]
+
+[exp_037.best_results]
+best_epoch = 12
+best_val_loss = 1.3723109543323517
+best_val_auc = 0.6974999904632568
+time_elapsed_min = 109.0
+time_elapsed_sec = 19.507593870162964
+time_elapsed_per_epoch_min = 3.0
+time_elapsed_per_epoch_sec = 38.65025312900542
+
+[exp_037.training_curves]
+train_loss = [ 1.5071027547121048, 1.501964122056961, 1.43931587934494, 1.4143512159585954, 1.4159094452857972, 1.3561363458633422, 1.3421362072229386, 1.2782463759183884, 1.1932391613721847, 1.2598921597003936, 1.232909619808197, 1.2422547191381454, 1.2412375837564469, 1.2561505049467088, 1.1448463141918181, 1.1387916088104248, 1.1662296950817108, 1.0852238953113555, 1.1201162844896317, 1.0260521173477173, 1.1688241362571716, 1.0726763427257537, 1.1821789562702179, 1.1073959082365037, 1.0557428926229477, 1.0177280694246291, 1.0798164546489715, 1.0085255831480027, 1.0230586409568787, 0.999015611410141,]
+train_auc = [ 0.5067026615142822, 0.5297529697418213, 0.5604719519615173, 0.5837339758872986, 0.5463546514511108, 0.5535989999771118, 0.6118612289428711, 0.6649940013885498, 0.7234723567962646, 0.6811000108718872, 0.7113401889801025, 0.684795618057251, 0.637033224105835, 0.6661995649337769, 0.7735905647277832, 0.778811514377594, 0.7503753900527954, 0.7752809524536133, 0.7704737186431885, 0.8452093601226807, 0.752982497215271, 0.7907047271728516, 0.7604504823684692, 0.7953530550003052, 0.8261616230010986, 0.8356108665466309, 0.7991980314254761, 0.8315619230270386, 0.846246600151062, 0.8502019643783569,]
+val_loss = [ 1.7201596319675445, 1.4040751218795777, 1.2241180002689362, 1.5853901982307435, 1.420353651046753, 1.5944215059280396, 1.2917663276195526, 1.2431798815727233, 1.2220935821533203, 1.1932146042585372, 1.1472294181585312, 1.261173889040947, 1.3723109543323517, 1.1949004411697388, 1.0646847307682037, 1.1417966902256012, 1.0625906258821487, 1.0053065538406372, 0.9977814525365829, 1.0559367120265961, 1.3932354748249054, 1.0645197182893753, 1.2254811882972718, 1.1051486134529114, 0.9911304295063019, 1.0103957414627076, 1.0896777033805847, 1.1564886540174484, 1.054375571012497, 1.0582812130451202,]
+val_auc = [ 0.6302777528762817, 0.6683332920074463, 0.675277829170227, 0.6708333492279053, 0.6883333325386047, 0.6811110973358154, 0.6938889026641846, 0.6747221946716309, 0.6766667366027832, 0.684166669845581, 0.6936111450195312, 0.6941666603088379, 0.6974999904632568, 0.6938889026641846, 0.6875, 0.6869444251060486, 0.6852778196334839, 0.6811110973358154, 0.6902777552604675, 0.6502777934074402, 0.6102777719497681, 0.6108333468437195, 0.5049999952316284, 0.6413888931274414, 0.6308333277702332, 0.6875, 0.6497222185134888, 0.6044444441795349, 0.5491666793823242, 0.6016666889190674,]
+
+[exp_038.best_results]
+best_epoch = 4
+best_val_loss = 1.8363077074289322
+best_val_auc = 0.6972222328186035
+time_elapsed_min = 59.0
+time_elapsed_sec = 54.1397659778595
+time_elapsed_per_epoch_min = 4.0
+time_elapsed_per_epoch_sec = 16.72426899841855
+
+[exp_038.training_curves]
+train_loss = [ 1.5162158250808715, 1.5119279265403747, 1.4945817291736603, 1.4031064808368683, 1.3471615195274353, 1.4263344824314117, 1.3914213716983794, 1.3344909340143203, 1.2843748062849045, 1.2751721933484077, 1.282369415462017, 1.2844365119934082, 1.264861634373665,]
+train_auc = [ 0.6047170758247375, 0.4965469241142273, 0.49042609333992004, 0.5503805875778198, 0.5849663019180298, 0.5366830229759216, 0.5898746848106384, 0.6261634826660156, 0.6450580358505249, 0.5983529090881348, 0.6764675974845886, 0.670103132724762, 0.706852912902832,]
+val_loss = [ 2.10889955163002, 2.078818607330322, 2.022355371713638, 1.7650193482637406, 1.8363077074289322, 1.8254273980855942, 1.4253152459859848, 1.5927555352449416, 1.5872204571962356, 1.867297887802124, 1.5446564435958863, 1.373031920194626, 1.5844089567661286,]
+val_auc = [ 0.6858333349227905, 0.6869444847106934, 0.6780555844306946, 0.6951388716697693, 0.6972222328186035, 0.6961111426353455, 0.6941666603088379, 0.6913889646530151, 0.6880555152893066, 0.6844444274902344, 0.6855555772781372, 0.6855555772781372, 0.6844444274902344,]
+
+[exp_039.best_results]
+best_epoch = 1
+best_val_loss = 1.7748011767864227
+best_val_auc = 0.6738888621330261
+time_elapsed_min = 11.0
+time_elapsed_sec = 39.69210147857666
+time_elapsed_per_epoch_min = 3.0
+time_elapsed_per_epoch_sec = 53.23070049285889
+
+[exp_039.training_curves]
+train_loss = [ 1.7167254075407983, 1.4079707652330398, 1.6227855399250983,]
+train_auc = [ 0.5051082372665405, 0.6228623390197754, 0.5286029577255249,]
+val_loss = [ 1.8450365990400315, 1.7748011767864227,]
+val_auc = [ 0.5336111187934875, 0.6738888621330261,]
+
+[exp_040.best_results]
+best_epoch = 27
+best_val_loss = 1.3091036468744277
+best_val_auc = 0.695555567741394
+time_elapsed_min = 115.0
+time_elapsed_sec = 2.4059860706329346
+time_elapsed_per_epoch_min = 3.0
+time_elapsed_per_epoch_sec = 50.08019953568777
+
+[exp_040.training_curves]
+train_loss = [ 1.6139882743358611, 1.4792274579405784, 1.410380372405052, 1.4598820507526398, 1.4672091633081437, 1.518949693441391, 1.4490803956985474, 1.3478151440620423, 1.439012774825096, 1.4073168501257896, 1.4396710231900216, 1.2762464061379433, 1.494636718928814, 1.2686176985502242, 1.258449749648571, 1.2291925981640817, 1.2785872504115106, 1.3358183830976487, 1.2909427642822267, 1.3385536193847656, 1.2930259883403779, 1.2881541311740876, 1.272023743391037, 1.294843326508999, 1.308757734298706, 1.2636138916015625, 1.2542971804738046,]
+train_auc = [ 0.5009523630142212, 0.5369492769241333, 0.5553542375564575, 0.542553186416626, 0.5418167114257812, 0.496146559715271, 0.5555555820465088, 0.6155862808227539, 0.5903030633926392, 0.5714142322540283, 0.5557005405426025, 0.6191638708114624, 0.5477777719497681, 0.6552354097366333, 0.6708873510360718, 0.7048819661140442, 0.6667003035545349, 0.615253746509552, 0.6760703921318054, 0.650261640548706, 0.6670666933059692, 0.6485837697982788, 0.6671667098999023, 0.6730228662490845, 0.6536883115768433, 0.6769924759864807, 0.6859999895095825,]
+val_loss = [ 1.7623628377914429, 1.81599061191082, 1.5763140797615052, 1.495158037543297, 1.5658149361610412, 1.5143288493156433, 1.4395242422819137, 1.4815259009599686, 1.3786384463310242, 1.321247684955597, 1.4432440102100372, 1.6077523440122605, 1.3955502182245254, 1.4371073484420775, 1.4754209458827972, 1.4511906951665878, 1.4120761454105377, 1.4140240281820298, 1.3069042146205903, 1.3793320834636689, 1.4521376579999923, 1.3914762765169144, 1.391794115304947, 1.3549674302339554, 1.3091036468744277, 1.3312305748462676, 1.3630726248025895,]
+val_auc = [ 0.6816666722297668, 0.6480555534362793, 0.6549999713897705, 0.6594444513320923, 0.6686111092567444, 0.67166668176651, 0.679444432258606, 0.6791666746139526, 0.6758333444595337, 0.6783332824707031, 0.6813889145851135, 0.6863888502120972, 0.6797221899032593, 0.6772222518920898, 0.6808333396911621, 0.6772222518920898, 0.6788889169692993, 0.6852778196334839, 0.6869444251060486, 0.6858333349227905, 0.6905555725097656, 0.6905555725097656, 0.6847222447395325, 0.6905555725097656, 0.695555567741394, 0.690833330154419, 0.6891666650772095,]
+
+[exp_041.best_results]
+best_epoch = 10
+best_val_loss = 1.226331317424774
+best_val_auc = 0.6947221755981445
+time_elapsed_min = 55.0
+time_elapsed_sec = 4.486999034881592
+time_elapsed_per_epoch_min = 3.0
+time_elapsed_per_epoch_sec = 40.29913326899211
+
+[exp_041.training_curves]
+train_loss = [ 1.7110910177230836, 1.6058522284030914, 1.6854123711585998, 1.7272256016731262, 1.7770878434181214, 1.5586993932723998, 1.5504214882850647, 1.5483301043510438, 1.6115068793296814, 1.532839870452881, 1.481192684173584, 1.4714645862579345, 1.5082550764083862, 1.4148111939430237, 1.4778160333633423,]
+train_auc = [ 0.46335840225219727, 0.5389539003372192, 0.5585312247276306, 0.46215540170669556, 0.43507400155067444, 0.520531415939331, 0.530426025390625, 0.5196078419685364, 0.502997100353241, 0.517258882522583, 0.5541000366210938, 0.5185185074806213, 0.5169270634651184, 0.5666566491127014, 0.5012511014938354,]
+val_loss = [ 1.475036656856537, 1.5150538682937622, 1.3356749653816222, 1.1757654547691345, 1.1735721230506897, 1.242799711227417, 1.3045915603637694, 1.272838532924652, 1.2871736645698548, 1.2605654001235962, 1.226331317424774, 1.2594139337539674, 1.275262451171875, 1.2451634764671327, 1.2159590601921082,]
+val_auc = [ 0.5263888835906982, 0.5911111235618591, 0.6269444823265076, 0.6583333015441895, 0.6916666626930237, 0.6499999761581421, 0.6336110830307007, 0.6708333492279053, 0.6727777719497681, 0.6877777576446533, 0.6947221755981445, 0.6905555129051208, 0.6827777624130249, 0.6741666793823242, 0.6772222518920898,]
+
+[exp_042.best_results]
+best_epoch = 18
+best_val_loss = 1.215662917494774
+best_val_auc = 0.695277750492096
+time_elapsed_min = 37.0
+time_elapsed_sec = 16.101943969726562
+time_elapsed_per_epoch_min = 1.0
+time_elapsed_per_epoch_sec = 46.48104495093936
+
+[exp_042.training_curves]
+train_loss = [ 1.5935971051454545, 1.5229826346039772, 1.5460872441530227, 1.4340191766619683, 1.446077173948288, 1.608682243525982, 1.3928794234991073, 1.2685692876577377, 1.2985788688063622, 1.3720883138477802,]
+train_auc = [ 0.4704761803150177, 0.4927971363067627, 0.5385387539863586, 0.5641076564788818, 0.5516965389251709, 0.4808952510356903, 0.5565656423568726, 0.6791000366210938, 0.6483592987060547, 0.5882999897003174,]
+val_loss = [ 1.1418825149536134, 1.2859805673360825, 1.2239401906728744, 1.200294029712677, 1.211341965198517, 1.2588954389095306, 1.2250457763671876, 1.215662917494774, 1.1728509292006493,]
+val_auc = [ 0.6552777886390686, 0.6366666555404663, 0.653333306312561, 0.6538888812065125, 0.6741666793823242, 0.6861110925674438, 0.6877777576446533, 0.695277750492096, 0.6775000095367432,]
+
+[exp_043.best_results]
+best_epoch = 5
+best_val_loss = 1.5641886472702027
+best_val_auc = 0.7033333778381348
+time_elapsed_min = 43.0
+time_elapsed_sec = 14.24682068824768
+time_elapsed_per_epoch_min = 3.0
+time_elapsed_per_epoch_sec = 55.84062006256798
+
+[exp_043.training_curves]
+train_loss = [ 1.9264404892921447, 1.737254011631012, 2.1207103610038756, 1.6526707410812378, 1.6818466544151307, 1.7824787139892577, 1.4626187920570373, 1.710886263847351, 1.6450883984565734, 1.5402097821235656,]
+train_auc = [ 0.5337533950805664, 0.5669642686843872, 0.4481682777404785, 0.5587558746337891, 0.5430542826652527, 0.4629667103290558, 0.6079608201980591, 0.4812999665737152, 0.4557455778121948, 0.5408614873886108,]
+val_loss = [ 1.330626630783081, 1.6331618666648864, 1.7080127954483033, 1.743661844730377, 1.6729289174079895, 1.5641886472702027, 1.5380860209465026, 1.4560068845748901, 1.4076207876205444, 1.3524688124656676,]
+val_auc = [ 0.44111108779907227, 0.5077778100967407, 0.5927777886390686, 0.6555555462837219, 0.6880555152893066, 0.7033333778381348, 0.6986111402511597, 0.6969444155693054, 0.6822222471237183, 0.6830555200576782,]
+
+[exp_044.best_results]
+best_epoch = 6
+best_val_loss = 1.2690049409866333
+best_val_auc = 0.6902778148651123
+time_elapsed_min = 41.0
+time_elapsed_sec = 16.673558712005615
+time_elapsed_per_epoch_min = 4.0
+time_elapsed_per_epoch_sec = 7.667355871200556
+
+[exp_044.training_curves]
+train_loss = [ 1.4978655219078063, 1.5312508940696716, 1.4633387327194214, 1.326801598072052, 1.3775331377983093, 1.3446839809417725, 1.2579043984413147, 1.314372754096985, 1.2348276376724243, 1.2243077278137207,]
+train_auc = [ 0.5166515111923218, 0.5218181610107422, 0.5116511583328247, 0.5774196982383728, 0.6071464419364929, 0.6009615659713745, 0.671404242515564, 0.6393754482269287, 0.7023237347602844, 0.7036703824996948,]
+val_loss = [ 1.9548860907554626, 1.3260977268218994, 1.3389213323593139, 1.4140946745872498, 1.2757663607597352, 1.1945756196975708, 1.2690049409866333, 1.4002440690994262, 1.2235445618629455, 1.1429416060447692,]
+val_auc = [ 0.4213888943195343, 0.6244444251060486, 0.6311110854148865, 0.663611114025116, 0.6719444990158081, 0.6872221827507019, 0.6902778148651123, 0.6600000262260437, 0.6858333349227905, 0.6747222542762756,]
+
+[exp_045.best_results]
+best_epoch = 2
+best_val_loss = 1.4062419176101684
+best_val_auc = 0.7144444584846497
+time_elapsed_min = 41.0
+time_elapsed_sec = 10.974233150482178
+time_elapsed_per_epoch_min = 4.0
+time_elapsed_per_epoch_sec = 7.097423315048218
+
+[exp_045.training_curves]
+train_loss = [ 1.6915698051452637, 1.5182663083076477, 1.4493297815322876, 1.4788767099380493, 1.3740967750549316, 1.359007215499878, 1.3689838290214538, 1.3313947796821595, 1.2525484800338744, 1.3475540399551391,]
+train_auc = [ 0.4629685580730438, 0.5113418698310852, 0.5321073532104492, 0.5325521230697632, 0.579927921295166, 0.5501959323883057, 0.6049444675445557, 0.634609580039978, 0.6688311696052551, 0.6666666269302368,]
+val_loss = [ 2.006790852546692, 1.7262911200523376, 1.4062419176101684, 1.595231008529663, 1.5294947981834413, 1.5449842810630798, 1.411369788646698, 1.3419137835502624, 1.394125258922577, 1.300647234916687,]
+val_auc = [ 0.3769444227218628, 0.7016666531562805, 0.7144444584846497, 0.7098610997200012, 0.6844444274902344, 0.6899999976158142, 0.6894444227218628, 0.6949999928474426, 0.6886111497879028, 0.6833333373069763,]
+
+[exp_046.best_results]
+best_epoch = 9
+best_val_loss = 1.454261314868927
+best_val_auc = 0.6894444227218628
+time_elapsed_min = 42.0
+time_elapsed_sec = 21.04140019416809
+time_elapsed_per_epoch_min = 4.0
+time_elapsed_per_epoch_sec = 14.104140019416803
+
+[exp_046.training_curves]
+train_loss = [ 1.546589696407318, 1.4389942049980164, 1.283053183555603, 1.4056676626205444, 1.2558050155639648, 1.2747959971427918, 1.2513198614120484, 1.2412912607192994, 1.2514310121536254, 1.2364570379257203,]
+train_auc = [ 0.5124512910842896, 0.5064506530761719, 0.602583646774292, 0.5800501108169556, 0.6486486196517944, 0.6558902859687805, 0.7027568817138672, 0.7033464312553406, 0.6571658253669739, 0.7021702527999878,]
+val_loss = [ 1.907580065727234, 1.5330252170562744, 1.9457424879074097, 1.5728182196617126, 1.612761414051056, 1.5281842231750489, 1.4769794702529908, 1.2907371163368224, 1.4969581484794616, 1.454261314868927,]
+val_auc = [ 0.4119444489479065, 0.5677777528762817, 0.6027777791023254, 0.6349999904632568, 0.6666666865348816, 0.6755555868148804, 0.6822222471237183, 0.6833333373069763, 0.6838889122009277, 0.6894444227218628,]
+
+[exp_047.best_results]
+best_epoch = 4
+best_val_loss = 1.8123132586479187
+best_val_auc = 0.5255555510520935
+time_elapsed_min = 39.0
+time_elapsed_sec = 32.461108446121216
+time_elapsed_per_epoch_min = 4.0
+time_elapsed_per_epoch_sec = 23.6067898273468
+
+[exp_047.training_curves]
+train_loss = [ 1.4614954233169555, 1.3111698150634765, 1.4151363372802734, 1.3314597725868225, 1.3267713904380798, 1.3427561521530151, 1.3046888947486877, 1.2899156093597413, 1.2953875541687012,]
+train_auc = [ 0.5725160241127014, 0.5219191312789917, 0.5277777910232544, 0.5354235768318176, 0.50919508934021, 0.5641000270843506, 0.5314009189605713, 0.6243624687194824, 0.6206586360931396,]
+val_loss = [ 1.352312397956848, 1.6676346898078918, 1.790879774093628, 1.7514268279075622, 1.8123132586479187, 1.8203250527381898, 1.8753636121749877, 1.8272575378417968,]
+val_auc = [ 0.4355555474758148, 0.46861109137535095, 0.472777783870697, 0.4788888692855835, 0.5255555510520935, 0.5055555701255798, 0.5094444751739502, 0.4950000047683716,]
+
+[exp_048.best_results]
+best_epoch = 9
+best_val_loss = 1.596431815624237
+best_val_auc = 0.7327777147293091
+time_elapsed_min = 43.0
+time_elapsed_sec = 29.67376184463501
+time_elapsed_per_epoch_min = 4.0
+time_elapsed_per_epoch_sec = 20.96737618446349
+
+[exp_048.training_curves]
+train_loss = [ 1.3993321180343627, 1.3139784693717957, 1.3183652758598328, 1.2841168165206909, 1.228724181652069, 1.2448869526386261, 1.1732974171638488, 1.1486716270446777, 1.072133296728134, 1.0605056583881378,]
+train_auc = [ 0.5282112956047058, 0.6418641805648804, 0.6160544157028198, 0.6542654633522034, 0.6932239532470703, 0.6947695016860962, 0.7424840927124023, 0.8009259104728699, 0.808899998664856, 0.8126854300498962,]
+val_loss = [ 1.47663311958313, 1.4246826887130737, 1.4515801548957825, 1.255467677116394, 1.4996127128601073, 1.4582001090049743, 1.3977912425994874, 1.5275658249855042, 1.3251498222351075, 1.596431815624237,]
+val_auc = [ 0.5102778077125549, 0.5119444131851196, 0.5413888692855835, 0.6241666674613953, 0.6072221994400024, 0.6711111068725586, 0.608055591583252, 0.6174999475479126, 0.6858333349227905, 0.7327777147293091,]
+
+[exp_049.best_results]
+best_epoch = 10
+best_val_loss = 1.0925560176372529
+best_val_auc = 0.6936111450195312
+time_elapsed_min = 54.0
+time_elapsed_sec = 33.35368490219116
+time_elapsed_per_epoch_min = 2.0
+time_elapsed_per_epoch_sec = 43.66768424510957
+
+[exp_049.training_curves]
+train_loss = [ 1.1126928567886352, 1.0535005509853363, 0.8464605867862701, 0.6892170548439026, 0.7558285862207412, 0.7216475576162338, 0.476715461909771, 0.43642125874757765, 0.3535599663853645, 0.2660126730799675,]
+train_auc = [ 0.7555354237556458, 0.8037999868392944, 0.8981074094772339, 0.8962405920028687, 0.9115911722183228, 0.9143669009208679, 0.9489867687225342, 0.9342633485794067, 0.9495999813079834, 0.9655835628509521,]
+val_loss = [ 1.0925560176372529, 1.1343946158885956, 1.012588694691658, 1.2361803621053695, 1.7679286241531371, 1.1763029746711253, 1.4174997448921203, 1.4226369857788086, 1.5524032264947891, 1.4524443864822387,]
+val_auc = [ 0.6936111450195312, 0.6413888931274414, 0.628333330154419, 0.6044444441795349, 0.616111159324646, 0.5811111330986023, 0.625, 0.612500011920929, 0.6058332920074463, 0.6050000190734863,]
+
+[exp_050.best_results]
+best_epoch = 7
+best_val_loss = 1.339023721218109
+best_val_auc = 0.6936111450195312
+time_elapsed_min = 42.0
+time_elapsed_sec = 38.132763385772705
+time_elapsed_per_epoch_min = 4.0
+time_elapsed_per_epoch_sec = 15.813276338577282
+
+[exp_050.training_curves]
+train_loss = [ 1.4616695523262024, 1.2964889407157898, 1.3160715103149414, 1.3382227778434754, 1.3106023788452148, 1.2361776232719421, 1.2898095011711121, 1.3493388175964356, 1.2698160469532014, 1.1691918194293975,]
+train_auc = [ 0.46568626165390015, 0.519292950630188, 0.5298073291778564, 0.5845338106155396, 0.6620370745658875, 0.6968271732330322, 0.6523871421813965, 0.6053244471549988, 0.6627999544143677, 0.7392929196357727,]
+val_loss = [ 1.6670946955680848, 1.6977210521697998, 1.7615209341049194, 1.6724137544631958, 1.3483508110046387, 1.5422666430473329, 1.327615213394165, 1.339023721218109, 1.2863836646080018, 1.6195152163505555,]
+val_auc = [ 0.4863888919353485, 0.5780555605888367, 0.590833306312561, 0.5744444131851196, 0.6186110973358154, 0.5958333015441895, 0.6061111092567444, 0.6936111450195312, 0.6711111068725586, 0.6474999785423279,]
+
+[exp_051.best_results]
+best_epoch = 6
+best_val_loss = 1.534423792362213
+best_val_auc = 0.6638889312744141
+time_elapsed_min = 31.0
+time_elapsed_sec = 16.385870218276978
+time_elapsed_per_epoch_min = 3.0
+time_elapsed_per_epoch_sec = 54.54823377728462
+
+[exp_051.training_curves]
+train_loss = [ 1.4456332206726075, 1.4083093404769897, 1.3251174688339233, 1.357680344581604, 1.3331377506256104, 1.326633095741272, 1.2605830550193786, 1.207076746225357,]
+train_auc = [ 0.5112601518630981, 0.48966512084007263, 0.5314010381698608, 0.5624562501907349, 0.6034724712371826, 0.5677567720413208, 0.6383856534957886, 0.6835430264472961,]
+val_loss = [ 1.657022511959076, 1.5129722714424134, 1.9227092385292053, 1.726628589630127, 1.396982443332672, 1.5046884536743164, 1.534423792362213,]
+val_auc = [ 0.5916666984558105, 0.5802778005599976, 0.5916666984558105, 0.6252777576446533, 0.6230555176734924, 0.6188889145851135, 0.6638889312744141,]
+
+[exp_052.best_results]
+best_epoch = 8
+best_val_loss = 1.5791250467300415
+best_val_auc = 0.5263158082962036
+time_elapsed_min = 0.0
+time_elapsed_sec = 23.976226806640625
+time_elapsed_per_epoch_min = 0.0
+time_elapsed_per_epoch_sec = 2.6640252007378473
+
+[exp_052.training_curves]
+train_loss = [ 0.9175352454185486,]
+train_auc = [ 0.5833333730697632,]
+val_loss = [ 1.5791250467300415,]
+val_auc = [ 0.5263158082962036,]
+
+[exp_053.best_results]
+best_epoch = 8
+best_val_loss = 1.1263293743133544
+best_val_auc = 0.6672222018241882
+time_elapsed_min = 77.0
+time_elapsed_sec = 15.876838445663452
+time_elapsed_per_epoch_min = 3.0
+time_elapsed_per_epoch_sec = 51.79384192228318
+
+[exp_053.training_curves]
+train_loss = [ 1.4919438719749452, 1.3317309856414794, 1.3648177623748778, 1.3477398991584777, 1.2979752540588378, 1.260442590713501, 1.2420903146266937, 1.2387148499488831, 1.1174558639526366, 1.0169363975524903, 0.9387564241886139, 0.715262946486473, 0.47938111424446106, 0.5927806675434113, 0.5201206222176552, 0.6155464492738247, 0.5927188292145729, 0.4010640040040016, 0.4517407029867172, 0.31994521543383597,]
+train_auc = [ 0.5223273038864136, 0.5196992754936218, 0.4550820291042328, 0.5906262397766113, 0.6554887294769287, 0.6316739916801453, 0.6792113184928894, 0.7115711569786072, 0.7778000831604004, 0.8148370981216431, 0.8431313037872314, 0.9292035698890686, 0.9684494733810425, 0.9449945092201233, 0.9471524953842163, 0.9505950212478638, 0.927819550037384, 0.9612098932266235, 0.9567956924438477, 0.9736499786376953,]
+val_loss = [ 1.3916707396507264, 1.570603859424591, 1.6498816013336182, 1.4650727272033692, 1.6682915806770324, 1.6576613545417787, 1.2891342878341674, 1.4732458591461182, 1.1263293743133544, 1.4932518243789672, 0.9357083231210709, 0.9683308944106102, 1.3025698602199554, 1.1497063010931015, 2.1815444469451903, 1.326179713010788, 1.1886379271745682, 1.2243147104978562, 1.1604705214500428, 1.072159357368946,]
+val_auc = [ 0.4511111378669739, 0.488055557012558, 0.5558333396911621, 0.6122221946716309, 0.6019444465637207, 0.612500011920929, 0.6083333492279053, 0.6458333134651184, 0.6672222018241882, 0.6563888788223267, 0.6513888835906982, 0.5686111450195312, 0.5952777862548828, 0.6205555200576782, 0.5972222089767456, 0.5924999713897705, 0.5991666913032532, 0.6177777647972107, 0.6277778148651123, 0.6377778053283691,]

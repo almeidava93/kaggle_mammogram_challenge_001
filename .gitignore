@@ -1,0 +1,11 @@
+venv
+model
+*.zip
+*.pth
+resnet - Copy.ipynb
+test.ipynb
+__pycache__*.pkl
+*.npz
+*.h5
+*.ipynb
+*.csv
