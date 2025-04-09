@@ -1,11 +1,11 @@
 import copy
+import logging
 import time
 from typing import Optional
 import torch
 from torch import nn
 import pandas as pd
 from pathlib import Path
-import pydicom
 import toml
 from torchvision import transforms
 from torch.utils.data import DataLoader
@@ -13,6 +13,10 @@ from torchmetrics.classification import BinaryAUROC
 from datasets import MammogramDataset
 import matplotlib.pyplot as plt
 import argparse
+
+from logs import get_logger
+
+logger = get_logger(__name__, log_level=logging.DEBUG, log_to_file=True)
 
 
 def collate_fn(batch):
@@ -56,8 +60,8 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
 
     try:
         for epoch in range(starting_epoch, num_epochs):
-            print(f'\nEpoch {epoch+1}/{num_epochs}')
-            print('-' * 10)
+            logger.debug(f'Epoch {epoch+1}/{num_epochs}')
+            logger.debug('-' * 10)
 
             for phase in phases:
                 if phase == 'train':
@@ -101,7 +105,7 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
                         binary_auc.update(probs, labels)
 
                         running_loss += loss.item() * inputs.size(0)
-                        print(f"Step {step} - Loss: {loss.item():.4f}")
+                        logger.debug(f"Step {step} - Loss: {loss.item():.4f}")
                                         
                         if phase == 'train':
                             scheduler.step()
@@ -134,7 +138,7 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
                             # Save the best model weights to disk
                             torch.save(best_model_wts, model_checkpoint_path / "best_model.pth")
                     except Exception as e:
-                        print(f'''Error in {phase} phase at step {step}: {str(e)}''')
+                        logger.error(f'''Error in {phase} phase at step {step}''', exc_info=True)
                     finally:
                         continue
 
@@ -142,11 +146,11 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
                 training_curves[phase+'_loss'].append(epoch_loss)
                 phase_time_elapsed = time.time() - since_phase
 
-                print(f'{phase:5} Loss: {epoch_loss:.4f} Time elapsed: {phase_time_elapsed // 60:.0f}m {phase_time_elapsed % 60:.0f}s')
+                logger.debug(f'{phase:5} Loss: {epoch_loss:.4f} Time elapsed: {phase_time_elapsed // 60:.0f}m {phase_time_elapsed % 60:.0f}s')
 
                 epoch_val_auc = binary_auc.compute().item()
                 training_curves[phase+'_auc'].append(epoch_val_auc)
-                print(f'{phase:5} AUC: {epoch_val_auc:.4f}')
+                logger.debug(f'{phase:5} AUC: {epoch_val_auc:.4f}')
 
                 binary_auc.reset()
 
@@ -186,16 +190,15 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
                     torch.save(best_model_wts, model_checkpoint_path / "best_model.pth")
 
     except KeyboardInterrupt:
-        print("\nTraining interrupted. Saving best model and results so far...")
+        logger.debug("Training interrupted. Saving best model and results so far...")
 
     except Exception as e:
-        print(f"An error occurred during training: {e}")
-        print(inputs, labels, masks, imgs_metadata)
+        logger.error(f"An error occurred during training: {e}", exc_info=True)
 
     finally:
         time_elapsed = time.time() - since
-        print(f'\nTraining complete in {time_elapsed // 60:.0f}m {time_elapsed % 60:.0f}s')
-        print(f'Best val AUC: {best_val_auc:4f} at epoch {best_epoch+1}')
+        logger.debug(f'Training complete in {time_elapsed // 60:.0f}m {time_elapsed % 60:.0f}s')
+        logger.debug(f'Best val AUC: {best_val_auc:4f} at epoch {best_epoch+1}')
 
         experiments_config[curr_exp]['best_results'] = {
             'best_epoch': best_epoch,
@@ -269,7 +272,6 @@ if __name__ == "__main__":
 
     config = experiments_config[CURRENT_EXP]
 
-
     # Load hyperparameters and config data
     batch_size = config['batch_size']
     dataset_size = config['dataset_size']
@@ -277,6 +279,7 @@ if __name__ == "__main__":
     feature_dim = config['feature_dim']
     img_size = config['img_size']
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    logger.debug(f'Using device: {device}')
 
     learning_rate = config['learning_rate']
     learning_rate_scheduler = config.get('learning_rate_scheduler', 'ExponentialLR')
@@ -458,7 +461,7 @@ if __name__ == "__main__":
 
     if start_from_checkpoint is not None:
         try:
-            print(f"Loading checkpoint from {start_from_checkpoint}.")
+            logger.debug(f"Loading checkpoint from {start_from_checkpoint}.")
             state_dict = torch.load(start_from_checkpoint, weights_only=False)
             
             # Load model weights
@@ -479,10 +482,10 @@ if __name__ == "__main__":
             # Set last auc
             last_auc = state_dict['last_auc']
             
-            print(f"Resuming training from epoch {start_epoch+1}.")
+            logger.debug(f"Resuming training from epoch {start_epoch+1}.")
         except Exception as e:
-            print(f"Error loading checkpoint: {e}")
-            print(f"Starting training for a new model.")
+            logger.debug(f"Error loading checkpoint: {e}")
+            logger.debug(f"Started training for a new model.")
             start_epoch = 0
             start_step = 0
             start_loss = 0
