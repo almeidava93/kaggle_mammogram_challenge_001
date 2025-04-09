@@ -119,6 +119,16 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
                                 'last_auc': binary_auc,
                                 }, model_checkpoint_path / Path(f'checkpoint_last.pth'))
                             
+                            if step % 10 == 0:
+                                torch.save({
+                                    'epoch': epoch,
+                                    'model_state_dict': model.state_dict(),
+                                    'optimizer_state_dict': optimizer.state_dict(),
+                                    'loss': running_loss,
+                                    'last_step': step,
+                                    'last_auc': binary_auc,
+                                    }, model_checkpoint_path / Path(f'checkpoint_last_backup.pth'))
+                            
                             experiments_config[curr_exp]['best_results'] = {
                                 'best_epoch': best_epoch,
                                 'best_val_loss': best_val_loss,
