@@ -4,7 +4,8 @@ model
 *.pth
 resnet - Copy.ipynb
 test.ipynb
-__pycache__*.pkl
+__pycache__
+*.pkl
 *.npz
 *.h5
 *.ipynb

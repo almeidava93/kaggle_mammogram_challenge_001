@@ -482,12 +482,13 @@ if __name__ == "__main__":
             print(f"Resuming training from epoch {start_epoch+1}.")
         except Exception as e:
             print(f"Error loading checkpoint: {e}")
-        finally:
             print(f"Starting training for a new model.")
             start_epoch = 0
             start_step = 0
             start_loss = 0
             last_auc = None
+        finally:
+            pass
 
     # Define learning rate scheduler
     schedulers = {
