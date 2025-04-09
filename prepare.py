@@ -1,5 +1,4 @@
 from pathlib import Path
-import time
 from typing import Optional
 import pandas as pd
 import pydicom
