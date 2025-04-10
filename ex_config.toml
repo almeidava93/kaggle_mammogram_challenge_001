@@ -991,7 +991,7 @@ add_padding_pixels = false
 comment = "Based on exp_048. All dataset."
 
 [exp_059]
-start_from_checkpoint = "model/exp_059/checkpoint_last.pth"
+start_from_checkpoint = "model/exp_059/checkpoint_last_backup.pth"
 dataset_size = -1
 learning_rate = 0.0001
 weight_decay = 0.0
@@ -1808,10 +1808,10 @@ val_auc = []
 best_epoch = 0
 best_val_loss = inf
 best_val_auc = 0
-time_elapsed_min = 463.0
-time_elapsed_sec = 39.521064043045044
-time_elapsed_per_epoch_min = 463.0
-time_elapsed_per_epoch_sec = 39.521064043045044
+time_elapsed_min = 221.0
+time_elapsed_sec = 39.30884528160095
+time_elapsed_per_epoch_min = 110.0
+time_elapsed_per_epoch_sec = 49.654422640800476
 
 [exp_059.training_curves]
 train_loss = []
