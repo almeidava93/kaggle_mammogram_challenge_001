@@ -34,3 +34,9 @@ train_df = pd.read_csv('train.csv')
 train_df['AccessionNumber'] = train_df['AccessionNumber'].astype(str).str.zfill(6)
 train_df['path'] = train_df['AccessionNumber'].map(path_dict)
 train_df.to_csv('train.csv', index=False)
+
+# Add file path to test data csv and save to disk
+test_df = pd.read_csv('sample_submissionA.csv')
+test_df['AccessionNumber'] = test_df['AccessionNumber'].astype(str).str.zfill(6)
+test_df['path'] = test_df['AccessionNumber'].map(path_dict)
+test_df.to_csv('test_split.csv', index=False)

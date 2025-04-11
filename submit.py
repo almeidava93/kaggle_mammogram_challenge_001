@@ -11,14 +11,23 @@ from datasets import MammogramDataset
 import argparse
 from model import MammogramScreeningClassifier
 
+
 parser = argparse.ArgumentParser(description="Train a mammogram classification model")
 parser.add_argument("--exp", type=str, help="Experiment name", required=True)
 parser.add_argument("--path", type=bool, help="Model path", required=False, default=None)
-parser.add_argument("--batch-size", type=int, help="Batch size", required=True, default=20)
+parser.add_argument("--batch-size", type=int, help="Batch size", required=False, default=None)
 args = parser.parse_args()
 
 CURRENT_EXP = args.exp
 
+# Load experiment config
+config_path = Path('ex_config.toml')
+
+with open(config_path, 'r') as f:
+    experiments_config = toml.load(f)
+config = experiments_config[CURRENT_EXP]
+
+# Load data splits
 test_split_path = Path('test_split.csv')
 train_split_path = Path('train_split.csv') 
 images_metadata_path = Path('img_studies_metadata.csv')
@@ -48,18 +57,8 @@ for col in img_metadata_cat_cols:
 # Get max images per study
 max_images_per_study = images_metadata_df.groupby(by=['AccessionNumber'])['PatientID'].count().max().item()
 
-
-# Load experiment config
-config_path = Path('ex_config.toml')
-
-with open(config_path, 'r') as f:
-    experiments_config = toml.load(f)
-
-config = experiments_config[CURRENT_EXP]
-
-
 # Load hyperparameters and config data
-batch_size = args.batch_size
+batch_size = args.batch_size if args.batch_size is not None else config['batch_size']
 dataset_size = config['dataset_size']
 dropout = config['dropout']
 feature_dim = config['feature_dim']

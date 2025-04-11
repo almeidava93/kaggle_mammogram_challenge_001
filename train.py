@@ -83,9 +83,6 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
                 for inputs, labels, masks, imgs_metadata in dataloaders[phase]:
                     try:
                         step += 1
-                        if step > dataset_sizes[phase]//batch_size:
-                            break
-
                         inputs = inputs.to(device)
                         labels = labels.to(device)
                         masks = masks.to(device)
@@ -147,9 +144,12 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
 
                             # Save the best model weights to disk
                             torch.save(best_model_wts, model_checkpoint_path / "best_model.pth")
+
+                        if step > dataset_sizes[phase]//batch_size:
+                            logger.debug(f"End of {phase} phase")
+                            break
                     except Exception as e:
                         logger.error(f'''Error in {phase} phase at step {step}''', exc_info=True)
-                    finally:
                         continue
 
                 epoch_loss = running_loss / dataset_sizes[phase]
