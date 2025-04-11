@@ -1808,10 +1808,10 @@ val_auc = []
 best_epoch = 0
 best_val_loss = inf
 best_val_auc = 0
-time_elapsed_min = 51.0
-time_elapsed_sec = 3.055386543273926
-time_elapsed_per_epoch_min = 12.0
-time_elapsed_per_epoch_sec = 45.76384663581848
+time_elapsed_min = 107.0
+time_elapsed_sec = 53.72536373138428
+time_elapsed_per_epoch_min = 26.0
+time_elapsed_per_epoch_sec = 58.43134093284607
 
 [exp_059.training_curves]
 train_loss = []
