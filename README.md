@@ -52,5 +52,36 @@ num_img_init_features = 64
 # Tamanho de batch e número de épocas
 batch_size = 20
 num_epochs = 10
+# Você pode definir um checkpoint anterior como ponto de partida
+start_from_checkpoint = "model/exp_001/checkpoint_last.pth"
 ```
 A estrutura do modelo tem várias regras e opções para criar variações. Importante olhar o modelo em `model.py` para entender melhor.
+
+Depois, basta treinar via linha de comando.
+```
+python train.py --exp exp_001
+```
+
+O número de `batches` pode ser definido via CLI
+```
+python train.py --exp exp_001 --batch-size 40
+```
+
+## Avaliação
+
+Esta etapa cria o arquivo para submissão na competição do Kaggle no formato correto.
+
+Para avaliar, utilize o comando:
+```
+python submit.py --exp exp_001
+```
+
+Você pode definir o tamanho dos lotes:
+```
+python submit.py --exp exp_001 --batch-size 40
+```
+
+Você pode definir para realizar a avaliação em uma versão específica do modelo adicionando um diretório.
+```
+python submit.py --exp exp_001 --path model/exp_001/checkpoint_08.pth
+```
