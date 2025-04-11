@@ -67,6 +67,11 @@ O número de `batches` pode ser definido via CLI
 python train.py --exp exp_001 --batch-size 40
 ```
 
+Você pode ajustar o número de `workers` e ativar a `pinned memory` para usar multiprocessamento e acelerar o carregamento de dados na GPU. O número recomendado de workers é `4 * n_gpus`. Este script ainda não suporta múltiplas gpus.
+```
+python train.py --exp exp_001 --workers 4 --pin-memory true
+```
+
 ## Avaliação
 
 Esta etapa cria o arquivo para submissão na competição do Kaggle no formato correto.

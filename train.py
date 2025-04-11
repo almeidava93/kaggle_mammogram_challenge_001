@@ -271,6 +271,8 @@ def plot_training_curves(training_curves, show=False):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train a mammogram classification model")
     parser.add_argument("--exp", type=str, help="Name of the experiment", required=True)
+    parser.add_argument("--workers", type=int, help="Number of workers", required=False, default=0)
+    parser.add_argument("--pin-memory", type=bool, help="Activate memory pinning", required=False, default=False)
     args = parser.parse_args()
 
     # Load experiment config
@@ -416,13 +418,22 @@ if __name__ == "__main__":
 
     # Prepare dataloaders
     train_dataloader = DataLoader(
-        train_dataset, 
-        batch_size=batch_size, 
-        collate_fn=collate_fn, 
-        sampler=train_dataset.sampler
+            train_dataset, 
+            batch_size=batch_size, 
+            collate_fn=collate_fn, 
+            sampler=train_dataset.sampler,
+            num_workers=args.workers,
+            pin_memory=args.pin_memory,
         )
 
-    val_dataloader = DataLoader(val_dataset, batch_size=batch_size, shuffle=True, collate_fn=collate_fn)
+    val_dataloader = DataLoader(
+            val_dataset, 
+            batch_size=batch_size, 
+            shuffle=True, 
+            collate_fn=collate_fn,
+            num_workers=args.workers,
+            pin_memory=args.pin_memory,
+        )
 
     dataloaders = {'train': train_dataloader,
                 'val': val_dataloader
