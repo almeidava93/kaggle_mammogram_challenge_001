@@ -195,4 +195,12 @@ with torch.no_grad():
 
 submission_df = pd.DataFrame.from_records(submission_data)
 submission_df['AccessionNumber'] = submission_df['AccessionNumber'].astype(str).str.zfill(6)
-submission_df.to_csv(Path(f'submissions/submission_{CURRENT_EXP}.csv'), index=False)
+
+# Save submission
+# Check if submissions for the current experiment exist
+if Path(f'submissions/submission_{CURRENT_EXP}_001.csv').exists():
+    n_submissions = len(list(Path('submissions').glob(f'submission_{CURRENT_EXP}_*')))
+    n_submissions = str(n_submissions + 1).zfill(3)
+    submission_df.to_csv(Path(f'submissions/submission_{CURRENT_EXP}_{n_submissions}.csv'), index=False)
+else:
+    submission_df.to_csv(Path(f'submissions/submission_{CURRENT_EXP}_001.csv'), index=False)
