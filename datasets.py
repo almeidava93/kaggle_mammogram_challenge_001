@@ -11,6 +11,7 @@ import numpy as np
 import torch.nn.functional as F
 import random
 from torchvision import transforms	
+from skimage import morphology
 
 available_transforms = [
     'RandomPerspective', 
@@ -79,13 +80,28 @@ def apply_random_transforms(img: torch.Tensor, p: float, max_transforms: int) ->
     selected_transforms = get_transforms(ts)
     return transforms.Compose(selected_transforms)(img)
 
-def crop_dark_pixels(img: torch.Tensor, threshold: float = 0.3168) -> torch.Tensor:
+def crop_dark_pixels(img: torch.Tensor, threshold: float = None) -> torch.Tensor:
+    if threshold is None:
+        threshold = img.min().item()
     img = img.squeeze(0).numpy()
-    mask = img < threshold
-    coords = np.argwhere(mask)
+    mask = img <= threshold
+
+    # Remove small artifacts from the image outside the main breast region
+    inv_mask = mask == False
+    cleaned = morphology.remove_small_objects(inv_mask, min_size=1000)
+    mask = cleaned
+
+    # Apply mask
+    masked_img = np.zeros(img.shape)
+    masked_img[mask] = img[mask]
+
+    # Get mask bounderies
+    coords = np.argwhere(masked_img)
     y0, x0 = coords.min(axis=0)
     y1, x1 = coords.max(axis=0) + 1
-    cropped_np = img[y0:y1, x0:x1]
+
+    # Crop masked img and return img tensor
+    cropped_np = masked_img[y0:y1, x0:x1]
     img = torch.tensor(cropped_np).unsqueeze(0)
     return img
 
