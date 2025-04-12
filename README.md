@@ -90,3 +90,8 @@ Você pode definir para realizar a avaliação em uma versão específica do mod
 ```
 python submit.py --exp exp_001 --path model/exp_001/checkpoint_08.pth
 ```
+
+Esta etapa também suporta multiprocessamento com as opções `workers` e `pinned memory`
+```
+python submit.py --exp exp_001 --workers 4 --pin-memory true
+``` 

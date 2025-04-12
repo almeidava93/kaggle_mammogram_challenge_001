@@ -16,6 +16,8 @@ parser = argparse.ArgumentParser(description="Train a mammogram classification m
 parser.add_argument("--exp", type=str, help="Experiment name", required=True)
 parser.add_argument("--path", type=bool, help="Model path", required=False, default=None)
 parser.add_argument("--batch-size", type=int, help="Batch size", required=False, default=None)
+parser.add_argument("--workers", type=int, help="Number of workers", required=False, default=0)
+parser.add_argument("--pin-memory", type=bool, help="Activate memory pinning", required=False, default=False)
 args = parser.parse_args()
 
 CURRENT_EXP = args.exp
@@ -138,7 +140,14 @@ test_dataset = MammogramDataset(
     img_metadata_cat_cols=img_metadata_cat_cols,
 )
 
-test_dataloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, collate_fn=collate_fn)
+test_dataloader = DataLoader(
+    test_dataset, 
+    batch_size=batch_size, 
+    shuffle=False, 
+    collate_fn=collate_fn,
+    num_workers=args.workers,
+    pin_memory=args.pin_memory,
+    )
 
 
 # Load model
