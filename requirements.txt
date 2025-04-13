@@ -10,3 +10,4 @@ torchaudio
 toml
 python-dotenv
 scikit-image
+pydantic
