@@ -102,7 +102,7 @@ def crop_dark_pixels(img: torch.Tensor, threshold: float = None) -> torch.Tensor
 
     # Crop masked img and return img tensor
     cropped_np = masked_img[y0:y1, x0:x1]
-    img = torch.tensor(cropped_np).unsqueeze(0)
+    img = torch.tensor(cropped_np, dtype=torch.float32).unsqueeze(0)
     return img
 
 def pad_to_square(img: torch.Tensor) -> torch.Tensor:
@@ -143,6 +143,7 @@ class MammogramDataset(Dataset):
             random_transforms_p: Optional[float] = 0,
             random_transforms_max: Optional[int] = 0,
             use_vit_b_16: Optional[bool] = False,
+            no_preprocessing: Optional[bool] = False
         ):
         
         if 'test' in split_filepath:
@@ -165,6 +166,7 @@ class MammogramDataset(Dataset):
         self.random_transforms_p = random_transforms_p
         self.random_transforms_max = random_transforms_max
         self.randomize_image_order = randomize_image_order
+        self.no_preprocessing = no_preprocessing
 
         if 'train' in split_filepath:
             self.split = 'train'
@@ -214,6 +216,11 @@ class MammogramDataset(Dataset):
         for img_path in study_images_path[:self.max_images]:  # Truncate if too many
             dicom_img = pydicom.dcmread(img_path, force=True)
             img = np.array(dicom_img.pixel_array, dtype=np.float32)
+
+            if self.no_preprocessing:
+                img = torch.from_numpy(img).float().view(1, *img.shape)
+                imgs.append(img)
+                continue
 
             # Normalize
             img = img / 65535.0

@@ -18,6 +18,7 @@ if __name__ == '__main__':
     parser.add_argument("--batch-size", type=int, help="Batch size", required=False, default=None)
     parser.add_argument("--workers", type=int, help="Number of workers", required=False, default=0)
     parser.add_argument("--pin-memory", type=bool, help="Activate memory pinning", required=False, default=False)
+    parser.add_argument("--device", type=str, help="Device", required=False, default='cuda' if torch.cuda.is_available() else 'cpu')
     args = parser.parse_args()
 
     CURRENT_EXP = args.exp
@@ -65,7 +66,7 @@ if __name__ == '__main__':
     dropout = config['dropout']
     feature_dim = config['feature_dim']
     img_size = config['img_size']
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    device = args.device
 
     learning_rate = config['learning_rate']
     learning_rate_scheduler = config.get('learning_rate_scheduler', 'ExponentialLR')

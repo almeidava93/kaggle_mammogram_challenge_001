@@ -346,7 +346,6 @@ if __name__ == "__main__":
     use_vit_b_16 = config.get('use_vit_b_16', False)
     freeze_pretrained_weights = config.get('freeze_pretrained_weights', False)
 
-
     # Prepare image metadata
     img_metadata_cat_cols = ['ViewPosition', 'PatientSex', 'ImageLaterality', 'BreastImplantPresent', 'PatientOrientation_0', 'PatientOrientation_1']
 

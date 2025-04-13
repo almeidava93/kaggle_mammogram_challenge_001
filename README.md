@@ -95,3 +95,19 @@ Esta etapa também suporta multiprocessamento com as opções `workers` e `pinne
 ```
 python submit.py --exp exp_001 --workers 4 --pin-memory true
 ``` 
+
+# Experimentos
+## Melhorias
+- Reescrever código para que configurações fiquem concentradas em um único objeto e esse objeto possa ser passado para cada nn.Module ou dataset, sem precisar passar item por item
+
+## TODO
+- Usar modelos pré-treinados para processamento de imagem:
+    - RADIOv2.5 NVIDIA: [repo](https://github.com/NVlabs/RADIO) / [paper](https://arxiv.org/abs/2412.07679) / [huggingface](https://huggingface.co/collections/nvidia/radio-669f77f1dd6b153f007dd1c6)
+    - Digital Eye Mammography: [repo](https://github.com/cbddobvyz/digitaleye-mammography)
+- Adicionar LayerNorm na camada final do classifier (igual a como RADIO foi treinado)
+- Ajustar mecanismo de cropping para incluir imagens com fundo branco também. Identificar as imagens com fundo branco identificando o valor de pixel moda. Se diferente de 0, multiplicar por -1 e somar o valor máximo de pixel, conforme o código abaixo:
+    ```
+    img_mode = curr_img.mode().values.max().item()
+    if img_mode != 0:
+        curr_img = curr_img*-1 + curr_img.max()
+    ```

@@ -1841,16 +1841,16 @@ val_loss = []
 val_auc = []
 
 [exp_060.best_results]
-best_epoch = 0
-best_val_loss = inf
-best_val_auc = 0
-time_elapsed_min = 402.0
-time_elapsed_sec = 12.819140911102295
-time_elapsed_per_epoch_min = 402.0
-time_elapsed_per_epoch_sec = 12.819140911102295
+best_epoch = 2
+best_val_loss = 1.5905337948984812
+best_val_auc = 0.6935092210769653
+time_elapsed_min = 671.0
+time_elapsed_sec = 18.076313257217407
+time_elapsed_per_epoch_min = 167.0
+time_elapsed_per_epoch_sec = 49.51907831430435
 
 [exp_060.training_curves]
-train_loss = []
-train_auc = []
-val_loss = []
-val_auc = []
+train_loss = [ 1.3105043268935712,]
+train_auc = [ 0.6825484037399292,]
+val_loss = [ 1.5905337948984812,]
+val_auc = [ 0.6935092210769653,]
