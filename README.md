@@ -115,4 +115,5 @@ python submit.py --exp exp_001 --workers 4 --pin-memory true
 - 🔲 Mudar a loss function para uma que otimize melhor a AUC. Vide refs abaixo:
     - https://arxiv.org/abs/2012.03173
     - https://arxiv.org/abs/2310.11693
+    - https://docs.libauc.org/index.html
 - 🔲 Otimizar a velocidade do pré-processamento das imagens. Está sendo um gargalo e prolongando o tempo de treino.
