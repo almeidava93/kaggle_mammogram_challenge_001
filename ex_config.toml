@@ -1950,3 +1950,18 @@ train_loss = [ 1.1771437883377076, 1.5289053440093994, 1.253675627708435,]
 train_auc = [ 0.5533661246299744, 0.9939393401145935, 0.6698718070983887,]
 val_loss = [ 1.6629371881484984, 1.7168847918510437,]
 val_auc = [ 0.8685343861579895, 0.7820844054222107,]
+
+[exp_063.best_results]
+best_epoch = 0
+best_val_loss = inf
+best_val_auc = 0
+time_elapsed_min = 12.0
+time_elapsed_sec = 20.860341548919678
+time_elapsed_per_epoch_min = 12.0
+time_elapsed_per_epoch_sec = 20.860341548919678
+
+[exp_063.training_curves]
+train_loss = [ 1.3205017626285553,]
+train_auc = [ 0.5909091234207153,]
+val_loss = []
+val_auc = []
