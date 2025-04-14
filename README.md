@@ -102,17 +102,17 @@ python submit.py --exp exp_001 --workers 4 --pin-memory true
 
 ## TODO
 - Usar modelos pré-treinados para processamento de imagem:
-    - RADIOv2.5 NVIDIA: [repo](https://github.com/NVlabs/RADIO) / [paper](https://arxiv.org/abs/2412.07679) / [huggingface](https://huggingface.co/collections/nvidia/radio-669f77f1dd6b153f007dd1c6)
-    - Digital Eye Mammography: [repo](https://github.com/cbddobvyz/digitaleye-mammography)
-- Adicionar LayerNorm na camada final do classifier (igual a como RADIO foi treinado)
-- Ajustar mecanismo de cropping para incluir imagens com fundo branco também. Identificar as imagens com fundo branco identificando o valor de pixel moda. Se diferente de 0, multiplicar por -1 e somar o valor máximo de pixel, conforme o código abaixo:
+    - 🔲 RADIOv2.5 NVIDIA: [repo](https://github.com/NVlabs/RADIO) / [paper](https://arxiv.org/abs/2412.07679) / [huggingface](https://huggingface.co/collections/nvidia/radio-669f77f1dd6b153f007dd1c6)
+    - 🔲 Digital Eye Mammography: [repo](https://github.com/cbddobvyz/digitaleye-mammography)
+- 🔲 Adicionar LayerNorm na camada final do classifier (igual a como RADIO foi treinado)
+- ✅ Ajustar mecanismo de cropping para incluir imagens com fundo branco também. Identificar as imagens com fundo branco identificando o valor de pixel moda. Se diferente de 0, multiplicar por -1 e somar o valor máximo de pixel, conforme o código abaixo:
     ```
     img_mode = curr_img.mode().values.max().item()
     if img_mode != 0:
         curr_img = curr_img*-1 + curr_img.max()
     ```
-- Testar estrutura de rede neural recorrente (GRU, LSTM) que analisa imagens de mamografia sequencialmente e atualiza a probabilidade de câncer de mama após cada imagem do estudo que analisa
-- Mudar a loss function para uma que otimize melhor a AUC. Vide refs abaixo:
+- 🔲 Testar estrutura de rede neural recorrente (GRU, LSTM) que analisa imagens de mamografia sequencialmente e atualiza a probabilidade de câncer de mama após cada imagem do estudo que analisa
+- 🔲 Mudar a loss function para uma que otimize melhor a AUC. Vide refs abaixo:
     - https://arxiv.org/abs/2012.03173
     - https://arxiv.org/abs/2310.11693
     
