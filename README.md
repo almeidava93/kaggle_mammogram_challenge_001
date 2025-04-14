@@ -97,6 +97,26 @@ python submit.py --exp exp_001 --workers 4 --pin-memory true
 ``` 
 
 # Experimentos
+## Melhor experimento até o momento
+```
+dataset_size = 200
+learning_rate = 0.0001
+weight_decay = 0.0
+dropout = 0.1
+cnn_dropout = 0.1
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 10
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+remove_dark_pixels = true
+add_padding_pixels = false
+```
+
 ## Melhorias
 - Reescrever código para que configurações fiquem concentradas em um único objeto e esse objeto possa ser passado para cada nn.Module ou dataset, sem precisar passar item por item
 
