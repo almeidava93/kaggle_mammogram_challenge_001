@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Tuple
 from torch.utils.data import Dataset
 from torch.utils.data import WeightedRandomSampler
 import torch
@@ -12,6 +12,41 @@ import torch.nn.functional as F
 import random
 from torchvision import transforms	
 from skimage import morphology
+
+from config import MammogramClassifierConfig
+
+def load_metadata(config: MammogramClassifierConfig) -> Tuple[pd.DataFrame, MammogramClassifierConfig]:
+    images_metadata_df = pd.read_csv(config.images_metadata_path, index_col=0)
+    train_split_df = pd.read_csv(config.train_split_path, index_col=0)
+
+    ## PatientAge
+    images_metadata_df['PatientAge'] = images_metadata_df['PatientAge'].str.extract(r'(\d+)').astype(float) # Convert to float
+    mean_age = images_metadata_df[images_metadata_df['AccessionNumber'].isin(train_split_df['AccessionNumber'])]['PatientAge'].mean() # Get mean age from training set
+    images_metadata_df['PatientAge'] = images_metadata_df['PatientAge'].fillna(mean_age)/120 # Scaled to [0, 1], filled with mean age from training set
+
+    ## PatientOrientation
+    images_metadata_df['PatientOrientation_0'] = images_metadata_df['PatientOrientation'].apply(lambda x: eval(x)[0])
+    images_metadata_df['PatientOrientation_1'] = images_metadata_df['PatientOrientation'].apply(lambda x: eval(x)[1])
+
+    ## Transform columns to categorical and encode them
+    n_categories = {}
+    for col in config.img_metadata_cat_cols:
+        n_categories[col] = images_metadata_df[col].nunique()
+        images_metadata_df[col] = images_metadata_df[col].astype('category').cat.codes
+
+    config.classes_per_cat = n_categories
+
+    # Load basic transformations
+    transform = transforms.Compose([
+                        transforms.Resize((config.img_size, config.img_size)),
+                    ])
+    config.transform = transform
+
+    # Get max images per study
+    config.max_images_per_study = images_metadata_df.groupby(by=['AccessionNumber'])['PatientID'].count().max().item()
+
+    return images_metadata_df, config
+
 
 available_transforms = [
     'RandomPerspective', 
@@ -95,15 +130,20 @@ def crop_dark_pixels(img: torch.Tensor, threshold: float = None) -> torch.Tensor
     masked_img = np.zeros(img.shape)
     masked_img[mask] = img[mask]
 
-    # Get mask bounderies
-    coords = np.argwhere(masked_img)
-    y0, x0 = coords.min(axis=0)
-    y1, x1 = coords.max(axis=0) + 1
+    try:
+        # Get mask bounderies
+        coords = np.argwhere(masked_img)
+        y0, x0 = coords.min(axis=0)
+        y1, x1 = coords.max(axis=0) + 1
 
-    # Crop masked img and return img tensor
-    cropped_np = masked_img[y0:y1, x0:x1]
-    img = torch.tensor(cropped_np, dtype=torch.float32).unsqueeze(0)
-    return img
+        # Crop masked img and return img tensor
+        cropped_np = masked_img[y0:y1, x0:x1]
+        img = torch.tensor(cropped_np, dtype=torch.float32).unsqueeze(0)
+        return img
+    except Exception as e:
+        print("Error cropping dark pixels:", e)
+        img = torch.tensor(img, dtype=torch.float32).unsqueeze(0)
+        return img
 
 def pad_to_square(img: torch.Tensor) -> torch.Tensor:
     _, H, W = img.shape
@@ -126,64 +166,35 @@ def pad_to_square(img: torch.Tensor) -> torch.Tensor:
 class MammogramDataset(Dataset):
     def __init__(
             self, 
-            split_filepath: str, 
-            max_images_per_study: int,  # Set your desired max number
-            img_metadata_cat_cols: list[str],
-            transform: transforms.Compose = None,
-            eps: float = 1e-7,
-            img_size: tuple = (1024, 1024),
-            use_weighted_random_sampler: Optional[bool] = None,
-            add_random_transforms: Optional[bool] = None,
-            randomize_image_order: Optional[bool] = None,
-            images_metadata_df: pd.DataFrame = None,
-            dataset_size: Optional[int] = -1,
-            pos_weight_scaler: Optional[float] = 1,
-            remove_dark_pixels: Optional[bool] = False,
-            add_padding_pixels: Optional[bool] = False,
-            random_transforms_p: Optional[float] = 0,
-            random_transforms_max: Optional[int] = 0,
-            use_vit_b_16: Optional[bool] = False,
-            no_preprocessing: Optional[bool] = False
+            split: str,
+            config: MammogramClassifierConfig,
         ):
-        
-        if 'test' in split_filepath:
-            self.df = pd.read_csv(Path(split_filepath), usecols=['AccessionNumber'])
-        else:
-            self.df = pd.read_csv(Path(split_filepath), usecols=['AccessionNumber', 'target', 'path'])[:dataset_size]
 
-        self.images_metadata_df = images_metadata_df
-        self.use_vit_b_16 = use_vit_b_16
-        self.img_metadata_cat_cols = img_metadata_cat_cols
-        self.remove_dark_pixels = remove_dark_pixels
-        self.add_padding_pixels = add_padding_pixels
-        self.transform = transform
-        self.eps = eps
-        self.max_images = max_images_per_study
-        self.img_size = img_size
+        assert split in ['train', 'val', 'test'], "split must be one of ['train', 'val', 'test']"
+        
+        if split == 'test':
+            self.df = pd.read_csv(config.test_split_path, usecols=['AccessionNumber'])
+        elif split == 'train':
+            self.df = pd.read_csv(
+                config.train_split_path, 
+                usecols=['AccessionNumber', 'target', 'path'])[:config.dataset_size]
+        elif split == 'val':
+            self.df = pd.read_csv(
+                config.val_split_path, 
+                usecols=['AccessionNumber', 'target', 'path'])[:config.dataset_size]
+            
+        self.split = split
+        self.images_metadata_df, self.config = load_metadata(config)
         self.sampler = None
         self.pos_weight = None
-        self.add_random_transforms = add_random_transforms
-        self.random_transforms_p = random_transforms_p
-        self.random_transforms_max = random_transforms_max
-        self.randomize_image_order = randomize_image_order
-        self.no_preprocessing = no_preprocessing
-
-        if 'train' in split_filepath:
-            self.split = 'train'
-        elif 'val' in split_filepath:
-            self.split = 'val'
-        elif 'test' in split_filepath:
-            self.split = 'test'
-        else:
-            raise ValueError(f"Invalid split_filepath: {split_filepath}")
 
         if self.split == 'train':
-            assert isinstance(pos_weight_scaler, float) and pos_weight_scaler > 0, "pos_weight_scaler must be a float and greater than 0"
+            assert isinstance(self.config.pos_weight_scaler, float) and self.config.pos_weight_scaler > 0, "pos_weight_scaler must be a float and greater than 0"
             self.pos_weight = torch.tensor(self.df['target'].value_counts()[0] / self.df['target'].value_counts()[1], dtype=torch.float)
-            self.pos_weight = self.pos_weight * pos_weight_scaler
+            self.pos_weight = self.pos_weight * self.config.pos_weight_scaler
 
         # Create weighted random sampler to balance traning examples
-        if self.split == 'train' and use_weighted_random_sampler:
+        if self.split == 'train' and self.config.use_weighted_random_sampler:
             # Inverse frequency for each class
             class_sample_counts = self.df['target'].value_counts().to_dict()
             class_weights = {cls: 1.0 / count for cls, count in class_sample_counts.items()}
@@ -206,64 +217,70 @@ class MammogramDataset(Dataset):
 
         # Randomize order in train dataset
         if self.split == 'train':
-            if self.randomize_image_order:
+            if self.config.randomize_image_order:
                 images_metadata = images_metadata.sample(frac=1)
 
         study_images_path = images_metadata['path']
 
         # Prepare images
         imgs = []
-        for img_path in study_images_path[:self.max_images]:  # Truncate if too many
+        for img_path in study_images_path[:self.config.max_images_per_study]:  # Truncate if too many
             dicom_img = pydicom.dcmread(img_path, force=True)
             img = np.array(dicom_img.pixel_array, dtype=np.float32)
-
-            if self.no_preprocessing:
-                img = torch.from_numpy(img).float().view(1, *img.shape)
+            
+            # If no preprocessing requested, just resize and return
+            if self.config.no_preprocessing:
+                img = torch.from_numpy(img)
+                img = img.float().view(1, *img.shape)
+                if self.config.transform is not None:
+                    img = self.config.transform(img)
                 imgs.append(img)
                 continue
 
-            # Normalize
-            img = img / 65535.0
-            img = (img - img.mean()) / (img.std() + self.eps)
+            # Invert images with white background
+            if self.config.invert_background:
+                img_mode = torch.tensor(img).mode().values.max().item()
+                if img_mode != 0:
+                    img = img*-1 + img.max()
 
+            # Normalize
+            img = ((img - img.mean())/(img.std() + self.config.eps))
+
+            # To tensor and reshape
             img = torch.from_numpy(img).float().view(1, *img.shape)  # Shape: [1, H, W]
 
-            # Resize if needed
-            if img.shape[-2:] != self.img_size:
-                img = torch.nn.functional.interpolate(img.unsqueeze(0), size=self.img_size, mode='bilinear', align_corners=False).squeeze(0)
-
             # Image transformations
-            if self.remove_dark_pixels:
+            if self.config.remove_dark_pixels:
                 img = crop_dark_pixels(img)
 
-            if self.add_padding_pixels:
+            if self.config.add_padding_pixels:
                 img = pad_to_square(img)
 
-            if self.transform is not None:
-                img = self.transform(img)
+            if self.config.transform is not None:
+                img = self.config.transform(img)
 
-            if self.add_random_transforms:
-                img = apply_random_transforms(img, p=self.random_transforms_p, max_transforms=self.random_transforms_max)
+            if self.config.add_random_transforms:
+                img = apply_random_transforms(img, p=self.config.random_transforms_prob, max_transforms=self.config.random_transforms_max)
 
             imgs.append(img)
 
         # Padding if fewer than max_images
         num_images = len(imgs)
-        mask = [1] * num_images + [0] * (self.max_images - num_images)
+        mask = [1] * num_images + [0] * (self.config.max_images_per_study - num_images)
 
-        if num_images < self.max_images:
+        if num_images < self.config.max_images_per_study:
             padding_img = torch.zeros_like(imgs[0])
-            for _ in range(self.max_images - num_images):
+            for _ in range(self.config.max_images_per_study - num_images):
                 imgs.append(padding_img)
 
         # Prepare images metadata [img_idx, num_metadata]
-        imgs_metadata = images_metadata[self.img_metadata_cat_cols + ['PatientAge']].to_numpy()
-        imgs_metadata = np.pad(imgs_metadata, ((0, self.max_images - num_images), (0, 0)))
+        imgs_metadata = images_metadata[self.config.img_metadata_cat_cols + ['PatientAge']].to_numpy()
+        imgs_metadata = np.pad(imgs_metadata, ((0, self.config.max_images_per_study - num_images), (0, 0)))
 
         imgs = torch.stack(imgs, dim=0)  # [max_images, C, H, W]
 
         # Adjust n channels for pretrained models
-        if self.use_vit_b_16:
+        if self.config.use_vit_b_16:
             imgs = imgs.repeat(1, 3, 1, 1)
 
         mask = torch.tensor(mask, dtype=torch.uint8)

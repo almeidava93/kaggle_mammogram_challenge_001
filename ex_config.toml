@@ -1031,6 +1031,49 @@ remove_dark_pixels = true
 add_padding_pixels = false
 comment = "Based on exp 48, increased gamma, full dataset."
 
+[exp_061]
+start_from_checkpoint = "model/exp_061/checkpoint_last.pth"
+dataset_size = 200
+learning_rate = 0.0001
+lr_exponentiallr_gamma = 0.98
+weight_decay = 0.0
+dropout = 0.1
+cnn_dropout = 0.1
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 10
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+remove_dark_pixels = true
+add_padding_pixels = false
+comment = "Testing different gamma."
+
+[exp_062]
+start_from_checkpoint = "model/exp_062/checkpoint_last.pth"
+dataset_size = 20
+learning_rate = 0.0001
+lr_exponentiallr_gamma = 0.95
+weight_decay = 0.0
+dropout = 0.1
+cnn_dropout = 0.1
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 10
+num_epochs = 20
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+remove_dark_pixels = true
+add_padding_pixels = false
+save_every_step = true
+save_after_n_steps = 2
+
 [exp_001.training_curves]
 train_loss = [ 1.4409383893013001, 1.3320579648017883, 1.2525875091552734, 1.2942439079284669, 1.2189216017723083, 1.2805424809455872, 1.1712888658046723, 1.1360002696514129, 1.1142919540405274, 1.0006040692329408,]
 train_acc = [ 0.5049999952316284, 0.5049999952316284, 0.5299999713897705, 0.48500001430511475, 0.5199999809265137, 0.47999998927116394, 0.5550000071525574, 0.5600000023841858, 0.5249999761581421, 0.5849999785423279,]
@@ -1841,16 +1884,46 @@ val_loss = []
 val_auc = []
 
 [exp_060.best_results]
-best_epoch = 2
-best_val_loss = 1.5905337948984812
-best_val_auc = 0.6935092210769653
-time_elapsed_min = 729.0
-time_elapsed_sec = 19.5301034450531
-time_elapsed_per_epoch_min = 182.0
-time_elapsed_per_epoch_sec = 19.882525861263275
+best_epoch = 4
+best_val_loss = 1.590357319718071
+best_val_auc = 0.6937897801399231
+time_elapsed_min = 1567.0
+time_elapsed_sec = 4.896459579467773
+time_elapsed_per_epoch_min = 261.0
+time_elapsed_per_epoch_sec = 10.816076596578569
 
 [exp_060.training_curves]
-train_loss = [ 1.3105043268935712,]
-train_auc = [ 0.6825484037399292,]
-val_loss = [ 1.5905337948984812,]
-val_auc = [ 0.6935092210769653,]
+train_loss = [ 1.3105043268935712, 1.282864218282397, 1.304867258195941,]
+train_auc = [ 0.6825484037399292, 0.6997573375701904, 0.6817148327827454,]
+val_loss = [ 1.5905337948984812, 1.5864513451735047, 1.590357319718071,]
+val_auc = [ 0.6935092210769653, 0.6933567523956299, 0.6937897801399231,]
+
+[exp_061.best_results]
+best_epoch = 7
+best_val_loss = 1.4054836630821228
+best_val_auc = 0.7086111307144165
+time_elapsed_min = 123.0
+time_elapsed_sec = 44.876107931137085
+time_elapsed_per_epoch_min = 12.0
+time_elapsed_per_epoch_sec = 22.48761079311373
+
+[exp_061.training_curves]
+train_loss = [ 1.4747645497322082, 1.3209659695625304, 1.3689005732536317, 1.2984214782714845, 1.241921842098236, 1.1868214845657348, 1.2150424897670746, 1.1221940577030183, 1.0656180202960968, 1.1562652170658112,]
+train_auc = [ 0.44409874081611633, 0.6266000270843506, 0.5542635917663574, 0.6696714758872986, 0.7142857313156128, 0.7618000507354736, 0.73575758934021, 0.7678625583648682, 0.7696163654327393, 0.7649538516998291,]
+val_loss = [ 1.5522223711013794, 1.6074218511581422, 1.3806439876556396, 1.4592506885528564, 1.4373519778251649, 1.2592402935028075, 1.3232742547988892, 1.4054836630821228, 1.256075119972229, 1.5568321704864503,]
+val_auc = [ 0.49361109733581543, 0.527222216129303, 0.545555591583252, 0.5491666793823242, 0.5972222089767456, 0.6749999523162842, 0.6597222089767456, 0.7086111307144165, 0.6616666913032532, 0.6736111044883728,]
+
+[exp_062.best_results]
+best_epoch = 0.0
+best_val_loss = 1.6629371881484984
+best_val_auc = 0.8685343861579895
+time_elapsed_min = 16.0
+time_elapsed_sec = 49.54751205444336
+time_elapsed_per_epoch_min = 5.0
+time_elapsed_per_epoch_sec = 36.51583735148114
+
+[exp_062.training_curves]
+train_loss = [ 1.1771437883377076, 1.5289053440093994, 1.253675627708435,]
+train_auc = [ 0.5533661246299744, 0.9939393401145935, 0.6698718070983887,]
+val_loss = [ 1.6629371881484984, 1.7168847918510437,]
+val_auc = [ 0.8685343861579895, 0.7820844054222107,]

@@ -2,6 +2,8 @@ import torch
 import torch.nn as nn
 from torchvision.models import vit_b_16, ViT_B_16_Weights
 
+from config import MammogramClassifierConfig
+
 class RMSNorm(nn.Module):
     """
     RMSNorm normalizes activations based on the root mean square of the activations themselves, rather than using mini-batch or layer statistics. This approach ensures that the activations are consistently scaled regardless of the mini-batch size or the number of features. Additionally, RMSNorm introduces learnable scale parameters, offering similar adaptability to BN.
@@ -111,19 +113,22 @@ class FeedForwardBlock(nn.Module):
     
 
 class MammogramScreeningClassifier(nn.Module):
-    def __init__(self, nc, nf, dropout, feature_dim, num_heads, num_layers, max_images_per_study, img_size, img_metadata_cat_cols, n_categories, cnn_dropout, cnn_activation, use_ffn=False, ffn_hidden_size=None, ffn_activation=None, add_pre_encoder_ffn=False, add_pre_ffn_rms_norm=False, pre_ffn_rms_norm_dim=None, use_post_attn_ffn=None, add_linear_proj_to_embeddings=False, cnn_rms_norms_dims_to_apply=None, use_vit_b_16=None, freeze_pretrained_weights=None, transformer_norm_first=False):
+    def __init__(self, 
+                 config: MammogramClassifierConfig,
+                 ):
         super().__init__()
 
-        self.feature_dim = feature_dim
-        self.max_images_per_study = max_images_per_study
-        self.img_metadata_cat_cols = img_metadata_cat_cols
+        self.config = config
+        self.feature_dim = config.feature_dim
+        self.max_images_per_study = config.max_images_per_study
+        self.img_metadata_cat_cols = config.img_metadata_cat_cols
 
-        if use_vit_b_16:
+        if config.use_vit_b_16:
             print("Using ViT-B/16 as pretrained backbone")
             base_model = vit_b_16(weights=ViT_B_16_Weights.DEFAULT)
 
             # freeze weights
-            if freeze_pretrained_weights:
+            if config.freeze_pretrained_weights:
                 for param in base_model.parameters():
                     print("Freezing ViT-B/16 weights")
                     param.requires_grad = False
@@ -136,35 +141,47 @@ class MammogramScreeningClassifier(nn.Module):
             self.projector = nn.Sequential()
 
         else:
-            # CNN feature extractor (your ResNet blocks)
+            # Configure ResNets by default
+            resnet_blocks = []
+            num_init_features = config.num_img_init_features
+            rms_norm_dim = config.img_size//2
+
+            # Add first block
+            resnet_blocks.append(
+                ResNetBlock(config.num_img_channels, num_init_features, stride=2, rms_norm_dim=rms_norm_dim, dropout=config.cnn_dropout, activation=config.cnn_activation)
+            )
+
+            for _ in range(config.cnn_resnet_n_blocks):
+                resnet_blocks.append(
+                    ResNetBlock(num_init_features,   num_init_features*2,  stride=2, rms_norm_dim=rms_norm_dim//2, dropout=config.cnn_dropout, activation=config.cnn_activation),
+                )
+                num_init_features *= 2
+                rms_norm_dim = rms_norm_dim//2
+
             self.pipeline = nn.Sequential(
-                ResNetBlock(nc,   nf,    stride=2, rms_norm_dim=img_size//2, dropout=cnn_dropout, activation=cnn_activation),
-                ResNetBlock(nf,   nf*2,  stride=2, rms_norm_dim=img_size//4, dropout=cnn_dropout, activation=cnn_activation),
-                ResNetBlock(nf*2, nf*4,  stride=2, rms_norm_dim=img_size//8, dropout=cnn_dropout, activation=cnn_activation),
-                ResNetBlock(nf*4, nf*8,  stride=2, rms_norm_dim=img_size//16, dropout=cnn_dropout, activation=cnn_activation),
-                ResNetBlock(nf*8, nf*16, stride=2, rms_norm_dim=img_size//32, dropout=cnn_dropout, activation=cnn_activation),
+                *resnet_blocks,
                 nn.AdaptiveAvgPool2d((1, 1)),  # ensure fixed output size
             )
 
             # Flatten CNN output to vector
-            self.projector = nn.Linear(nf*16, feature_dim)
+            self.projector = nn.Linear(num_init_features, config.feature_dim)
 
         # Embeddings for images metadata
         self.meta_embeddings = nn.ModuleDict()
-        for cat in img_metadata_cat_cols:
+        for cat in config.img_metadata_cat_cols:
             if cat == 'PatientAge':
-                n_categories[cat] = 1
-                self.meta_embeddings[cat] = nn.Linear(1, feature_dim)
+                config.classes_per_cat[cat] = 1
+                self.meta_embeddings[cat] = nn.Linear(1, config.feature_dim)
                 continue
 
-            if add_linear_proj_to_embeddings:
+            if config.add_linear_proj_to_embeddings:
                 self.meta_embeddings[cat] = nn.Sequential(
-                    nn.Embedding(n_categories[cat], feature_dim),
-                    nn.Linear(feature_dim, feature_dim),
+                    nn.Embedding(config.classes_per_cat[cat], config.feature_dim),
+                    nn.Linear(config.feature_dim, config.feature_dim),
                 )
                 continue
 
-            self.meta_embeddings[cat] = nn.Embedding(n_categories[cat], feature_dim)
+            self.meta_embeddings[cat] = nn.Embedding(config.classes_per_cat[cat], config.feature_dim)
 
         # Post-CNN block
         self.ffn = None
@@ -173,36 +190,36 @@ class MammogramScreeningClassifier(nn.Module):
         self.pre_ffn_rms_norm = None
 
         # Feedforward block
-        if use_ffn:
-            assert ffn_hidden_size is not None and ffn_activation is not None
-            self.ffn = FeedForwardBlock(feature_dim * self.max_images_per_study, hidden_size=ffn_hidden_size, out_features=feature_dim, dropout=dropout, activation=ffn_activation)
+        if config.use_ffn:
+            assert config.ffn_hidden_dim is not None and config.ffn_activation is not None
+            self.ffn = FeedForwardBlock(config.feature_dim * self.max_images_per_study, hidden_size=config.ffn_hidden_dim, out_features=config.feature_dim, dropout=config.dropout, activation=config.ffn_activation)
 
-            if add_pre_ffn_rms_norm:
-                assert pre_ffn_rms_norm_dim is not None and isinstance(pre_ffn_rms_norm_dim, int)
-                self.pre_ffn_rms_norm = RMSNorm(pre_ffn_rms_norm_dim, dims_to_apply_to=cnn_rms_norms_dims_to_apply)
+            if config.add_pre_ffn_rms_norm:
+                assert config.pre_ffn_rms_norm_dim is not None and isinstance(config.pre_ffn_rms_norm_dim, int)
+                self.pre_ffn_rms_norm = RMSNorm(config.pre_ffn_rms_norm_dim, dims_to_apply_to=config.cnn_rms_norms_dims_to_apply)
 
         # If not, use transformer encoder
         else:
             # Transformer encoder
-            encoder_layer = nn.TransformerEncoderLayer(d_model=feature_dim, nhead=num_heads, dropout=dropout, activation='gelu', batch_first=False, norm_first=transformer_norm_first)
-            self.transformer = nn.TransformerEncoder(encoder_layer, num_layers=num_layers, enable_nested_tensor=False)
+            encoder_layer = nn.TransformerEncoderLayer(d_model=config.feature_dim, nhead=config.num_attn_heads, dropout=config.dropout, activation='gelu', batch_first=False, norm_first=config.transformer_norm_first)
+            self.transformer = nn.TransformerEncoder(encoder_layer, num_layers=config.num_encoder_layers, enable_nested_tensor=False)
 
-            if add_pre_encoder_ffn:
-                assert ffn_hidden_size is not None and ffn_activation is not None
-                self.pre_encoder_ffn = FeedForwardBlock(feature_dim, hidden_size=ffn_hidden_size, out_features=feature_dim, dropout=dropout, activation=ffn_activation)
+            if config.add_pre_encoder_ffn:
+                assert config.ffn_hidden_dim is not None and config.ffn_activation is not None
+                self.pre_encoder_ffn = FeedForwardBlock(config.feature_dim, hidden_size=config.ffn_hidden_dim, out_features=config.feature_dim, dropout=config.dropout, activation=config.ffn_activation)
 
         # Feedforward block after attention
         self.post_attn_ffn = None
-        if use_post_attn_ffn:
-            assert ffn_hidden_size is not None and ffn_activation is not None
-            self.post_attn_ffn = FeedForwardBlock(feature_dim, hidden_size=ffn_hidden_size, out_features=feature_dim, dropout=dropout, activation=ffn_activation)
+        if config.use_post_attn_ffn:
+            assert config.ffn_hidden_dim is not None and config.ffn_activation is not None
+            self.post_attn_ffn = FeedForwardBlock(config.feature_dim, hidden_size=config.ffn_hidden_dim, out_features=config.feature_dim, dropout=config.dropout, activation=config.ffn_activation)
 
         # Classifier head
         self.classifier = nn.Sequential(
-            nn.Linear(feature_dim, feature_dim),
+            nn.Linear(config.feature_dim, config.feature_dim),
             nn.ReLU(),
-            nn.Dropout(dropout),
-            nn.Linear(feature_dim, 1),
+            nn.Dropout(config.dropout),
+            nn.Linear(config.feature_dim, 1),
         )
 
     def forward(self, image_sets, image_mask, imgs_metadata):

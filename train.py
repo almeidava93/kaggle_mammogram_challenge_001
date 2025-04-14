@@ -1,19 +1,17 @@
 import copy
 import logging
 import time
-from typing import Optional
 import torch
 from torch import nn
-import pandas as pd
 from pathlib import Path
 import toml
-from torchvision import transforms
 from torch.utils.data import DataLoader
 from torchmetrics.classification import BinaryAUROC
+from config import MammogramClassifierConfig
 from datasets import MammogramDataset
 import matplotlib.pyplot as plt
 import argparse
-
+from model import MammogramScreeningClassifier
 from logs import get_logger
 
 logger = get_logger(__name__, log_level=logging.DEBUG, log_to_file=True)
@@ -34,7 +32,8 @@ def collate_fn(batch):
     return images, targets, masks, imgs_metadata
 
 
-def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, criterion, optimizer, scheduler, num_epochs=5, starting_epoch=0, starting_step=0, starting_loss=0, last_auc: Optional[BinaryAUROC]=None):
+def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, criterion, optimizer, scheduler, 
+                               config: MammogramClassifierConfig):
     since = time.time()
 
     best_model_wts = copy.deepcopy(model.state_dict()) # keep the best weights stored separately
@@ -42,11 +41,17 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
     best_val_auc = 0
     best_val_loss = float('inf')
 
+    if config.best_results is not None:
+        best_epoch = config.best_results['best_epoch']
+        best_val_auc = config.best_results['best_val_auc']
+        best_val_loss = config.best_results['best_val_loss']
+        since = time.time() - config.best_results['time_elapsed_min'] * 60 - config.best_results['time_elapsed_sec']
+
     # Each epoch has a training, validation, and test phase
     phases = ['train', 'val']
 
     # Initialize metrics
-    binary_auc = BinaryAUROC().to(device)
+    binary_auc = BinaryAUROC().to(config.device)
 
     # Create directory to store model checkpoints
     model_checkpoint_path = Path('model', curr_exp)
@@ -58,9 +63,13 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
         training_curves[phase+'_loss'] = []
         training_curves[phase+'_auc'] = []
 
+    # Load previous training curves if they exist
+    if config.training_curves is not None:
+        training_curves = config.training_curves
+
     try:
-        for epoch in range(starting_epoch, num_epochs):
-            logger.debug(f'Epoch {epoch+1}/{num_epochs}')
+        for epoch in range(config.start_epoch, config.num_epochs):
+            logger.debug(f'Epoch {epoch+1}/{config.num_epochs}')
             logger.debug('-' * 10)
 
             for phase in phases:
@@ -71,22 +80,30 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
 
                 since_phase = time.time()
 
-                if epoch == starting_epoch and phase == 'train':
-                    step = starting_step
-                    running_loss = starting_loss
-                    if last_auc is not None:
-                        binary_auc = last_auc
+                if epoch == config.start_epoch and phase == 'train':
+                    step = config.start_step
+                    running_loss = config.start_loss
+                    if config.last_auc is not None:
+                        binary_auc = config.last_auc
                 else:
                     step = 0
                     running_loss = 0.0
 
+                if step > dataset_sizes[phase]//config.batch_size:
+                    logger.debug(f"End of {phase} phase")
+                    continue
+
                 for inputs, labels, masks, imgs_metadata in dataloaders[phase]:
+                    if step > dataset_sizes[phase]//config.batch_size:
+                        logger.debug(f"End of {phase} phase")
+                        break
+
                     try:
                         step += 1
-                        inputs = inputs.to(device)
-                        labels = labels.to(device)
-                        masks = masks.to(device)
-                        imgs_metadata = imgs_metadata.to(device)
+                        inputs = inputs.to(config.device)
+                        labels = labels.to(config.device)
+                        masks = masks.to(config.device)
+                        imgs_metadata = imgs_metadata.to(config.device)
 
                         optimizer.zero_grad()
 
@@ -107,47 +124,25 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
                         if phase == 'train':
                             scheduler.step()
                             time_elapsed = time.time() - since
-                            torch.save({
+
+                            training_state = {
                                 'epoch': epoch,
                                 'model_state_dict': model.state_dict(),
                                 'optimizer_state_dict': optimizer.state_dict(),
                                 'loss': running_loss,
                                 'last_step': step,
                                 'last_auc': binary_auc,
-                                }, model_checkpoint_path / Path(f'checkpoint_last.pth'))
+                                }
                             
-                            if step % 10 == 0:
-                                torch.save({
-                                    'epoch': epoch,
-                                    'model_state_dict': model.state_dict(),
-                                    'optimizer_state_dict': optimizer.state_dict(),
-                                    'loss': running_loss,
-                                    'last_step': step,
-                                    'last_auc': binary_auc,
-                                    }, model_checkpoint_path / Path(f'checkpoint_last_backup.pth'))
+                            # Save checkpoints if enabled
+                            if config.save_every_step:
+                                torch.save(training_state, model_checkpoint_path / Path(f'checkpoint_last.pth'))
                             
-                            experiments_config[curr_exp]['best_results'] = {
-                                'best_epoch': best_epoch,
-                                'best_val_loss': best_val_loss,
-                                'best_val_auc': best_val_auc,
-                                'time_elapsed_min': time_elapsed // 60,
-                                'time_elapsed_sec': time_elapsed % 60,
-                                'time_elapsed_per_epoch_min': (time_elapsed / (epoch + 1)) // 60,
-                                'time_elapsed_per_epoch_sec': (time_elapsed / (epoch + 1)) % 60,
-                            }
+                            if config.save_after_n_steps is not None and step % config.save_after_n_steps == 0:
+                                if step % 10 == 0:
+                                    torch.save(training_state, model_checkpoint_path / Path(f'checkpoint_last_backup.pth'))
 
-                            experiments_config[curr_exp]['training_curves'] = training_curves
-
-                            # Save the experiment data to disk
-                            with open(config_path, 'w') as f:
-                                toml.dump(experiments_config, f)
-
-                            # Save the best model weights to disk
-                            torch.save(best_model_wts, model_checkpoint_path / "best_model.pth")
-
-                        if step > dataset_sizes[phase]//batch_size:
-                            logger.debug(f"End of {phase} phase")
-                            break
+                        
                     except Exception as e:
                         logger.error(f'''Error in {phase} phase at step {step}''', exc_info=True)
                         continue
@@ -172,32 +167,37 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
 
                 # Save model and traning checkpoints
                 if phase == 'train':
-                    time_elapsed = time.time() - since
-                    torch.save({
-                        'epoch': epoch,
-                        'model_state_dict': model.state_dict(),
-                        'optimizer_state_dict': optimizer.state_dict(),
-                        'loss': epoch_loss,
-                        }, model_checkpoint_path / Path(f'checkpoint_{str(epoch+1).zfill(2)}.pth'))
-                    
-                    experiments_config[curr_exp]['best_results'] = {
-                        'best_epoch': best_epoch,
-                        'best_val_loss': best_val_loss,
-                        'best_val_auc': best_val_auc,
-                        'time_elapsed_min': time_elapsed // 60,
-                        'time_elapsed_sec': time_elapsed % 60,
-                        'time_elapsed_per_epoch_min': (time_elapsed / (epoch + 1)) // 60,
-                        'time_elapsed_per_epoch_sec': (time_elapsed / (epoch + 1)) % 60,
-                    }
+                    if config.save_every_epoch or (
+                        config.save_after_n_epochs is not None and epoch % config.save_after_n_epochs == 0
+                    ):
+                        time_elapsed = time.time() - since
+                        torch.save({
+                            'epoch': epoch,
+                            'model_state_dict': model.state_dict(),
+                            'optimizer_state_dict': optimizer.state_dict(),
+                            'loss': epoch_loss,
+                            'last_step': step,
+                            'last_auc': binary_auc,
+                            }, model_checkpoint_path / Path(f'checkpoint_{str(epoch+1).zfill(2)}.pth'))
+                        
+                        experiments_config[curr_exp]['best_results'] = {
+                            'best_epoch': best_epoch,
+                            'best_val_loss': best_val_loss,
+                            'best_val_auc': best_val_auc,
+                            'time_elapsed_min': time_elapsed // 60,
+                            'time_elapsed_sec': time_elapsed % 60,
+                            'time_elapsed_per_epoch_min': (time_elapsed / (epoch + 1)) // 60,
+                            'time_elapsed_per_epoch_sec': (time_elapsed / (epoch + 1)) % 60,
+                        }
 
-                    experiments_config[curr_exp]['training_curves'] = training_curves
+                        experiments_config[curr_exp]['training_curves'] = training_curves
 
-                    # Save the experiment data to disk
-                    with open(config_path, 'w') as f:
-                        toml.dump(experiments_config, f)
+                        # Save the experiment data to disk
+                        with open(config_path, 'w') as f:
+                            toml.dump(experiments_config, f)
 
-                    # Save the best model weights to disk
-                    torch.save(best_model_wts, model_checkpoint_path / "best_model.pth")
+                        # Save the best model weights to disk
+                        torch.save(best_model_wts, model_checkpoint_path / "best_model.pth")
 
     except KeyboardInterrupt:
         logger.debug("Training interrupted. Saving best model and results so far...")
@@ -282,156 +282,32 @@ if __name__ == "__main__":
     with open(config_path, 'r') as f:
         experiments_config = toml.load(f)
 
-    config = experiments_config[CURRENT_EXP]
-
-    # Load hyperparameters and config data
-    batch_size = config['batch_size']
-    dataset_size = config['dataset_size']
-    dropout = config['dropout']
-    feature_dim = config['feature_dim']
-    img_size = config['img_size']
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    logger.debug(f'Using device: {device}')
-
-    learning_rate = config['learning_rate']
-    learning_rate_scheduler = config.get('learning_rate_scheduler', 'ExponentialLR')
-    lr_exponentiallr_gamma = config.get('lr_exponentiallr_gamma', 0.95)
-    lr_cycliclr_max_lr = config.get('lr_cycliclr_max_lr', learning_rate*100)
-
-    num_epochs = config['num_epochs']
-    weight_decay = config['weight_decay']
-
-    use_ffn = config.get('use_ffn', None)
-    ffn_hidden_dim = config.get('ffn_hidden_dim', None)
-    ffn_activation = config.get('ffn_activation', None)
-
-    add_pre_ffn_rms_norm = config.get('add_pre_ffn_rms_norm', False)
-    pre_ffn_rms_norm_dim = config.get('pre_ffn_rms_norm_dim', None)
-
-    add_linear_proj_to_embeddings = config.get('add_linear_proj_to_embeddings', False)
-
-    # Tune the weight of positive examples
-    pos_weight_scaler = config.get('pos_weight_scaler', 1.0)
-
-    # Image transformations
-    remove_dark_pixels = config.get('remove_dark_pixels', False)
-    add_padding_pixels = config.get('add_padding_pixels', False)
-
-    # Random transforms to augment data during training
-    add_random_transforms = config.get('add_random_transforms', None)
-    random_transforms_prob = config.get('random_transforms_prob', None)
-    random_transforms_max = config.get('random_transforms_max', None)
-    randomize_image_order = config.get('randomize_image_order', None)
-
-    # Customizations to transformer encoder
-    num_heads = config.get('num_attn_heads', None)
-    num_layers = config.get('num_encoder_layers', None)
-    add_pre_encoder_ffn = config.get('add_pre_encoder_ffn', None)
-    use_post_attn_ffn = config.get('use_post_attn_ffn', None)
-    transformer_norm_first = config.get('transformer_norm_first', False)
-
-    # Customizations to CNN encoder
-    nc = config['num_img_channels'] # number of channels
-    nf = config['num_img_init_features'] # number of features to begin with
-    cnn_dropout = config.get('cnn_dropout', 0) # to add or not dropout after each block
-    cnn_activation = config.get('cnn_activation', 'ReLU')
-    cnn_resnet_n_conv = config.get('cnn_resnet_n_conv', 2)
-    cnn_use_rms_norm = config.get('cnn_use_rms_norm', False)
-    cnn_rms_norms_dims_to_apply = config.get('cnn_rms_norms_dims_to_apply', [-1])
-
-    # Start from checkpoint
-    start_from_checkpoint = config.get('start_from_checkpoint', None)
-
-    # Use pretrained models
-    use_vit_b_16 = config.get('use_vit_b_16', False)
-    freeze_pretrained_weights = config.get('freeze_pretrained_weights', False)
-
-    # Prepare image metadata
-    img_metadata_cat_cols = ['ViewPosition', 'PatientSex', 'ImageLaterality', 'BreastImplantPresent', 'PatientOrientation_0', 'PatientOrientation_1']
-
-    images_metadata_df = pd.read_csv(Path('img_studies_metadata.csv'), index_col=0)
-    train_split_df = pd.read_csv(Path('train_split.csv'), index_col=0)
-
-    ## PatientAge
-    images_metadata_df['PatientAge'] = images_metadata_df['PatientAge'].str.extract(r'(\d+)').astype(float)
-    mean_age = images_metadata_df[images_metadata_df['AccessionNumber'].isin(train_split_df['AccessionNumber'])]['PatientAge'].mean()
-    images_metadata_df['PatientAge'] = images_metadata_df['PatientAge'].fillna(mean_age)/120
-
-    ## PatientOrientation
-    images_metadata_df['PatientOrientation_0'] = images_metadata_df['PatientOrientation'].apply(lambda x: eval(x)[0])
-    images_metadata_df['PatientOrientation_1'] = images_metadata_df['PatientOrientation'].apply(lambda x: eval(x)[1])
-
-    ## Transform to categorical
-    n_categories = {}
-    for col in img_metadata_cat_cols:
-        n_categories[col] = images_metadata_df[col].nunique()
-        images_metadata_df[col] = images_metadata_df[col].astype('category').cat.codes
-
-    # Get max images per study
-    max_images_per_study = images_metadata_df.groupby(by=['AccessionNumber'])['PatientID'].count().max().item()
-
-
-    # Prepare img transform	
-    transform = transforms.Compose([
-        transforms.Resize((img_size, img_size)),
-    ])
+    config = MammogramClassifierConfig(exp=CURRENT_EXP, **experiments_config[CURRENT_EXP])
+    config.workers = args.workers
+    config.pin_memory = args.pin_memory
+    logger.debug(f'Using device: {config.device}')
 
     # Prepare datasets
-    train_dataset = MammogramDataset(
-            'train_split.csv', 
-            img_size=img_size,
-            transform=transform, 
-            max_images_per_study=max_images_per_study,
-            use_weighted_random_sampler=True, 
-            add_random_transforms=add_random_transforms,
-            randomize_image_order=randomize_image_order,
-            images_metadata_df=images_metadata_df,
-            pos_weight_scaler=pos_weight_scaler,
-            remove_dark_pixels=remove_dark_pixels,
-            add_padding_pixels=add_padding_pixels,
-            random_transforms_p=random_transforms_prob,
-            random_transforms_max=random_transforms_max,
-            use_vit_b_16=use_vit_b_16,
-            img_metadata_cat_cols=img_metadata_cat_cols,
-            dataset_size=dataset_size
-        )
-    
-    val_dataset = MammogramDataset(
-            'val_split.csv',
-            img_size=img_size,
-            transform=transform, 
-            max_images_per_study=max_images_per_study,
-            use_weighted_random_sampler=True, 
-            add_random_transforms=add_random_transforms,
-            randomize_image_order=randomize_image_order,
-            images_metadata_df=images_metadata_df,
-            pos_weight_scaler=pos_weight_scaler,
-            remove_dark_pixels=remove_dark_pixels,
-            add_padding_pixels=add_padding_pixels,
-            random_transforms_p=random_transforms_prob,
-            random_transforms_max=random_transforms_max,
-            use_vit_b_16=use_vit_b_16,
-            img_metadata_cat_cols=img_metadata_cat_cols,
-            dataset_size=dataset_size
-        )
+    train_dataset = MammogramDataset(split='train', config=config)
+    val_dataset = MammogramDataset(split='val', config=config)
 
     # Prepare dataloaders
     train_dataloader = DataLoader(
             train_dataset, 
-            batch_size=batch_size, 
+            batch_size=config.batch_size, 
             collate_fn=collate_fn, 
             sampler=train_dataset.sampler,
-            num_workers=args.workers,
-            pin_memory=args.pin_memory,
+            num_workers=config.workers,
+            pin_memory=config.pin_memory,
         )
 
     val_dataloader = DataLoader(
             val_dataset, 
-            batch_size=batch_size, 
+            batch_size=config.batch_size, 
             shuffle=True, 
             collate_fn=collate_fn,
-            num_workers=args.workers,
-            pin_memory=args.pin_memory,
+            num_workers=config.workers,
+            pin_memory=config.pin_memory,
         )
 
     dataloaders = {'train': train_dataloader,
@@ -442,47 +318,16 @@ if __name__ == "__main__":
                     'val': len(val_dataset)
                     }
     
-
     # Prepare model
-    from model import MammogramScreeningClassifier
-
-    model = MammogramScreeningClassifier(
-            img_size=img_size,
-            img_metadata_cat_cols=img_metadata_cat_cols,
-            nc=nc, 
-            nf=nf, 
-            dropout=dropout, 
-            feature_dim=feature_dim, 
-            num_heads=num_heads, 
-            num_layers=num_layers, 
-            max_images_per_study=max_images_per_study, 
-            use_ffn=use_ffn, 
-            ffn_hidden_size=ffn_hidden_dim, 
-            ffn_activation=ffn_activation, 
-            add_pre_encoder_ffn=add_pre_encoder_ffn, 
-            add_pre_ffn_rms_norm=add_pre_ffn_rms_norm, 
-            pre_ffn_rms_norm_dim=pre_ffn_rms_norm_dim, 
-            add_linear_proj_to_embeddings=add_linear_proj_to_embeddings, cnn_rms_norms_dims_to_apply=cnn_rms_norms_dims_to_apply, 
-            use_vit_b_16=use_vit_b_16,
-            freeze_pretrained_weights=freeze_pretrained_weights,
-            n_categories=n_categories,  
-            use_post_attn_ffn=use_post_attn_ffn,
-            cnn_activation=cnn_activation,
-            cnn_dropout=cnn_dropout,
-            transformer_norm_first=transformer_norm_first
-        ).to(device)
+    model = MammogramScreeningClassifier(config).to(config.device)
     
     criterion = nn.BCEWithLogitsLoss(pos_weight=train_dataset.pos_weight) # For binary classification
-    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, weight_decay=weight_decay)
-    start_epoch = 0
-    start_step = 0
-    start_loss = 0
-    last_auc = None
+    optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate, weight_decay=config.weight_decay, eps=config.eps)
 
-    if start_from_checkpoint is not None:
+    if config.start_from_checkpoint is not None:
         try:
-            logger.debug(f"Loading checkpoint from {start_from_checkpoint}.")
-            state_dict = torch.load(start_from_checkpoint, weights_only=False)
+            logger.debug(f"Loading checkpoint from {config.start_from_checkpoint}.")
+            state_dict = torch.load(config.start_from_checkpoint, weights_only=False)
             
             # Load model weights
             model.load_state_dict(state_dict['model_state_dict'])
@@ -491,37 +336,43 @@ if __name__ == "__main__":
             optimizer.load_state_dict(state_dict['optimizer_state_dict'])
 
             # Set starting epoch
-            start_epoch = state_dict['epoch']
+            config.start_epoch = state_dict['epoch']
 
             # Set starting step
-            start_step = state_dict['last_step']
+            config.start_step = state_dict['last_step']
 
             # Set starting loss
-            start_loss = state_dict['loss']
+            config.start_loss = state_dict['loss']
 
             # Set last auc
-            last_auc = state_dict['last_auc']
+            config.last_auc = state_dict['last_auc']
             
-            logger.debug(f"Resuming training from epoch {start_epoch+1}.")
+            logger.debug(f"Resuming training at epoch {config.start_epoch+1}.")
         except Exception as e:
             logger.debug(f"Error loading checkpoint: {e}")
             logger.debug(f"Started training for a new model.")
-            start_epoch = 0
-            start_step = 0
-            start_loss = 0
-            last_auc = None
+            config.best_results = None
+            config.training_curves = None
         finally:
             pass
 
     # Define learning rate scheduler
     schedulers = {
-        'ExponentialLR': torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=lr_exponentiallr_gamma),
-        'CyclicLR': torch.optim.lr_scheduler.CyclicLR(optimizer, base_lr=learning_rate, max_lr=lr_cycliclr_max_lr, step_size_up=len(train_dataset)//batch_size, mode='exp_range'),
+        'ExponentialLR': torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=config.lr_exponentiallr_gamma),
+        'CyclicLR': torch.optim.lr_scheduler.CyclicLR(optimizer, base_lr=config.learning_rate, max_lr=config.lr_cycliclr_max_lr, step_size_up=len(train_dataset)//config.batch_size, mode='exp_range'),
     }
 
-    scheduler = schedulers[learning_rate_scheduler]
+    scheduler = schedulers[config.learning_rate_scheduler]
 
     # Train the model. We also will store the results of training to visualize
-    model, training_curves = train_classification_model(CURRENT_EXP, model, dataloaders, dataset_sizes, 
-                                        criterion, optimizer, scheduler, num_epochs=num_epochs, starting_epoch=start_epoch, starting_step=start_step, starting_loss=start_loss, last_auc=last_auc)
+    model, training_curves = train_classification_model(
+            CURRENT_EXP, 
+            model, 
+            dataloaders, 
+            dataset_sizes,
+            criterion, 
+            optimizer, 
+            scheduler, 
+            config,
+        )
     plot_training_curves(training_curves)

@@ -111,3 +111,8 @@ python submit.py --exp exp_001 --workers 4 --pin-memory true
     if img_mode != 0:
         curr_img = curr_img*-1 + curr_img.max()
     ```
+- Testar estrutura de rede neural recorrente (GRU, LSTM) que analisa imagens de mamografia sequencialmente e atualiza a probabilidade de câncer de mama após cada imagem do estudo que analisa
+- Mudar a loss function para uma que otimize melhor a AUC. Vide refs abaixo:
+    - https://arxiv.org/abs/2012.03173
+    - https://arxiv.org/abs/2310.11693
+    

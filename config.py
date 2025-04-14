@@ -2,7 +2,6 @@ from pathlib import Path
 from typing import Any, Optional
 from pydantic import BaseModel, Field
 import torch
-from torchvision import transforms
 
 class MammogramClassifierConfig(BaseModel):
     exp: str = Field(..., description="Experiment name")
@@ -15,11 +14,13 @@ class MammogramClassifierConfig(BaseModel):
     learning_rate: float = Field(..., description="Learning rate")
     learning_rate_scheduler: str = Field('ExponentialLR', description="Learning rate scheduler")
     lr_exponentiallr_gamma: float = Field(0.95, description="Gamma for ExponentialLR")
-    lr_cycliclr_max_lr: Optional[float] = Field(None, description="Max learning rate for CyclicLR")
+    lr_cycliclr_max_lr: Optional[float] = Field(0.001, description="Max learning rate for CyclicLR")
     num_epochs: int = Field(..., description="Number of epochs")
     workers: int = Field(0, description="Number of workers for data loading")
     pin_memory: bool = Field(False, description="Pin memory for data loading")
     weight_decay: float = Field(0.0, description="Weight decay for optimizer")
+    eps: float = Field(1e-8, description="Epsilon to avoid division by zero in optimizer and other computations")
+    max_images_per_study: Optional[int] = Field(None, description="Max number of images per study")
 
     # Feedforward parameters
     use_ffn: bool = Field(False, description="Use feedforward network")
@@ -33,6 +34,7 @@ class MammogramClassifierConfig(BaseModel):
 
     # Loss function parameters
     pos_weight_scaler: float = Field(1.0, description="Scaler for positive weight in loss function")
+    use_weighted_random_sampler: bool = Field(True, description="Use weighted random sampler for imbalanced datasets in the training set")
 
     # Image transformations
     transform: Optional[Any] = Field(None, description="Image transformations applied to all images and data splits")
@@ -42,10 +44,12 @@ class MammogramClassifierConfig(BaseModel):
     random_transforms_prob: Optional[float] = Field(None, description="Probability of applying random transforms")
     random_transforms_max: Optional[int] = Field(None, description="Max number of random transforms to apply per image")
     randomize_image_order: bool = Field(False, description="Randomize image order in the batch during training")
+    no_preprocessing: bool = Field(False, description="Do not apply any preprocessing to images. Only resize is applied.")
+    invert_background: bool = Field(False, description="Invert images with background different from value 0 to attempt to uniformize them.")
 
     # Transformer encoder parameters
-    num_heads: Optional[int] = Field(None, description="Number of attention heads")
-    num_layers: Optional[int] = Field(None, description="Number of encoder layers")
+    num_attn_heads: Optional[int] = Field(None, description="Number of attention heads")
+    num_encoder_layers: Optional[int] = Field(None, description="Number of encoder layers")
     add_pre_encoder_ffn: bool = Field(False, description="Add feedforward network before transformer encoder")
     use_post_attn_ffn: bool = Field(False, description="Use feedforward network after transformer encoder")
     transformer_norm_first: bool = Field(False, description="Apply normalization before attention in transformer encoder")
@@ -56,6 +60,7 @@ class MammogramClassifierConfig(BaseModel):
     cnn_dropout: float = Field(0.0, description="Dropout rate for CNN")
     cnn_activation: str = Field('ReLU', description="Activation function for CNN")
     cnn_resnet_n_conv: int = Field(2, description="Number of convolutional layers in a single ResNet block")
+    cnn_resnet_n_blocks: int = Field(5, description="Number of ResNet blocks")
     cnn_use_rms_norm: bool = Field(False, description="Use RMS norm in CNN instead of BatchNorm")
     cnn_rms_norms_dims_to_apply: list[int] = Field([-1], description="Dimensions to apply RMS norm in CNN")
 
@@ -71,8 +76,22 @@ class MammogramClassifierConfig(BaseModel):
     images_metadata_path: Path = Field(Path('img_studies_metadata.csv'), description="Path to images metadata CSV file")
     train_split_path: Optional[Path] = Field(Path('train_split.csv'), description="Path to training split CSV file")
     val_split_path: Optional[Path] = Field(Path('val_split.csv'), description="Path to validation split CSV file")
+    test_split_path: Optional[Path] = Field(Path('test_split.csv'), description="Path to test split CSV file")
+
+    # Image metadata
+    img_metadata_cat_cols: list[str] = ['ViewPosition', 'PatientSex', 'ImageLaterality', 'BreastImplantPresent', 'PatientOrientation_0', 'PatientOrientation_1']
+    classes_per_cat: Optional[dict[str, int]] = Field(None, description="Number of classes per categorical feature")
 
     # Previous training data for the current experiment
     training_curves: Optional[dict[str, list[float]]] = Field(None, description="Training curves for the current experiment")
     best_results: Optional[dict[str, float]] = Field(None, description="Best results for the current experiment")
+    start_epoch: Optional[int] = Field(0, description="Epoch to start from")
+    start_step: Optional[int] = Field(0, description="Step to start from")
+    start_loss: Optional[float] = Field(0.0, description="Loss to start from")
+    last_auc: Optional[Any] = Field(None, description="Last BinaryAUROC object")
 
+    # Configure checkpoint saving behavior
+    save_every_step: bool = Field(False, description="Save model checkpoint after every step")
+    save_after_n_steps: Optional[int] = Field(None, description="Save model checkpoint after n steps")
+    save_every_epoch: bool = Field(True, description="Save model checkpoint after every epoch")
+    save_after_n_epochs: Optional[int] = Field(None, description="Save model checkpoint after n epochs")
