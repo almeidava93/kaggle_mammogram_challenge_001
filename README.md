@@ -99,6 +99,7 @@ python submit.py --exp exp_001 --workers 4 --pin-memory true
 # Experimentos
 ## Melhor experimento até o momento
 ```
+[exp_063]
 dataset_size = 200
 learning_rate = 0.0001
 weight_decay = 0.0
@@ -109,13 +110,17 @@ img_size = 256
 num_img_channels = 1
 num_img_init_features = 64
 batch_size = 20
-num_epochs = 10
+num_epochs = 15
 use_ffn = false
 num_attn_heads = 8
 num_encoder_layers = 2
 remove_dark_pixels = true
+invert_background = true
 add_padding_pixels = false
 ```
+Treinado com apenas 200 exemplos
+AUC na validação: 0.7453
+AUC no teste (Kaggle): 0.701
 
 ## Melhorias
 - Reescrever código para que configurações fiquem concentradas em um único objeto e esse objeto possa ser passado para cada nn.Module ou dataset, sem precisar passar item por item
@@ -124,6 +129,7 @@ add_padding_pixels = false
 - Usar modelos pré-treinados para processamento de imagem:
     - 🔲 RADIOv2.5 NVIDIA: [repo](https://github.com/NVlabs/RADIO) / [paper](https://arxiv.org/abs/2412.07679) / [huggingface](https://huggingface.co/collections/nvidia/radio-669f77f1dd6b153f007dd1c6)
     - 🔲 Digital Eye Mammography: [repo](https://github.com/cbddobvyz/digitaleye-mammography)
+    - 🔲 https://huggingface.co/google/cxr-foundation
 - 🔲 Adicionar LayerNorm na camada final do classifier (igual a como RADIO foi treinado)
 - ✅ Ajustar mecanismo de cropping para incluir imagens com fundo branco também. Identificar as imagens com fundo branco identificando o valor de pixel moda. Se diferente de 0, multiplicar por -1 e somar o valor máximo de pixel, conforme o código abaixo:
     ```

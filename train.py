@@ -105,7 +105,10 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
                         masks = masks.to(config.device)
                         imgs_metadata = imgs_metadata.to(config.device)
 
-                        optimizer.zero_grad()
+                        # Zero the parameter gradients
+                        # See https://pytorch.org/tutorials/recipes/recipes/tuning_guide.html#use-parameter-grad-none-instead-of-model-zero-grad-or-optimizer-zero-grad
+                        for param in model.parameters():
+                            param.grad = None
 
                         with torch.set_grad_enabled(phase == 'train'):
                             outputs = model(inputs, masks, imgs_metadata)

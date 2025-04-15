@@ -15,6 +15,12 @@ from skimage import morphology
 
 from config import MammogramClassifierConfig
 
+# Create relevant directories if they don't exist
+dataset_cache_path = Path('datasets_cache')
+Path(dataset_cache_path, 'train').mkdir(parents=True, exist_ok=True)
+Path(dataset_cache_path, 'val').mkdir(parents=True, exist_ok=True)
+Path(dataset_cache_path, 'test').mkdir(parents=True, exist_ok=True)
+
 def load_metadata(config: MammogramClassifierConfig) -> Tuple[pd.DataFrame, MammogramClassifierConfig]:
     images_metadata_df = pd.read_csv(config.images_metadata_path, index_col=0)
     train_split_df = pd.read_csv(config.train_split_path, index_col=0)
@@ -187,6 +193,7 @@ class MammogramDataset(Dataset):
         self.images_metadata_df, self.config = load_metadata(config)
         self.sampler = None
         self.pos_weight = None
+        self.dataset_cache_path = dataset_cache_path / split
 
         if self.split == 'train':
             assert isinstance(self.config.pos_weight_scaler, float) and self.config.pos_weight_scaler > 0, "pos_weight_scaler must be a float and greater than 0"
@@ -210,6 +217,14 @@ class MammogramDataset(Dataset):
         return len(self.df)
 
     def __getitem__(self, idx):
+        # Load cached data if available
+        cache_path = self.dataset_cache_path / f"{idx}.pt"
+        if cache_path.exists():
+            data = torch.load(cache_path, weights_only=False, map_location='cuda')
+            imgs, target, mask, imgs_metadata = data['imgs'], data['target'], data['mask'], data['imgs_metadata']
+            return imgs, target, mask, imgs_metadata
+
+        # Else, prepare data
         image_study_data = self.df.iloc[idx]
 
         # Get image metadata
@@ -287,7 +302,20 @@ class MammogramDataset(Dataset):
         imgs_metadata = torch.tensor(imgs_metadata, dtype=torch.uint8)
         
         if self.split == 'test':
-            return imgs, torch.tensor(image_study_data['AccessionNumber'], dtype=torch.long), mask, imgs_metadata
+            accession_number = torch.tensor(image_study_data['AccessionNumber'], dtype=torch.long)
+            torch.save({
+                'imgs': imgs,
+                'target': accession_number,
+                'mask': mask,
+                'imgs_metadata': imgs_metadata
+            }, cache_path)
+            return imgs, accession_number, mask, imgs_metadata
         else:
             target = torch.tensor(image_study_data['target']).float()
+            torch.save({
+                'imgs': imgs,
+                'target': target,
+                'mask': mask,
+                'imgs_metadata': imgs_metadata
+            }, cache_path)
             return imgs, target, mask, imgs_metadata
