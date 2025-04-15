@@ -21,6 +21,8 @@ class MammogramClassifierConfig(BaseModel):
     weight_decay: float = Field(0.0, description="Weight decay for optimizer")
     eps: float = Field(1e-8, description="Epsilon to avoid division by zero in optimizer and other computations")
     max_images_per_study: Optional[int] = Field(None, description="Max number of images per study")
+    cache_data: bool = Field(False, description="Cache data in memory")
+    use_cache: bool = Field(False, description="Use cached data")
 
     # Feedforward parameters
     use_ffn: bool = Field(False, description="Use feedforward network")

@@ -219,10 +219,11 @@ class MammogramDataset(Dataset):
     def __getitem__(self, idx):
         # Load cached data if available
         cache_path = self.dataset_cache_path / f"{idx}.pt"
-        if cache_path.exists():
-            data = torch.load(cache_path, weights_only=False, map_location='cuda')
-            imgs, target, mask, imgs_metadata = data['imgs'], data['target'], data['mask'], data['imgs_metadata']
-            return imgs, target, mask, imgs_metadata
+        if self.config.use_cache and self.config.cache_data:
+            if cache_path.exists():
+                data = torch.load(cache_path, weights_only=False, map_location='cuda')
+                imgs, target, mask, imgs_metadata = data['imgs'], data['target'], data['mask'], data['imgs_metadata']
+                return imgs, target, mask, imgs_metadata
 
         # Else, prepare data
         image_study_data = self.df.iloc[idx]
@@ -277,14 +278,14 @@ class MammogramDataset(Dataset):
             if self.config.add_random_transforms:
                 img = apply_random_transforms(img, p=self.config.random_transforms_prob, max_transforms=self.config.random_transforms_max)
 
-            imgs.append(img)
+            imgs.append(img.to(self.config.device))
 
         # Padding if fewer than max_images
         num_images = len(imgs)
         mask = [1] * num_images + [0] * (self.config.max_images_per_study - num_images)
 
         if num_images < self.config.max_images_per_study:
-            padding_img = torch.zeros_like(imgs[0])
+            padding_img = torch.zeros_like(imgs[0], device=self.config.device)
             for _ in range(self.config.max_images_per_study - num_images):
                 imgs.append(padding_img)
 
@@ -298,24 +299,27 @@ class MammogramDataset(Dataset):
         if self.config.use_vit_b_16:
             imgs = imgs.repeat(1, 3, 1, 1)
 
-        mask = torch.tensor(mask, dtype=torch.uint8)
-        imgs_metadata = torch.tensor(imgs_metadata, dtype=torch.uint8)
+        mask = torch.tensor(mask, dtype=torch.uint8, device=self.config.device)
+        imgs_metadata = torch.tensor(imgs_metadata, dtype=torch.uint8, device=self.config.device)
         
         if self.split == 'test':
-            accession_number = torch.tensor(image_study_data['AccessionNumber'], dtype=torch.long)
-            torch.save({
-                'imgs': imgs,
-                'target': accession_number,
-                'mask': mask,
-                'imgs_metadata': imgs_metadata
-            }, cache_path)
+            accession_number = torch.tensor(image_study_data['AccessionNumber'], dtype=torch.long, device=self.config.device)
+            if self.config.cache_data:
+                torch.save({
+                    'imgs': imgs,
+                    'target': accession_number,
+                    'mask': mask,
+                    'imgs_metadata': imgs_metadata
+                }, cache_path)
             return imgs, accession_number, mask, imgs_metadata
         else:
-            target = torch.tensor(image_study_data['target']).float()
-            torch.save({
-                'imgs': imgs,
-                'target': target,
-                'mask': mask,
-                'imgs_metadata': imgs_metadata
-            }, cache_path)
+            target = torch.tensor(image_study_data['target'], device=self.config.device).float()
+
+            if self.config.cache_data:
+                torch.save({
+                    'imgs': imgs,
+                    'target': target,
+                    'mask': mask,
+                    'imgs_metadata': imgs_metadata
+                }, cache_path)
             return imgs, target, mask, imgs_metadata
