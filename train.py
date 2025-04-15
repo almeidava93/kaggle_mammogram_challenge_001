@@ -245,7 +245,7 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
         return model, training_curves
 
 
-def plot_training_curves(training_curves, show=False):
+def plot_training_curves(training_curves, curr_exp, show=False):
     """
     Plots loss, accuracy, F1, and AUC from the training_curves dictionary.
     """
@@ -272,7 +272,7 @@ def plot_training_curves(training_curves, show=False):
         plt.tight_layout()
 
         # Save the plot to a file
-        filename = Path('model', CURRENT_EXP) / f'training_curves_{metric}.png'
+        filename = Path('model', curr_exp) / f'training_curves_{metric}.png'
         plt.savefig(filename)
         
         if show:
@@ -385,4 +385,4 @@ if __name__ == "__main__":
             scheduler, 
             config,
         )
-    plot_training_curves(training_curves)
+    plot_training_curves(training_curves, CURRENT_EXP)
