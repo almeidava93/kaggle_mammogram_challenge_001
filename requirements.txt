@@ -11,3 +11,4 @@ toml
 python-dotenv
 scikit-image
 pydantic
+torchmetrics
