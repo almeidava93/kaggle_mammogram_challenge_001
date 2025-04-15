@@ -123,8 +123,11 @@ Treinado com apenas 200 exemplos
 AUC na validação: 0.791389
 AUC no teste (Kaggle): 0.674
 
+## Referências para inspirar
+- 🔲 https://github.com/escuccim/mammography-models
+
 ## Melhorias
-- Reescrever código para que configurações fiquem concentradas em um único objeto e esse objeto possa ser passado para cada nn.Module ou dataset, sem precisar passar item por item
+- ✅ Reescrever código para que configurações fiquem concentradas em um único objeto e esse objeto possa ser passado para cada nn.Module ou dataset, sem precisar passar item por item
 
 ## TODO
 - Usar modelos pré-treinados para processamento de imagem:
