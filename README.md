@@ -38,7 +38,8 @@ Primeiro, é preciso configurar um experimento no arquivo `ex_config.toml`. Este
 ```
 [exp_001]   # Nome do experimento
 # Limte de tamanho do dataset. Use dataset_size = -1 para treinar com o dataset inteiro
-dataset_size = 200          
+dataset_size = 200      
+    
 # Alguns hiperparâmetros    
 learning_rate = 0.0001
 weight_decay = 0.0
@@ -49,11 +50,17 @@ feature_dim = 256
 img_size = 256
 num_img_channels = 1
 num_img_init_features = 64
+
 # Tamanho de batch e número de épocas
 batch_size = 20
 num_epochs = 10
+
 # Você pode definir um checkpoint anterior como ponto de partida
 start_from_checkpoint = "model/exp_001/checkpoint_last.pth"
+
+# Habilite criação e uso de cache em disco
+cache_data = true
+use_cache = true
 ```
 A estrutura do modelo tem várias regras e opções para criar variações. Importante olhar o modelo em `model.py` para entender melhor.
 
