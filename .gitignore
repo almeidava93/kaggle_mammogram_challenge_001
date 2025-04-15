@@ -9,7 +9,11 @@ __pycache__
 *.npz
 *.h5
 *.ipynb
-*.csv
 logs
 ex_config.toml
 datasets_cache
+img_studies_metadata_test.csv
+img_with_errors.csv
+sample_submissionA.csv
+train.csv
+submissions
