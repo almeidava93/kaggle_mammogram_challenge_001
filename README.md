@@ -135,7 +135,8 @@ AUC no teste (Kaggle): 0.674
     - 🔲 Digital Eye Mammography: [repo](https://github.com/cbddobvyz/digitaleye-mammography)
     - 🔲 https://huggingface.co/google/cxr-foundation
 - 🔲 Adicionar LayerNorm na camada final do classifier (igual a como RADIO foi treinado)
-- ✅ Ajustar mecanismo de cropping para incluir imagens com fundo branco também. Identificar as imagens com fundo branco identificando o valor de pixel moda. Se diferente de 0, multiplicar por -1 e somar o valor máximo de pixel, conforme o código abaixo:
+- 
+ Ajustar mecanismo de cropping para incluir imagens com fundo branco também. Identificar as imagens com fundo branco identificando o valor de pixel moda. Se diferente de 0, multiplicar por -1 e somar o valor máximo de pixel, conforme o código abaixo:
     ```
     img_mode = curr_img.mode().values.max().item()
     if img_mode != 0:
@@ -147,3 +148,4 @@ AUC no teste (Kaggle): 0.674
     - https://arxiv.org/abs/2310.11693
     - https://docs.libauc.org/index.html
 - 🔲 Otimizar a velocidade do pré-processamento das imagens. Está sendo um gargalo e prolongando o tempo de treino.
+    - ✅ Cache salvando imagens pré-processadas como tensors na memória
