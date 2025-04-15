@@ -39,7 +39,7 @@ Primeiro, é preciso configurar um experimento no arquivo `ex_config.toml`. Este
 [exp_001]   # Nome do experimento
 # Limte de tamanho do dataset. Use dataset_size = -1 para treinar com o dataset inteiro
 dataset_size = 200      
-    
+
 # Alguns hiperparâmetros    
 learning_rate = 0.0001
 weight_decay = 0.0
@@ -142,8 +142,7 @@ AUC no teste (Kaggle): 0.674
     - 🔲 Digital Eye Mammography: [repo](https://github.com/cbddobvyz/digitaleye-mammography)
     - 🔲 https://huggingface.co/google/cxr-foundation
 - 🔲 Adicionar LayerNorm na camada final do classifier (igual a como RADIO foi treinado)
-- 
- Ajustar mecanismo de cropping para incluir imagens com fundo branco também. Identificar as imagens com fundo branco identificando o valor de pixel moda. Se diferente de 0, multiplicar por -1 e somar o valor máximo de pixel, conforme o código abaixo:
+- ✅ Ajustar mecanismo de cropping para incluir imagens com fundo branco também. Identificar as imagens com fundo branco identificando o valor de pixel moda. Se diferente de 0, multiplicar por -1 e somar o valor máximo de pixel, conforme o código abaixo:
     ```
     img_mode = curr_img.mode().values.max().item()
     if img_mode != 0:
@@ -156,3 +155,4 @@ AUC no teste (Kaggle): 0.674
     - https://docs.libauc.org/index.html
 - 🔲 Otimizar a velocidade do pré-processamento das imagens. Está sendo um gargalo e prolongando o tempo de treino.
     - ✅ Cache salvando imagens pré-processadas como tensors na memória
+- 🔲 Testar se faz diferença, ao invés de apenas somar as features de cada metadado, concatenar todos eles, processar com uma camada linear para a dimensão correta e só então somar. 
