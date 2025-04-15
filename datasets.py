@@ -49,7 +49,7 @@ def load_metadata(config: MammogramClassifierConfig) -> Tuple[pd.DataFrame, Mamm
     config.transform = transform
 
     # Get max images per study
-    config.max_images_per_study = images_metadata_df.groupby(by=['AccessionNumber'])['PatientID'].count().max().item()
+    config.max_images_per_study = images_metadata_df.groupby(by=['AccessionNumber'])['PatientID'].count().max()
 
     return images_metadata_df, config
 
