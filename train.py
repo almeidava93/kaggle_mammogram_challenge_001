@@ -32,9 +32,17 @@ def collate_fn(batch):
     return images, targets, masks, imgs_metadata
 
 
-def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, criterion, optimizer, scheduler, 
-                               config: MammogramClassifierConfig):
+def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, criterion, optimizer, scheduler, config: MammogramClassifierConfig):
     since = time.time()
+
+    config_path = Path('ex_config.toml')
+    with open(config_path, 'r') as f:
+        experiments_config = toml.load(f)
+
+    if curr_exp not in experiments_config:
+        experiments_config[curr_exp] = config.model_dump()
+        experiments_config[curr_exp]['transform'] = None
+        experiments_config[curr_exp]['last_auc'] = None
 
     best_model_wts = copy.deepcopy(model.state_dict()) # keep the best weights stored separately
     best_epoch = 0
