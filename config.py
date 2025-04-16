@@ -16,6 +16,7 @@ class MammogramClassifierConfig(BaseModel):
     lr_exponentiallr_gamma: float = Field(0.95, description="Gamma for ExponentialLR")
     lr_cycliclr_max_lr: Optional[float] = Field(0.001, description="Max learning rate for CyclicLR")
     num_epochs: int = Field(..., description="Number of epochs")
+    steps_per_epoch: Optional[int] = Field(None, description="Number of steps per epoch")
     workers: int = Field(0, description="Number of workers for data loading")
     pin_memory: bool = Field(False, description="Pin memory for data loading")
     weight_decay: float = Field(0.0, description="Weight decay for optimizer")

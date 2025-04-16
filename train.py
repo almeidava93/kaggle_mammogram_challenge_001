@@ -75,6 +75,9 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
     if config.training_curves is not None:
         training_curves = config.training_curves
 
+    # Define steps per epoch
+    steps_per_epoch = dataset_sizes['train'] // config.batch_size
+
     try:
         for epoch in range(config.start_epoch, config.num_epochs):
             logger.debug(f'Epoch {epoch+1}/{config.num_epochs}')
@@ -85,6 +88,11 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
                     model.train()
                 else:
                     model.eval()
+
+                if config.steps_per_epoch is not None:
+                    steps_per_epoch = config.steps_per_epoch
+                else:
+                    steps_per_epoch = dataset_sizes[phase]//config.batch_size
 
                 since_phase = time.time()
 
@@ -97,12 +105,12 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
                     step = 0
                     running_loss = 0.0
 
-                if step > dataset_sizes[phase]//config.batch_size:
+                if step > steps_per_epoch:
                     logger.debug(f"End of {phase} phase")
                     continue
 
                 for inputs, labels, masks, imgs_metadata in dataloaders[phase]:
-                    if step > dataset_sizes[phase]//config.batch_size:
+                    if step > steps_per_epoch:
                         logger.debug(f"End of {phase} phase")
                         break
 
