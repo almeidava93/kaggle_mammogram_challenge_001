@@ -82,6 +82,9 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
         for epoch in range(config.start_epoch, config.num_epochs):
             logger.debug(f'Epoch {epoch+1}/{config.num_epochs}')
             logger.debug('-' * 10)
+            logger.debug(f'Current learning rate: {scheduler.get_last_lr()[0]:.10f}')
+            logger.debug('-' * 10)
+
 
             for phase in phases:
                 if phase == 'train':
@@ -105,12 +108,12 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
                     step = 0
                     running_loss = 0.0
 
-                if step > steps_per_epoch:
+                if step >= steps_per_epoch:
                     logger.debug(f"End of {phase} phase")
                     continue
 
                 for inputs, labels, masks, imgs_metadata in dataloaders[phase]:
-                    if step > steps_per_epoch:
+                    if step >= steps_per_epoch:
                         logger.debug(f"End of {phase} phase")
                         break
 
@@ -165,7 +168,7 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
                         logger.error(f'''Error in {phase} phase at step {step}''', exc_info=True)
                         continue
 
-                epoch_loss = running_loss / dataset_sizes[phase]
+                epoch_loss = running_loss / (config.batch_size*steps_per_epoch)
                 training_curves[phase+'_loss'].append(epoch_loss)
                 phase_time_elapsed = time.time() - since_phase
 
