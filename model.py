@@ -185,7 +185,7 @@ class MammogramScreeningClassifier(nn.Module):
 
         # Linear projection for concatenated embeddings if enabled
         if config.concatenate_embeddings:
-            self.concatenated_embeddings_projector = nn.Linear(len(config.img_metadata_cat_cols) * config.feature_dim, config.feature_dim)
+            self.concatenated_embeddings_projector = nn.Linear((len(config.img_metadata_cat_cols)+1) * config.feature_dim, config.feature_dim)
 
         # Post-CNN block
         self.ffn = None
