@@ -185,7 +185,7 @@ class MammogramScreeningClassifier(nn.Module):
 
         # Linear projection for concatenated embeddings if enabled
         if config.concatenate_embeddings:
-            self.concatenated_embeddings_projector = nn.Linear((len(config.img_metadata_cat_cols)+1) * config.feature_dim, config.feature_dim)
+            self.concatenated_embeddings_projector = nn.Linear(len(config.img_metadata_cat_cols) * config.feature_dim, config.feature_dim)
 
         # Post-CNN block
         self.ffn = None
@@ -240,19 +240,16 @@ class MammogramScreeningClassifier(nn.Module):
 
         # Apply meta embeddings
         if self.config.concatenate_embeddings:
+            embeddings_features = []
             for cat_idx, cat in enumerate(self.img_metadata_cat_cols):
                 if cat == 'PatientAge':
                     pat_ages = imgs_metadata[:, :, cat_idx].unsqueeze(-1)
-                    features = torch.cat([
-                        features, self.meta_embeddings[cat](pat_ages)
-                        ], dim=-1) # Concat over last dim
+                    embeddings_features.append(self.meta_embeddings[cat](pat_ages))
                     continue
-                features = torch.cat([
-                    features, 
-                    self.meta_embeddings[cat](imgs_metadata[:, :, cat_idx].to(torch.long))
-                    ], dim=-1) # Concat over last dim
-            # Project concatenated embeddings
-            features = self.concatenated_embeddings_projector(features)
+                embeddings_features.append(self.meta_embeddings[cat](imgs_metadata[:, :, cat_idx].to(torch.long)))
+
+            # Project concatenated embeddings and add to image features
+            features += self.concatenated_embeddings_projector(torch.cat(embeddings_features, dim=-1))
 
         else:
             for cat_idx, cat in enumerate(self.img_metadata_cat_cols):
