@@ -87,6 +87,7 @@ Para avaliar, utilize o comando:
 ```
 python submit.py --exp exp_001
 ```
+Por padrão, o arquivo `best_model.pth` daquele experimento será usado para predição.
 
 Você pode definir o tamanho dos lotes:
 ```
@@ -96,6 +97,11 @@ python submit.py --exp exp_001 --batch-size 40
 Você pode definir para realizar a avaliação em uma versão específica do modelo adicionando um diretório.
 ```
 python submit.py --exp exp_001 --path model/exp_001/checkpoint_08.pth
+```
+
+Você pode definir qual o device a ser utilizado no treinamento
+```
+python submit.py --exp exp_001 --device cpu
 ```
 
 Esta etapa também suporta multiprocessamento com as opções `workers` e `pinned memory`
