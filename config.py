@@ -33,6 +33,7 @@ class MammogramClassifierConfig(BaseModel):
 
     # Metadata embeddings
     add_linear_proj_to_embeddings: bool = Field(False, description="Add linear projection to embeddings")
+    concatenate_embeddings: bool = Field(False, description="Concatenate embeddings and project them instead of just adding them up")
 
     # Loss function parameters
     pos_weight_scaler: float = Field(1.0, description="Scaler for positive weight in loss function")

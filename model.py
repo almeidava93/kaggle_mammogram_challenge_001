@@ -183,6 +183,10 @@ class MammogramScreeningClassifier(nn.Module):
 
             self.meta_embeddings[cat] = nn.Embedding(config.classes_per_cat[cat], config.feature_dim)
 
+        # Linear projection for concatenated embeddings if enabled
+        if config.concatenate_embeddings:
+            self.concatenated_embeddings_projector = nn.Linear(len(config.img_metadata_cat_cols) * config.feature_dim, config.feature_dim)
+
         # Post-CNN block
         self.ffn = None
         self.transformer = None
@@ -235,12 +239,28 @@ class MammogramScreeningClassifier(nn.Module):
         features = features.view(B, S, -1)           # [B, S, feature_dim]
 
         # Apply meta embeddings
-        for cat_idx, cat in enumerate(self.img_metadata_cat_cols):
-            if cat == 'PatientAge':
-                pat_ages = imgs_metadata[:, :, cat_idx].unsqueeze(-1)
-                features += self.meta_embeddings[cat](pat_ages)
-                continue
-            features += self.meta_embeddings[cat](imgs_metadata[:, :, cat_idx].to(torch.long))
+        if self.config.concatenate_embeddings:
+            for cat_idx, cat in enumerate(self.img_metadata_cat_cols):
+                if cat == 'PatientAge':
+                    pat_ages = imgs_metadata[:, :, cat_idx].unsqueeze(-1)
+                    features = torch.cat([
+                        features, self.meta_embeddings[cat](pat_ages)
+                        ], dim=-1) # Concat over last dim
+                    continue
+                features = torch.cat([
+                    features, 
+                    self.meta_embeddings[cat](imgs_metadata[:, :, cat_idx].to(torch.long))
+                    ], dim=-1) # Concat over last dim
+            # Project concatenated embeddings
+            features = self.concatenated_embeddings_projector(features)
+
+        else:
+            for cat_idx, cat in enumerate(self.img_metadata_cat_cols):
+                if cat == 'PatientAge':
+                    pat_ages = imgs_metadata[:, :, cat_idx].unsqueeze(-1)
+                    features += self.meta_embeddings[cat](pat_ages)
+                    continue
+                features += self.meta_embeddings[cat](imgs_metadata[:, :, cat_idx].to(torch.long))
 
         if self.ffn is not None:
             if self.pre_ffn_rms_norm is not None:
