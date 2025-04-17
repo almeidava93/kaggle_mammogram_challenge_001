@@ -202,9 +202,20 @@ class MammogramDataset(Dataset):
 
         # Create weighted random sampler to balance traning examples
         if self.split == 'train' and self.config.use_weighted_random_sampler:
+            # Define probability of sampling positive samples and negative samples
+            if self.config.sampler_pos_prob is not None:
+                pos_prob = self.config.sampler_pos_prob
+                neg_prob = 1 - pos_prob
+            else:
+                pos_prob = self.df['target'].mean()
+                neg_prob = 1 - pos_prob
+
             # Inverse frequency for each class
             class_sample_counts = self.df['target'].value_counts().to_dict()
-            class_weights = {cls: 1.0 / count for cls, count in class_sample_counts.items()}
+            class_weights = {
+                0: neg_prob / class_sample_counts[0],
+                1: pos_prob / class_sample_counts[1]
+            }
             sample_weights = self.df['target'].map(class_weights).values
 
             self.sampler = WeightedRandomSampler(
