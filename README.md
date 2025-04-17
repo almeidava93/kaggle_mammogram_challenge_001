@@ -180,3 +180,4 @@ AUC no teste (Kaggle): 0.674
     - Filter Material
     - Filter Thickness Minimum
     - Filter Thickness Maximum
+- 🔲 Usar gradient accumulation para simular batches maiores
