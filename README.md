@@ -162,3 +162,6 @@ AUC no teste (Kaggle): 0.674
 - 🔲 Otimizar a velocidade do pré-processamento das imagens. Está sendo um gargalo e prolongando o tempo de treino.
     - ✅ Cache salvando imagens pré-processadas como tensors na memória
 - 🔲 Testar se faz diferença, ao invés de apenas somar as features de cada metadado, concatenar todos eles, processar com uma camada linear para a dimensão correta e só então somar. 
+- 🔲 Testar currículo dinâmico para treinamento do modelo. Por exemplo, iniciar treino com uma alta proporção de casos positivos e progressivamente reduzir até chegar próximo à prevalência real de casos positivos.
+    - https://arxiv.org/abs/1901.06783
+    - https://arxiv.org/abs/1904.03626
