@@ -34,6 +34,16 @@ def load_metadata(config: MammogramClassifierConfig) -> Tuple[pd.DataFrame, Mamm
     images_metadata_df['PatientOrientation_0'] = images_metadata_df['PatientOrientation'].apply(lambda x: eval(x)[0])
     images_metadata_df['PatientOrientation_1'] = images_metadata_df['PatientOrientation'].apply(lambda x: eval(x)[1])
 
+    ## Prepare numerical columns
+    for col in config.img_metadata_num_cols:
+        # Convert to float
+        images_metadata_df[col] = images_metadata_df[col].astype(float)
+        # Fill missing values with mean of train data
+        train_data_mean_value = images_metadata_df[images_metadata_df['AccessionNumber'].isin(train_split_df['AccessionNumber'])]['PatientAge'].mean()
+        images_metadata_df[col] = images_metadata_df[col].fillna(train_data_mean_value)
+        # Scale to [0, 1]
+        images_metadata_df[col] = (images_metadata_df[col] - images_metadata_df[col].min()) / (images_metadata_df[col].max() - images_metadata_df[col].min())
+
     ## Transform columns to categorical and encode them
     n_categories = {}
     for col in config.img_metadata_cat_cols:
@@ -301,7 +311,11 @@ class MammogramDataset(Dataset):
                 imgs.append(padding_img)
 
         # Prepare images metadata [img_idx, num_metadata]
-        imgs_metadata = images_metadata[self.config.img_metadata_cat_cols + ['PatientAge']].to_numpy()
+        imgs_metadata = images_metadata[
+            self.config.img_metadata_cat_cols + 
+            self.config.img_metadata_num_cols +
+            ['PatientAge']
+            ].to_numpy()
         imgs_metadata = np.pad(imgs_metadata, ((0, self.config.max_images_per_study - num_images), (0, 0)))
 
         imgs = torch.stack(imgs, dim=0)  # [max_images, C, H, W]

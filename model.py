@@ -183,6 +183,10 @@ class MammogramScreeningClassifier(nn.Module):
 
             self.meta_embeddings[cat] = nn.Embedding(config.classes_per_cat[cat], config.feature_dim)
 
+        ## Include numerical metadata as well
+        for num_col in config.img_metadata_num_cols:
+            self.meta_embeddings[num_col] = nn.Linear(1, config.feature_dim)
+
         # Linear projection for concatenated embeddings if enabled
         if config.concatenate_embeddings:
             self.concatenated_embeddings_projector = nn.Linear(len(config.img_metadata_cat_cols) * config.feature_dim, config.feature_dim)
@@ -247,6 +251,10 @@ class MammogramScreeningClassifier(nn.Module):
                     embeddings_features.append(self.meta_embeddings[cat](pat_ages))
                     continue
                 embeddings_features.append(self.meta_embeddings[cat](imgs_metadata[:, :, cat_idx].to(torch.long)))
+            
+            ## Include numerical metadata as well
+            for num_col in self.config.img_metadata_num_cols:
+                embeddings_features.append(self.meta_embeddings[num_col](imgs_metadata[:, :, cat_idx].unsqueeze(-1)))
 
             # Project concatenated embeddings and add to image features
             features += self.concatenated_embeddings_projector(torch.cat(embeddings_features, dim=-1))
@@ -258,6 +266,10 @@ class MammogramScreeningClassifier(nn.Module):
                     features += self.meta_embeddings[cat](pat_ages)
                     continue
                 features += self.meta_embeddings[cat](imgs_metadata[:, :, cat_idx].to(torch.long))
+            
+            ## Include numerical metadata as well
+            for num_col in self.config.img_metadata_num_cols:
+                features += self.meta_embeddings[num_col](imgs_metadata[:, :, cat_idx].unsqueeze(-1))
 
         if self.ffn is not None:
             if self.pre_ffn_rms_norm is not None:
