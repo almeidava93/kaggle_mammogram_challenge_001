@@ -60,7 +60,7 @@ if __name__ == '__main__':
 
     if args.path is not None:
         print(f"Loading checkpoint from {args.path}")
-        model_weights = torch.load(args.path, map_location=config.device)['model_state_dict']
+        model_weights = torch.load(args.path, map_location=config.device, weights_only=False)['model_state_dict']
 
     else:
         print(f"Loading checkpoint from model/{CURRENT_EXP}/best_model.pth")
