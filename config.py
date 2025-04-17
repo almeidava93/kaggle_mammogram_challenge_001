@@ -38,6 +38,8 @@ class MammogramClassifierConfig(BaseModel):
 
     # Loss function parameters
     pos_weight_scaler: float = Field(1.0, description="Scaler for positive weight in loss function")
+    
+    # Sampling parameters
     sampler_pos_prob: Optional[float] = Field(None, description="Probability of sampling positive samples")
     use_weighted_random_sampler: bool = Field(True, description="Use weighted random sampler for imbalanced datasets in the training set")
 
