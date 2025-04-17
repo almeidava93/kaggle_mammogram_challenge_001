@@ -165,3 +165,18 @@ AUC no teste (Kaggle): 0.674
 - 🔲 Testar currículo dinâmico para treinamento do modelo. Por exemplo, iniciar treino com uma alta proporção de casos positivos e progressivamente reduzir até chegar próximo à prevalência real de casos positivos.
     - https://arxiv.org/abs/1901.06783
     - https://arxiv.org/abs/1904.03626
+- 🔲 Expandir metadados incorporados no modelo:
+    Metadados já incorporados:
+    - Breast Implant Present
+    - Patient's Sex
+    - Patient's Age
+    - View Position
+    - Image Laterality
+    - Patient Orientation
+
+    Outros metadados pra considerar incluir:
+    - KVP
+    - Body Part Thickness
+    - Filter Material
+    - Filter Thickness Minimum
+    - Filter Thickness Maximum
