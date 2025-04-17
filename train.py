@@ -220,7 +220,7 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
                         # Save the best model weights to disk
                         torch.save(best_model_wts, model_checkpoint_path / "best_model.pth")
             
-            plot_training_curves(training_curves, config.exp)
+            plot_training_curves(training_curves, config.exp, show=False)
 
     except KeyboardInterrupt:
         logger.debug("Training interrupted. Saving best model and results so far...")
