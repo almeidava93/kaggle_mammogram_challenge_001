@@ -37,6 +37,18 @@ def get_study_metadata(dicom_img_path: str, ttl_hash=None) -> tuple[dict, Option
         study_metadata['PatientAge'] = dicom_img.PatientAge
         study_metadata['img_height'] = dicom_img.pixel_array.shape[0]
         study_metadata['img_width'] = dicom_img.pixel_array.shape[1]
+        study_metadata['FilterType'] = dicom_img.FilterType
+        study_metadata['PhotometricInterpretation'] = dicom_img.PhotometricInterpretation
+        study_metadata['FilterMaterial'] = dicom_img.FilterMaterial
+        study_metadata['KVP'] = dicom_img.KVP
+        study_metadata['BodyPartThickness'] = dicom_img.BodyPartThickness
+        study_metadata['CompressionForce'] = dicom_img.CompressionForce
+        study_metadata['FilterThicknessMinimum'] = dicom_img.FilterThicknessMinimum
+        study_metadata['FilterThicknessMaximum'] = dicom_img.FilterThicknessMaximum
+        study_metadata['RelativeXRayExposure'] = dicom_img.RelativeXRayExposure
+        study_metadata['Exposure'] = dicom_img.Exposure
+        study_metadata['WindowCenter'] = dicom_img.WindowCenter
+        study_metadata['WindowWidth'] = dicom_img.WindowWidth
 
         study_metadata['path'] = filepath
         
