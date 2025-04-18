@@ -258,7 +258,7 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
         return model, training_curves
 
 
-def plot_training_curves(training_curves, curr_exp, show=False):
+def plot_training_curves(training_curves, curr_exp, show=False, close=True):
     """
     Plots loss, accuracy, F1, and AUC from the training_curves dictionary.
     """
@@ -290,6 +290,10 @@ def plot_training_curves(training_curves, curr_exp, show=False):
         
         if show:
             plt.show()    
+
+        if close:
+            plt.close()
+            
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train a mammogram classification model")
