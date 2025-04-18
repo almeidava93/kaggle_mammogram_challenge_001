@@ -247,14 +247,14 @@ class MammogramScreeningClassifier(nn.Module):
             embeddings_features = []
             for cat_idx, cat in enumerate(self.img_metadata_cat_cols):
                 if cat == 'PatientAge':
-                    pat_ages = imgs_metadata[:, :, cat_idx].unsqueeze(-1)
+                    pat_ages = imgs_metadata[:, :, cat_idx].unsqueeze(-1).float()
                     embeddings_features.append(self.meta_embeddings[cat](pat_ages))
                     continue
                 embeddings_features.append(self.meta_embeddings[cat](imgs_metadata[:, :, cat_idx].to(torch.long)))
             
             ## Include numerical metadata as well
             for num_col in self.config.img_metadata_num_cols:
-                embeddings_features.append(self.meta_embeddings[num_col](imgs_metadata[:, :, cat_idx].unsqueeze(-1)))
+                embeddings_features.append(self.meta_embeddings[num_col](imgs_metadata[:, :, cat_idx].unsqueeze(-1).float()))
 
             # Project concatenated embeddings and add to image features
             features += self.concatenated_embeddings_projector(torch.cat(embeddings_features, dim=-1))
@@ -262,14 +262,14 @@ class MammogramScreeningClassifier(nn.Module):
         else:
             for cat_idx, cat in enumerate(self.img_metadata_cat_cols):
                 if cat == 'PatientAge':
-                    pat_ages = imgs_metadata[:, :, cat_idx].unsqueeze(-1)
+                    pat_ages = imgs_metadata[:, :, cat_idx].unsqueeze(-1).float()
                     features += self.meta_embeddings[cat](pat_ages)
                     continue
                 features += self.meta_embeddings[cat](imgs_metadata[:, :, cat_idx].to(torch.long))
             
             ## Include numerical metadata as well
             for num_col in self.config.img_metadata_num_cols:
-                features += self.meta_embeddings[num_col](imgs_metadata[:, :, cat_idx].unsqueeze(-1))
+                features += self.meta_embeddings[num_col](imgs_metadata[:, :, cat_idx].unsqueeze(-1).float())
 
         if self.ffn is not None:
             if self.pre_ffn_rms_norm is not None:

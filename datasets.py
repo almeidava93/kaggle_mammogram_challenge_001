@@ -16,6 +16,7 @@ from skimage import morphology
 from tqdm import tqdm
 from logs import get_logger
 import shutil
+from torch.utils.data import DataLoader
 
 logger = get_logger(__name__, log_level=logging.DEBUG, log_to_file=True)
 
@@ -26,6 +27,20 @@ dataset_cache_path = Path('datasets_cache')
 Path(dataset_cache_path, 'train').mkdir(parents=True, exist_ok=True)
 Path(dataset_cache_path, 'val').mkdir(parents=True, exist_ok=True)
 Path(dataset_cache_path, 'test').mkdir(parents=True, exist_ok=True)
+
+def collate_fn(batch):
+    """
+    batch: list of tuples (imgs, target, mask)
+      imgs: [max_images, C, H, W]
+      target: scalar
+      mask: [max_images]
+    """
+    images = torch.stack([item[0] for item in batch], dim=0)      # [B, max_images, C, H, W]
+    targets = torch.stack([item[1] for item in batch], dim=0)     # [B]
+    masks = torch.stack([item[2] for item in batch], dim=0)       # [B, max_images]
+    imgs_metadata = torch.stack([item[3] for item in batch], dim=0)
+
+    return images, targets, masks, imgs_metadata
 
 def load_metadata(config: MammogramClassifierConfig) -> Tuple[pd.DataFrame, MammogramClassifierConfig]:
     images_metadata_df = pd.read_csv(config.images_metadata_path, index_col=0)
@@ -254,7 +269,6 @@ class MammogramDataset(Dataset):
 
         # Else, prepare data
         image_study_data = self.df.iloc[idx]
-        print(image_study_data)
 
         # Get image metadata
         images_metadata = self.images_metadata_df[self.images_metadata_df['AccessionNumber'] == image_study_data['AccessionNumber']]
@@ -265,7 +279,6 @@ class MammogramDataset(Dataset):
                 images_metadata = images_metadata.sample(frac=1)
 
         study_images_path = images_metadata['path']
-        print(study_images_path)
 
         # Prepare images
         imgs = []
@@ -361,8 +374,16 @@ class MammogramDataset(Dataset):
         self.config.use_cache = False
         self.config.cache_data = True
         logger.info(f"Caching dataset {self.split} to {self.dataset_cache_path}")
-        for idx in tqdm(range(len(self))):
-            self[idx]
+
+        dataloader = DataLoader(
+            self, 
+            batch_size=self.config.batch_size, 
+            collate_fn=collate_fn, 
+            num_workers=4,
+        )
+
+        for batch in tqdm(dataloader, desc=f"Building cache for {self.split} dataset", total=len(self)/self.config.batch_size):
+            pass
 
     def delete_cache(self):
         if self.config.cache_data and self.dataset_cache_path.exists():

@@ -16,6 +16,8 @@ if __name__ == '__main__':
         num_img_init_features = 64,
         batch_size = 20,
         num_epochs = 100,
+        use_cache = True,
+        cache_data=True,
         )
     
     train_dataset = MammogramDataset(split='train', config=config)
