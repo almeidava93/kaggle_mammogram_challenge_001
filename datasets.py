@@ -1,3 +1,4 @@
+import logging
 from typing import Tuple
 from torch.utils.data import Dataset
 from torch.utils.data import WeightedRandomSampler
@@ -12,6 +13,11 @@ import torch.nn.functional as F
 import random
 from torchvision import transforms	
 from skimage import morphology
+from tqdm import tqdm
+from logs import get_logger
+import shutil
+
+logger = get_logger(__name__, log_level=logging.DEBUG, log_to_file=True)
 
 from config import MammogramClassifierConfig
 
@@ -248,6 +254,7 @@ class MammogramDataset(Dataset):
 
         # Else, prepare data
         image_study_data = self.df.iloc[idx]
+        print(image_study_data)
 
         # Get image metadata
         images_metadata = self.images_metadata_df[self.images_metadata_df['AccessionNumber'] == image_study_data['AccessionNumber']]
@@ -258,6 +265,7 @@ class MammogramDataset(Dataset):
                 images_metadata = images_metadata.sample(frac=1)
 
         study_images_path = images_metadata['path']
+        print(study_images_path)
 
         # Prepare images
         imgs = []
@@ -348,3 +356,14 @@ class MammogramDataset(Dataset):
                     'imgs_metadata': imgs_metadata
                 }, cache_path)
             return imgs, target, mask, imgs_metadata
+        
+    def build_cache(self):
+        self.config.use_cache = False
+        self.config.cache_data = True
+        logger.info(f"Caching dataset {self.split} to {self.dataset_cache_path}")
+        for idx in tqdm(range(len(self))):
+            self[idx]
+
+    def delete_cache(self):
+        if self.config.cache_data and self.dataset_cache_path.exists():
+            shutil.rmtree(self.dataset_cache_path)

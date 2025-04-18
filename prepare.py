@@ -19,8 +19,7 @@ for assession_data in tqdm(train_df.to_dict('records') + test_df.to_dict('record
     curr_dicom_file_paths = list(Path(assession_data['path']).glob('*.dcm'))
     dicom_file_paths += curr_dicom_file_paths
 
-def get_study_metadata(dicom_img_path: str, ttl_hash=None) -> tuple[dict, Optional[dict|None]]:
-    del ttl_hash
+def get_study_metadata(dicom_img_path: str) -> tuple[dict, Optional[dict|None]]:
     try:
         study_metadata = {}
         error = None
@@ -37,18 +36,13 @@ def get_study_metadata(dicom_img_path: str, ttl_hash=None) -> tuple[dict, Option
         study_metadata['PatientAge'] = dicom_img.PatientAge
         study_metadata['img_height'] = dicom_img.pixel_array.shape[0]
         study_metadata['img_width'] = dicom_img.pixel_array.shape[1]
-        study_metadata['FilterType'] = dicom_img.FilterType
-        study_metadata['PhotometricInterpretation'] = dicom_img.PhotometricInterpretation
-        study_metadata['FilterMaterial'] = dicom_img.FilterMaterial
-        study_metadata['KVP'] = dicom_img.KVP
-        study_metadata['BodyPartThickness'] = dicom_img.BodyPartThickness
-        study_metadata['CompressionForce'] = dicom_img.CompressionForce
-        study_metadata['FilterThicknessMinimum'] = dicom_img.FilterThicknessMinimum
-        study_metadata['FilterThicknessMaximum'] = dicom_img.FilterThicknessMaximum
-        study_metadata['RelativeXRayExposure'] = dicom_img.RelativeXRayExposure
-        study_metadata['Exposure'] = dicom_img.Exposure
-        study_metadata['WindowCenter'] = dicom_img.WindowCenter
-        study_metadata['WindowWidth'] = dicom_img.WindowWidth
+        
+        study_metadata['FilterMaterial'] = getattr(dicom_img, 'FilterMaterial', None)
+        study_metadata['KVP'] = getattr(dicom_img, 'KVP', None)
+        study_metadata['BodyPartThickness'] = getattr(dicom_img, 'BodyPartThickness', None)
+        study_metadata['CompressionForce'] = getattr(dicom_img, 'CompressionForce', None)
+        study_metadata['RelativeXRayExposure'] = getattr(dicom_img, 'RelativeXRayExposure', None)
+        study_metadata['Exposure'] = getattr(dicom_img, 'Exposure', None)
 
         study_metadata['path'] = filepath
         
