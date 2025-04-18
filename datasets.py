@@ -43,7 +43,7 @@ def collate_fn(batch):
     return images, targets, masks, imgs_metadata
 
 def load_metadata(config: MammogramClassifierConfig) -> Tuple[pd.DataFrame, MammogramClassifierConfig]:
-    images_metadata_df = pd.read_csv(config.images_metadata_path, index_col=0)
+    images_metadata_df = pd.read_csv(config.images_metadata_path, index_col=0, low_memory=False)
     train_split_df = pd.read_csv(config.train_split_path, index_col=0)
 
     ## PatientAge
@@ -70,8 +70,8 @@ def load_metadata(config: MammogramClassifierConfig) -> Tuple[pd.DataFrame, Mamm
     for col in config.img_metadata_cat_cols:
         images_metadata_df[col] = images_metadata_df[col].astype(str).fillna('MISSING')
         n_categories[col] = images_metadata_df[col].nunique()
+        n_categories[f'{col}_categories'] = images_metadata_df[col].astype('category').cat.categories.tolist()
         images_metadata_df[col] = images_metadata_df[col].astype('category').cat.codes
-        n_categories[f'{col}_categories'] = images_metadata_df[col].cat.categories.tolist()
 
     config.classes_per_cat = n_categories
 
