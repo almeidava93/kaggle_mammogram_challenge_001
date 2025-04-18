@@ -68,8 +68,10 @@ def load_metadata(config: MammogramClassifierConfig) -> Tuple[pd.DataFrame, Mamm
     ## Transform columns to categorical and encode them
     n_categories = {}
     for col in config.img_metadata_cat_cols:
+        images_metadata_df[col] = images_metadata_df[col].astype(str).fillna('MISSING')
         n_categories[col] = images_metadata_df[col].nunique()
         images_metadata_df[col] = images_metadata_df[col].astype('category').cat.codes
+        n_categories[f'{col}_categories'] = images_metadata_df[col].cat.categories.tolist()
 
     config.classes_per_cat = n_categories
 
