@@ -86,9 +86,9 @@ class MammogramClassifierConfig(BaseModel):
     test_split_path: Optional[Path] = Field(Path('test_split.csv'), description="Path to test split CSV file")
 
     # Image metadata
-    img_metadata_cat_cols: list[str] = ['ViewPosition', 'PatientSex', 'ImageLaterality', 'BreastImplantPresent', 'PatientOrientation_0', 'PatientOrientation_1', 'FilterMaterial', 'img_width', 'img_height']
+    img_metadata_cat_cols: list[str] = ['ViewPosition', 'PatientSex', 'ImageLaterality', 'BreastImplantPresent', 'PatientOrientation_0', 'PatientOrientation_1', 'FilterMaterial', 'img_width', 'img_height', 'RescaleType', 'PixelIntensityRelationshipSign', 'PixelIntensityRelationship', 'QualityControlImage', 'FieldOfViewRotation', 'FocalSpots', 'Grid', 'Manufacturer', 'ExposureControlMode', 'DetectorConditionsNominalFlag', 'AnodeTargetMaterial']
     classes_per_cat: Optional[dict[str, int]] = Field(None, description="Number of classes per categorical feature")
-    img_metadata_num_cols: list[str] = ['KVP', 'BodyPartThickness', 'CompressionForce', 'RelativeXRayExposure', 'Exposure']
+    img_metadata_num_cols: list[str] = ['KVP', 'BodyPartThickness', 'CompressionForce', 'RelativeXRayExposure', 'Exposure', 'PositionerPrimaryAngle', 'DistanceSourceToPatient', 'DistanceSourceToDetector', 'DetectorTemperature']
 
     # Previous training data for the current experiment
     training_curves: Optional[dict[str, list[float]]] = Field(None, description="Training curves for the current experiment")
