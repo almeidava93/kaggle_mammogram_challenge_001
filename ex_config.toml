@@ -1359,8 +1359,8 @@ add_padding_pixels = false
 save_every_step = true
 save_after_n_steps = 2
 sampler_pos_prob = 0.5
-img_metadata_cat_cols = ['ViewPosition', 'PatientSex', 'ImageLaterality', 'BreastImplantPresent', 'PatientOrientation_0', 'PatientOrientation_1', 'FilterMaterial', 'img_width', 'img_height']
-img_metadata_num_cols = ['KVP', 'BodyPartThickness', 'CompressionForce', 'RelativeXRayExposure', 'Exposure']
+img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "BreastImplantPresent", "PatientOrientation_0", "PatientOrientation_1", "FilterMaterial", "img_width", "img_height",]
+img_metadata_num_cols = [ "KVP", "BodyPartThickness", "CompressionForce", "RelativeXRayExposure", "Exposure",]
 comment = "Based on exp_064, new metadata, fixed pos prob in train dataset."
 
 [exp_074]
@@ -1387,6 +1387,34 @@ save_every_step = true
 save_after_n_steps = 2
 sampler_pos_prob = 0.5
 comment = "Based on exp_074, more metadata, preserved other configs."
+
+[exp_075]
+start_from_checkpoint = "model/exp_075/checkpoint_last.pth"
+dataset_size = 200
+learning_rate = 0.0001
+lr_exponentiallr_gamma = 0.96
+weight_decay = 0.0
+dropout = 0.1
+cnn_dropout = 0.1
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 20
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+remove_dark_pixels = true
+invert_background = true
+add_padding_pixels = false
+save_every_step = true
+save_after_n_steps = 2
+sampler_pos_prob = 0.5
+img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "BreastImplantPresent", "PatientOrientation_0", "PatientOrientation_1", "FilterMaterial", "img_width", "img_height", "AnodeTargetMaterial",]
+img_metadata_num_cols = [ "KVP", "BodyPartThickness", "CompressionForce", "RelativeXRayExposure", "Exposure",]
+cache_data = true
+use_cache = true
 
 [exp_001.training_curves]
 train_loss = [ 1.4409383893013001, 1.3320579648017883, 1.2525875091552734, 1.2942439079284669, 1.2189216017723083, 1.2805424809455872, 1.1712888658046723, 1.1360002696514129, 1.1142919540405274, 1.0006040692329408,]
@@ -2421,3 +2449,18 @@ train_loss = [ 1.4600510597229004, 1.2776056289672852, 1.2311546683311463, 1.196
 train_auc = [ 0.5207017660140991, 0.6504650115966797, 0.7397959232330322, 0.745199978351593, 0.7233723402023315, 0.7214499115943909, 0.7232723236083984, 0.773409366607666, 0.8069155216217041, 0.8026210069656372,]
 val_loss = [ 1.5310707688331604, 1.4699194431304932, 1.4145091772079468, 1.3518805623054504, 1.391199266910553, 1.5298746466636657, 1.5692589998245239, 1.5344974875450135, 1.5124242424964904, 1.5137301564216614,]
 val_auc = [ 0.46833330392837524, 0.6077777743339539, 0.7552777528762817, 0.7705554962158203, 0.7491666674613953, 0.7611111402511597, 0.7469444870948792, 0.7280555963516235, 0.7233332991600037, 0.7213888764381409,]
+
+[exp_075.best_results]
+best_epoch = 0
+best_val_loss = inf
+best_val_auc = 0
+time_elapsed_min = 0.0
+time_elapsed_sec = 17.245574951171875
+time_elapsed_per_epoch_min = 0.0
+time_elapsed_per_epoch_sec = 17.245574951171875
+
+[exp_075.training_curves]
+train_loss = []
+train_auc = []
+val_loss = []
+val_auc = []

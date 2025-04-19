@@ -281,6 +281,7 @@ class MammogramDataset(Dataset):
                     ['PatientAge']
                     ].to_numpy()
                 imgs_metadata = np.pad(imgs_metadata, ((0, self.config.max_images_per_study - num_images), (0, 0)))
+                imgs_metadata = torch.tensor(imgs_metadata, dtype=torch.uint8)
                 return imgs, target, mask, imgs_metadata
             
         # Randomize order in train dataset
