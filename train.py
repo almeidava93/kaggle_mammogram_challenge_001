@@ -112,8 +112,6 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
                     continue
 
                 for inputs, labels, masks, imgs_metadata in dataloaders[phase]:
-                    logger.debug(f'Pos prob: {labels.sum()/len(labels):.4f}')
-                    logger.debug(f'Neg prob: {(1-labels).sum()/len(labels):.4f}')
                     if step >= steps_per_epoch:
                         logger.debug(f"End of {phase} phase")
                         break
