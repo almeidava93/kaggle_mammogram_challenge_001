@@ -26,6 +26,12 @@ class MammogramClassifierConfig(BaseModel):
     cache_data: bool = Field(False, description="Cache data in memory")
     use_cache: bool = Field(False, description="Use cached data")
 
+    # Dynamic curriculum learning parameters
+    use_dynamic_curriculum: bool = Field(False, description="Use dynamic curriculum learning")
+    dynamic_curriculum_starting_pos_prob: float = Field(0.9, description="Starting probability of sampling positive samples")
+    dynamic_curriculum_pos_prob_decay_rate: float = Field(0.05, description="Rate of change for positive sampling probability")
+    dynamic_curriculum_min_pos_prob: Optional[float] = Field(None, description="Minimum probability of sampling positive samples")
+
     # Feedforward parameters
     use_ffn: bool = Field(False, description="Use feedforward network")
     ffn_hidden_dim: Optional[int] = Field(None, description="Hidden dimension for feedforward network")

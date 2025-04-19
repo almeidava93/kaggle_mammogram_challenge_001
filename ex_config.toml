@@ -1400,7 +1400,7 @@ feature_dim = 256
 img_size = 256
 num_img_channels = 1
 num_img_init_features = 64
-batch_size = 20
+batch_size = 10
 num_epochs = 20
 use_ffn = false
 num_attn_heads = 8
@@ -1411,10 +1411,15 @@ add_padding_pixels = false
 save_every_step = true
 save_after_n_steps = 2
 sampler_pos_prob = 0.5
-img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "BreastImplantPresent", "PatientOrientation_0", "PatientOrientation_1", "FilterMaterial", "img_width", "img_height", "AnodeTargetMaterial",]
+img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "BreastImplantPresent", "PatientOrientation_0", "PatientOrientation_1", "FilterMaterial", "img_width", "img_height",]
 img_metadata_num_cols = [ "KVP", "BodyPartThickness", "CompressionForce", "RelativeXRayExposure", "Exposure",]
 cache_data = true
 use_cache = true
+use_dynamic_curriculum = true
+dynamic_curriculum_starting_pos_prob = 0.9
+dynamic_curriculum_min_pos_prob = 0.0
+dynamic_curriculum_pos_prob_decay_rate = 0.5
+steps_per_epoch = 1
 
 [exp_001.training_curves]
 train_loss = [ 1.4409383893013001, 1.3320579648017883, 1.2525875091552734, 1.2942439079284669, 1.2189216017723083, 1.2805424809455872, 1.1712888658046723, 1.1360002696514129, 1.1142919540405274, 1.0006040692329408,]
@@ -2455,12 +2460,12 @@ best_epoch = 0
 best_val_loss = inf
 best_val_auc = 0
 time_elapsed_min = 0.0
-time_elapsed_sec = 17.245574951171875
+time_elapsed_sec = 4.150855541229248
 time_elapsed_per_epoch_min = 0.0
-time_elapsed_per_epoch_sec = 17.245574951171875
+time_elapsed_per_epoch_sec = 4.150855541229248
 
 [exp_075.training_curves]
-train_loss = []
+train_loss = [ 0.0,]
 train_auc = []
 val_loss = []
 val_auc = []

@@ -232,9 +232,18 @@ class MammogramDataset(Dataset):
             assert isinstance(self.config.pos_weight_scaler, float) and self.config.pos_weight_scaler > 0, "pos_weight_scaler must be a float and greater than 0"
             self.pos_weight = torch.tensor(self.df['target'].value_counts()[0] / self.df['target'].value_counts()[1], dtype=torch.float)
             self.pos_weight = self.pos_weight * self.config.pos_weight_scaler
-
+        
         # Create weighted random sampler to balance traning examples
         if self.split == 'train' and self.config.use_weighted_random_sampler:
+            
+            # Check if dynamic curriculum is enabled
+            if config.use_dynamic_curriculum:
+                assert config.workers == 0, "Dynamic curriculum only works with workers=0"
+                self.config.sampler_pos_prob = self.config.dynamic_curriculum_starting_pos_prob
+                # Define minimum probability of sampling positive samples if not given
+                if self.config.dynamic_curriculum_min_pos_prob is None:
+                    self.config.dynamic_curriculum_min_pos_prob = self.df['target'].mean()
+            
             # Define probability of sampling positive samples and negative samples
             if self.config.sampler_pos_prob is not None:
                 pos_prob = self.config.sampler_pos_prob
