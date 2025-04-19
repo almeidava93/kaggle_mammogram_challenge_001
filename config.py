@@ -7,6 +7,7 @@ class MammogramClassifierConfig(BaseModel):
     exp: str = Field(..., description="Experiment name")
     batch_size: int = Field(20, description="Batch size")
     dataset_size: int = Field(-1, description="Dataset size")
+    num_steps_gradient_accumulation: int = Field(1, description="Number of steps to accumulate gradients over")
     feature_dim: int = Field(256, description="Feature dimension")
     img_size: int = Field(256, description="Image size")
     device: str = Field('cuda' if torch.cuda.is_available() else 'cpu', description="Device to use for training")

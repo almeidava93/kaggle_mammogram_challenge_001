@@ -261,20 +261,28 @@ class MammogramDataset(Dataset):
         return len(self.df)
 
     def __getitem__(self, idx):
-        # Load cached data if available
-        cache_path = self.dataset_cache_path / f"{idx}.pt"
-        if self.config.use_cache and self.config.cache_data:
-            if cache_path.exists():
-                data = torch.load(cache_path, weights_only=False, map_location='cpu')
-                imgs, target, mask, imgs_metadata = data['imgs'], data['target'], data['mask'], data['imgs_metadata']
-                return imgs, target, mask, imgs_metadata
-
-        # Else, prepare data
+        # Prepare data
         image_study_data = self.df.iloc[idx]
 
         # Get image metadata
         images_metadata = self.images_metadata_df[self.images_metadata_df['AccessionNumber'] == image_study_data['AccessionNumber']]
 
+        # Load cached data if available
+        cache_path = self.dataset_cache_path / f"{idx}.pt"
+        if self.config.use_cache and self.config.cache_data:
+            if cache_path.exists():
+                data = torch.load(cache_path, weights_only=False, map_location='cpu')
+                imgs, target, mask = data['imgs'], data['target'], data['mask']
+                num_images = len(images_metadata)
+                # Prepare images metadata [img_idx, num_metadata]
+                imgs_metadata = images_metadata[
+                    self.config.img_metadata_cat_cols + 
+                    self.config.img_metadata_num_cols +
+                    ['PatientAge']
+                    ].to_numpy()
+                imgs_metadata = np.pad(imgs_metadata, ((0, self.config.max_images_per_study - num_images), (0, 0)))
+                return imgs, target, mask, imgs_metadata
+            
         # Randomize order in train dataset
         if self.split == 'train':
             if self.config.randomize_image_order:

@@ -124,17 +124,19 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
                         masks = masks.to(config.device)
                         imgs_metadata = imgs_metadata.to(config.device)
 
-                        # Zero the parameter gradients
-                        # See https://pytorch.org/tutorials/recipes/recipes/tuning_guide.html#use-parameter-grad-none-instead-of-model-zero-grad-or-optimizer-zero-grad
-                        optimizer.zero_grad()
-
                         with torch.set_grad_enabled(phase == 'train'):
                             outputs = model(inputs, masks, imgs_metadata)
                             loss = criterion(outputs.view(-1), labels.to(torch.float))
+                            # Scale loss due to gradient accumulation
+                            loss = loss / config.num_steps_gradient_accumulation
 
                             if phase == 'train':
                                 loss.backward()
-                                optimizer.step()
+
+                                # Apply gradient accumulation
+                                if step % config.num_steps_gradient_accumulation == 0:
+                                    optimizer.step()
+                                    optimizer.zero_grad() # Reset accumulated gradients after optimizer step
 
                         probs = torch.sigmoid(outputs.view(-1))
                         binary_auc.update(probs, labels)
@@ -143,7 +145,9 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
                         logger.debug(f"Step {step} - Loss: {loss.item():.4f}")
                                         
                         if phase == 'train':
-                            scheduler.step()
+                            # Apply gradient accumulation
+                            if step % config.num_steps_gradient_accumulation == 0:
+                                scheduler.step()
                             time_elapsed = time.time() - since
 
                             training_state = {
@@ -293,7 +297,7 @@ def plot_training_curves(training_curves, curr_exp, show=False, close=True):
 
         if close:
             plt.close()
-            
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train a mammogram classification model")
