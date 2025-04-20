@@ -79,7 +79,7 @@ class MammogramClassifierConfig(BaseModel):
     cnn_rms_norms_dims_to_apply: list[int] = Field([-1], description="Dimensions to apply RMS norm in CNN")
     cnn_use_group_norm: bool = Field(False, description="Use GroupNorm in CNN instead of BatchNorm")
     cnn_use_weight_standardization: bool = Field(False, description="Use weight standardization in CNN")
-    cnn_max_num_features: Optional[int] = Field(1024, description="Max number of features in CNN")
+    cnn_max_num_features: Optional[int] = Field(2048, description="Max number of features in CNN")
 
     # Start from checkpoint
     start_from_checkpoint: Optional[str] = Field(None, description="Path to checkpoint to start from")
