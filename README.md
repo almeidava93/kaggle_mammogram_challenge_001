@@ -181,3 +181,6 @@ AUC no teste (Kaggle): 0.674
     - Filter Thickness Minimum
     - Filter Thickness Maximum
 - 🔲 Usar gradient accumulation para simular batches maiores
+- 🔲 Aplicar características do BiT
+    - Big Transfer (BiT): General Visual Representation Learning - https://arxiv.org/abs/1912.11370
+    - GroupNorm + Weight Standardization (WS) - https://github.com/joe-siyuan-qiao/WeightStandardization

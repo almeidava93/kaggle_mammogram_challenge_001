@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 from torchvision.models import vit_b_16, ViT_B_16_Weights
+import torch.nn.functional as F
 
 from config import MammogramClassifierConfig
 
@@ -29,11 +30,26 @@ class RMSNorm(nn.Module):
         normed = x * rms
         output = normed * (1 + self.weight.to(x.dtype).unsqueeze(0))
         return output
-    
+
+class Conv2dWithWeightStandardization(nn.Conv2d):
+    def __init__(self, in_channels, out_channels, kernel_size, stride=1,
+                 padding=0, dilation=1, groups=1, bias=True):
+        super(Conv2dWithWeightStandardization, self).__init__(in_channels, out_channels, kernel_size, stride,
+                 padding, dilation, groups, bias)
+
+    def forward(self, x):
+        weight = self.weight
+        weight_mean = weight.mean(dim=1, keepdim=True).mean(dim=2,
+                                  keepdim=True).mean(dim=3, keepdim=True)
+        weight = weight - weight_mean
+        std = weight.view(weight.size(0), -1).std(dim=1).view(-1, 1, 1, 1) + 1e-5
+        weight = weight / std.expand_as(weight)
+        return F.conv2d(x, weight, self.bias, self.stride,
+                        self.padding, self.dilation, self.groups)
 
 # setup model
 class ResNetBlock(nn.Module):
-    def __init__(self, in_channels, out_channels, dropout, activation, stride=1, n_conv=2, use_rms_norm=False, rms_norm_dim=None, cnn_rms_norms_dims_to_apply=None):
+    def __init__(self, in_channels, out_channels, dropout, activation, stride=1, n_conv=2, use_rms_norm=False, rms_norm_dim=None, cnn_rms_norms_dims_to_apply=None, cnn_use_group_norm=False, cnn_use_weight_standardization=False):
         super(ResNetBlock, self).__init__()
         self.dropout = None
         self.activation = getattr(nn, activation)()
@@ -42,11 +58,22 @@ class ResNetBlock(nn.Module):
         
         self.shortcut = nn.Sequential()
         if stride != 1 or in_channels != out_channels:
-            self.shortcut = nn.Sequential(
-                nn.Conv2d(in_channels, out_channels, kernel_size=1, stride=stride, bias=False),
-            )
+            # Define convolutional layer with weight standardization if specified
+            if cnn_use_weight_standardization:
+                self.shortcut = nn.Sequential(
+                    Conv2dWithWeightStandardization(in_channels, out_channels, kernel_size=1, stride=stride, bias=False),
+                )
+            else:
+                # Define convolutional layer without weight standardization
+                self.shortcut = nn.Sequential(
+                    nn.Conv2d(in_channels, out_channels, kernel_size=1, stride=stride, bias=False),
+                )
+
+            # Define normalization strategy
             if use_rms_norm:
                 self.shortcut.append(RMSNorm(rms_norm_dim, dims_to_apply_to=cnn_rms_norms_dims_to_apply))
+            elif cnn_use_group_norm:
+                self.shortcut.append(nn.GroupNorm(out_channels//8, out_channels))
             else:
                 self.shortcut.append(nn.BatchNorm2d(out_channels))
 
@@ -54,13 +81,22 @@ class ResNetBlock(nn.Module):
         for idx in range(0, n_conv):
             # If last conv layer
             if idx == n_conv - 1:
-                self.pipeline.append(nn.Conv2d(out_channels, out_channels, kernel_size=3, stride=1, padding=1, bias=False))
-
+                # Define convolutional layer with weight standardization if specified
+                if cnn_use_weight_standardization:
+                    self.pipeline.append(Conv2dWithWeightStandardization(out_channels, out_channels, kernel_size=3, stride=1, padding=1, bias=False))
+                else:
+                    # Define convolutional layer without weight standardization
+                    self.pipeline.append(nn.Conv2d(out_channels, out_channels, kernel_size=3, stride=1, padding=1, bias=False))
+                
+                # Define normalization strategy
                 if use_rms_norm:
                     self.pipeline.append(RMSNorm(rms_norm_dim, dims_to_apply_to=cnn_rms_norms_dims_to_apply))
+                elif cnn_use_group_norm:
+                    self.pipeline.append(nn.GroupNorm(out_channels//8, out_channels))
                 else:
                     self.pipeline.append(nn.BatchNorm2d(out_channels))
                 
+                # Define dropout
                 if dropout > 0:
                     self.pipeline.append(nn.Dropout(dropout))
                 
@@ -68,9 +104,18 @@ class ResNetBlock(nn.Module):
 
             # if the first conv layer
             if idx == 0:
-                self.pipeline.append(nn.Conv2d(in_channels, out_channels, kernel_size=3, stride=stride, padding=1, bias=False))
+                # Define convolutional layer with weight standardization if specified
+                if cnn_use_weight_standardization:
+                    self.pipeline.append(Conv2dWithWeightStandardization(in_channels, out_channels, kernel_size=3, stride=stride, padding=1, bias=False))
+                else:
+                    # Define convolutional layer without weight standardization
+                    self.pipeline.append(nn.Conv2d(in_channels, out_channels, kernel_size=3, stride=stride, padding=1, bias=False))
+                
+                # Define normalization strategy
                 if use_rms_norm:
                     self.pipeline.append(RMSNorm(rms_norm_dim, dims_to_apply_to=cnn_rms_norms_dims_to_apply))
+                elif cnn_use_group_norm:
+                    self.pipeline.append(nn.GroupNorm(out_channels//8, out_channels))
                 else:
                     self.pipeline.append(nn.BatchNorm2d(out_channels))
 
@@ -78,14 +123,22 @@ class ResNetBlock(nn.Module):
                 continue
             
             # middle conv layers
-            self.pipeline.append(nn.Conv2d(out_channels, out_channels, kernel_size=3, stride=1, padding=1, bias=False))
+            # Define convolutional layer with weight standardization if specified
+            if cnn_use_weight_standardization:
+                self.pipeline.append(Conv2dWithWeightStandardization(out_channels, out_channels, kernel_size=3, stride=1, padding=1, bias=False))
+            else:
+                # Define convolutional layer without weight standardization
+                self.pipeline.append(nn.Conv2d(out_channels, out_channels, kernel_size=3, stride=1, padding=1, bias=False))
+            
+            # Define normalization strategy
             if use_rms_norm:
                 self.pipeline.append(RMSNorm(rms_norm_dim, dims_to_apply_to=cnn_rms_norms_dims_to_apply))
+            elif cnn_use_group_norm:
+                self.pipeline.append(nn.GroupNorm(out_channels//8, out_channels))
             else:
                 self.pipeline.append(nn.BatchNorm2d(out_channels))
             self.pipeline.append(self.activation)
 
-        
     def forward(self, x):
         out = self.pipeline(x)
         out += self.shortcut(x)
@@ -148,12 +201,20 @@ class MammogramScreeningClassifier(nn.Module):
 
             # Add first block
             resnet_blocks.append(
-                ResNetBlock(config.num_img_channels, num_init_features, stride=2, rms_norm_dim=rms_norm_dim, dropout=config.cnn_dropout, activation=config.cnn_activation)
+                ResNetBlock(config.num_img_channels, num_init_features, stride=2, rms_norm_dim=rms_norm_dim, dropout=config.cnn_dropout, activation=config.cnn_activation, cnn_use_group_norm=config.cnn_use_group_norm, cnn_use_weight_standardization=config.cnn_use_weight_standardization),
             )
 
             for _ in range(config.cnn_resnet_n_blocks):
+                if num_init_features*2 > config.cnn_max_num_features:
+                    resnet_blocks.append(
+                        ResNetBlock(num_init_features, config.cnn_max_num_features, stride=2, rms_norm_dim=rms_norm_dim//2, dropout=config.cnn_dropout, activation=config.cnn_activation, cnn_use_group_norm=config.cnn_use_group_norm, cnn_use_weight_standardization=config.cnn_use_weight_standardization),
+                    )
+                    num_init_features = config.cnn_max_num_features
+                    rms_norm_dim = rms_norm_dim//2
+                    continue
+
                 resnet_blocks.append(
-                    ResNetBlock(num_init_features,   num_init_features*2,  stride=2, rms_norm_dim=rms_norm_dim//2, dropout=config.cnn_dropout, activation=config.cnn_activation),
+                    ResNetBlock(num_init_features,   num_init_features*2,  stride=2, rms_norm_dim=rms_norm_dim//2, dropout=config.cnn_dropout, activation=config.cnn_activation, cnn_use_group_norm=config.cnn_use_group_norm, cnn_use_weight_standardization=config.cnn_use_weight_standardization),
                 )
                 num_init_features *= 2
                 rms_norm_dim = rms_norm_dim//2
