@@ -1421,6 +1421,279 @@ dynamic_curriculum_min_pos_prob = 0.0
 dynamic_curriculum_pos_prob_decay_rate = 0.5
 steps_per_epoch = 1
 
+[exp_076]
+start_from_checkpoint = "model/exp_076/checkpoint_last.pth"
+dataset_size = -1
+learning_rate = 0.0001
+lr_exponentiallr_gamma = 0.999258
+weight_decay = 0.0
+dropout = 0.1
+cnn_dropout = 0.1
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 2000
+steps_per_epoch = 10
+num_steps_gradient_accumulation = 5
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+remove_dark_pixels = true
+invert_background = true
+add_padding_pixels = false
+save_every_step = true
+save_after_n_steps = 2
+sampler_pos_prob = 0.5
+img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "BreastImplantPresent", "PatientOrientation_0", "PatientOrientation_1", "FilterMaterial", "img_width", "img_height",]
+img_metadata_num_cols = [ "KVP", "BodyPartThickness", "CompressionForce", "RelativeXRayExposure", "Exposure",]
+use_cache = true
+cache_data = true
+
+[exp_077]
+start_from_checkpoint = "model/exp_077/checkpoint_last.pth"
+dataset_size = -1
+learning_rate = 0.0001
+lr_exponentiallr_gamma = 0.96
+weight_decay = 0.0
+dropout = 0.1
+cnn_dropout = 0.1
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 200
+steps_per_epoch = 10
+num_steps_gradient_accumulation = 10
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+remove_dark_pixels = true
+invert_background = true
+add_padding_pixels = false
+save_every_step = true
+save_after_n_steps = 2
+sampler_pos_prob = 0.5
+img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "BreastImplantPresent", "PatientOrientation_0", "PatientOrientation_1", "FilterMaterial", "img_width", "img_height",]
+img_metadata_num_cols = [ "KVP", "BodyPartThickness", "CompressionForce", "RelativeXRayExposure", "Exposure",]
+use_cache = true
+cache_data = true
+
+[exp_078]
+start_from_checkpoint = "model/exp_078/checkpoint_last.pth"
+dataset_size = -1
+learning_rate = 0.0001
+lr_exponentiallr_gamma = 0.96
+weight_decay = 0.0
+dropout = 0.1
+cnn_dropout = 0.1
+feature_dim = 256
+img_size = 512
+cnn_resnet_n_blocks = 6
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 200
+steps_per_epoch = 10
+num_steps_gradient_accumulation = 1
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+remove_dark_pixels = true
+invert_background = true
+add_padding_pixels = false
+save_every_step = true
+save_after_n_steps = 2
+sampler_pos_prob = 0.5
+img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "BreastImplantPresent", "PatientOrientation_0", "PatientOrientation_1", "FilterMaterial", "img_width", "img_height",]
+img_metadata_num_cols = [ "KVP", "BodyPartThickness", "CompressionForce", "RelativeXRayExposure", "Exposure",]
+use_cache = true
+cache_data = true
+
+[exp_079]
+start_from_checkpoint = "model/exp_079/checkpoint_last.pth"
+dataset_size = -1
+learning_rate = 0.0001
+lr_exponentiallr_gamma = 0.999258
+weight_decay = 0.0
+dropout = 0.1
+cnn_dropout = 0.1
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 200
+steps_per_epoch = 10
+num_steps_gradient_accumulation = 5
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+remove_dark_pixels = true
+invert_background = true
+add_padding_pixels = false
+save_every_step = true
+save_after_n_steps = 2
+sampler_pos_prob = 0.5
+img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "BreastImplantPresent", "PatientOrientation_0", "PatientOrientation_1", "FilterMaterial", "img_width", "img_height",]
+img_metadata_num_cols = [ "KVP", "BodyPartThickness", "CompressionForce", "RelativeXRayExposure", "Exposure",]
+use_cache = true
+cache_data = true
+
+[exp_080]
+start_from_checkpoint = "model/exp_079/checkpoint_last.pth"
+dataset_size = -1
+learning_rate = 0.0001
+lr_exponentiallr_gamma = 0.999258
+weight_decay = 0.0
+dropout = 0.1
+cnn_dropout = 0.1
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 200
+steps_per_epoch = 10
+num_steps_gradient_accumulation = 1
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+remove_dark_pixels = true
+invert_background = true
+add_padding_pixels = false
+save_every_step = true
+save_after_n_steps = 2
+sampler_pos_prob = 0.5
+img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "BreastImplantPresent", "PatientOrientation_0", "PatientOrientation_1", "FilterMaterial", "img_width", "img_height",]
+img_metadata_num_cols = [ "KVP", "BodyPartThickness", "CompressionForce", "RelativeXRayExposure", "Exposure",]
+use_cache = true
+cache_data = true
+
+[exp_081]
+start_from_checkpoint = "model/exp_081/checkpoint_last.pth"
+dataset_size = -1
+learning_rate = 0.0001
+lr_exponentiallr_gamma = 0.999258
+weight_decay = 0.0001
+dropout = 0.2
+cnn_dropout = 0.2
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 200
+steps_per_epoch = 10
+num_steps_gradient_accumulation = 1
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+remove_dark_pixels = true
+invert_background = true
+add_padding_pixels = false
+save_every_step = true
+save_after_n_steps = 2
+sampler_pos_prob = 0.5
+img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "BreastImplantPresent", "PatientOrientation_0", "PatientOrientation_1", "FilterMaterial", "img_width", "img_height", "Manufacturer", "AnodeTargetMaterial",]
+img_metadata_num_cols = [ "KVP", "BodyPartThickness", "CompressionForce", "Exposure",]
+use_cache = true
+cache_data = true
+
+[exp_082]
+start_from_checkpoint = "model/exp_082/checkpoint_last.pth"
+dataset_size = 200
+learning_rate = 0.0001
+lr_exponentiallr_gamma = 0.96
+weight_decay = 0.0001
+dropout = 0.1
+cnn_dropout = 0.1
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 20
+steps_per_epoch = 10
+num_steps_gradient_accumulation = 1
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+remove_dark_pixels = true
+invert_background = true
+add_padding_pixels = false
+save_every_step = true
+save_after_n_steps = 2
+sampler_pos_prob = 0.5
+img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "BreastImplantPresent", "PatientOrientation_0", "PatientOrientation_1", "FilterMaterial", "img_width", "img_height", "Manufacturer", "AnodeTargetMaterial",]
+img_metadata_num_cols = [ "KVP", "BodyPartThickness", "CompressionForce", "Exposure",]
+use_cache = true
+cache_data = true
+
+[exp_083]
+start_from_checkpoint = "model/exp_083/checkpoint_last.pth"
+dataset_size = 200
+learning_rate = 0.0001
+lr_exponentiallr_gamma = 0.96
+weight_decay = 0.0001
+dropout = 0.2
+cnn_dropout = 0.2
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 20
+steps_per_epoch = 10
+num_steps_gradient_accumulation = 1
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+remove_dark_pixels = true
+invert_background = true
+add_padding_pixels = false
+save_every_step = true
+save_after_n_steps = 2
+sampler_pos_prob = 0.5
+img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "BreastImplantPresent", "PatientOrientation_0", "PatientOrientation_1", "FilterMaterial", "img_width", "img_height",]
+img_metadata_num_cols = [ "KVP", "BodyPartThickness", "CompressionForce", "Exposure",]
+use_cache = true
+cache_data = true
+
+[exp_084]
+start_from_checkpoint = "model/exp_084/checkpoint_last.pth"
+dataset_size = -1
+learning_rate = 0.0001
+lr_exponentiallr_gamma = 0.999258
+weight_decay = 0.0
+dropout = 0.1
+cnn_dropout = 0.1
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 20
+num_epochs = 20
+num_steps_gradient_accumulation = 1
+steps_per_epoch = 10
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+remove_dark_pixels = true
+invert_background = true
+add_padding_pixels = false
+save_every_step = true
+save_after_n_steps = 10
+cache_data = true
+use_cache = true
+img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "BreastImplantPresent", "PatientOrientation_0", "PatientOrientation_1", "FilterMaterial", "img_width", "img_height",]
+img_metadata_num_cols = [ "KVP", "BodyPartThickness", "CompressionForce", "Exposure",]
+cnn_use_group_norm = true
+cnn_use_weight_standardization = true
+comment = "Based on exp_070, added group norm and weight standardization, entire dataset."
+
 [exp_001.training_curves]
 train_loss = [ 1.4409383893013001, 1.3320579648017883, 1.2525875091552734, 1.2942439079284669, 1.2189216017723083, 1.2805424809455872, 1.1712888658046723, 1.1360002696514129, 1.1142919540405274, 1.0006040692329408,]
 train_acc = [ 0.5049999952316284, 0.5049999952316284, 0.5299999713897705, 0.48500001430511475, 0.5199999809265137, 0.47999998927116394, 0.5550000071525574, 0.5600000023841858, 0.5249999761581421, 0.5849999785423279,]
@@ -2469,3 +2742,63 @@ train_loss = [ 0.0,]
 train_auc = []
 val_loss = []
 val_auc = []
+
+[exp_076.best_results]
+best_epoch = 7.0
+best_val_loss = 0.3495395421981812
+best_val_auc = 0.726348340511322
+time_elapsed_min = 236.0
+time_elapsed_sec = 39.96072864532471
+time_elapsed_per_epoch_min = 16.0
+time_elapsed_per_epoch_sec = 54.28290918895175
+
+[exp_076.training_curves]
+train_loss = [ 0.43306505084037783, 0.28973315954208373, 0.27769444286823275, 0.2708418682217598, 0.28036672472953794, 0.2987699925899506, 0.2878517657518387, 0.281121127307415, 0.28788758218288424, 0.28241853415966034, 0.28081253468990325, 0.2832984238862991, 0.27421316504478455, 0.28111618757247925,]
+train_auc = [ 0.4750474691390991, 0.5437543988227844, 0.5123809576034546, 0.571212112903595, 0.5607185959815979, 0.6160184741020203, 0.584926426410675, 0.6117446422576904, 0.6562627553939819, 0.6251505613327026, 0.6232622861862183, 0.6191922426223755, 0.8159341216087341, 0.6455106735229492,]
+val_loss = [ 0.26903347223997115, 0.34567383527755735, 0.38713519275188446, 0.4350742518901825, 0.42336012721061705, 0.40705285370349886, 0.38279573917388915, 0.3495395421981812, 0.32349041402339934, 0.3036972850561142, 0.30346933007240295, 0.3138948559761047, 0.3232480615377426,]
+val_auc = [ 0.43791526556015015, 0.5388110876083374, 0.671168863773346, 0.6774770021438599, 0.6942839026451111, 0.6578891277313232, 0.6160648465156555, 0.726348340511322, 0.6438857316970825, 0.7243748903274536, 0.5895225405693054, 0.5539772510528564, 0.6550671458244324,]
+
+[exp_078.best_results]
+best_epoch = 0
+best_val_loss = inf
+best_val_auc = 0
+time_elapsed_min = 21.0
+time_elapsed_sec = 17.42931580543518
+time_elapsed_per_epoch_min = 21.0
+time_elapsed_per_epoch_sec = 17.42931580543518
+
+[exp_078.training_curves]
+train_loss = [ 1.6775468349456788,]
+train_auc = [ 0.4425933361053467,]
+val_loss = []
+val_auc = []
+
+[exp_082.best_results]
+best_epoch = 6
+best_val_loss = 1.3988749265670777
+best_val_auc = 0.7219444513320923
+time_elapsed_min = 176.0
+time_elapsed_sec = 18.05622911453247
+time_elapsed_per_epoch_min = 12.0
+time_elapsed_per_epoch_sec = 35.57544493675232
+
+[exp_082.training_curves]
+train_loss = [ 1.4600298166275025, 1.2917069435119628, 1.177730667591095, 1.2155870199203491, 1.1847190499305724, 1.2523165583610534, 1.155393409729004, 1.1574958622455598, 1.1346530318260193, 1.158095622062683, 1.058531641960144, 1.1584385514259339, 1.183636736869812,]
+train_auc = [ 0.5626569986343384, 0.6772836446762085, 0.7862000465393066, 0.7256140112876892, 0.6935338973999023, 0.7134177684783936, 0.7803777456283569, 0.7693790197372437, 0.7672767639160156, 0.7299248576164246, 0.8229292631149292, 0.7877810001373291, 0.7510145902633667,]
+val_loss = [ 1.4386030316352845, 1.4079071640968324, 1.3775776863098144, 1.4370047211647035, 1.4591565489768983, 1.4596292972564697, 1.3988749265670777, 1.3623626708984375, 1.3599779844284057, 1.3755077600479126, 1.398751401901245, 1.4081956028938294, 1.4101042866706848,]
+val_auc = [ 0.426111102104187, 0.6766666769981384, 0.7194444537162781, 0.7150000333786011, 0.71833336353302, 0.7211111187934875, 0.7219444513320923, 0.721666693687439, 0.7216666340827942, 0.7205555438995361, 0.7202777862548828, 0.7200000286102295, 0.7205555438995361,]
+
+[exp_083.best_results]
+best_epoch = 6
+best_val_loss = 1.6258482694625855
+best_val_auc = 0.7563889026641846
+time_elapsed_min = 282.0
+time_elapsed_sec = 11.379378080368042
+time_elapsed_per_epoch_min = 16.0
+time_elapsed_per_epoch_sec = 35.9634928282569
+
+[exp_083.training_curves]
+train_loss = [ 1.5371103644371034, 1.2969115793704986, 1.3474517583847045, 1.3366511464118958, 1.2656798481941223, 1.2327311277389525, 1.2964550018310548, 1.2193458795547485, 1.2428270697593689, 1.2395620226860047, 1.302221667766571, 1.2754642128944398, 1.297864603996277, 1.258105254173279, 1.2995998740196228, 1.2267682790756225, 1.2825292110443116,]
+train_auc = [ 0.49834588170051575, 0.5059596300125122, 0.6281049251556396, 0.5999598503112793, 0.6899839639663696, 0.7036137580871582, 0.6925093531608582, 0.7288714647293091, 0.7248899936676025, 0.6999198198318481, 0.6587157249450684, 0.6359174847602844, 0.6755233407020569, 0.6743674278259277, 0.6419047713279724, 0.7453926801681519, 0.6982213258743286,]
+val_loss = [ 1.7720659494400024, 1.8625347137451171, 1.7071442604064941, 1.5703192710876466, 1.5935495257377625, 1.635331630706787, 1.6258482694625855, 1.593191385269165, 1.600331223011017, 1.6002156019210816, 1.5876880407333374, 1.5843515038490295, 1.5806811690330504, 1.5780555605888367, 1.5744020342826843, 1.5696839928627013,]
+val_auc = [ 0.4451388716697693, 0.6405555009841919, 0.7283332943916321, 0.7224999666213989, 0.7291666865348816, 0.7491666674613953, 0.7563889026641846, 0.746666669845581, 0.7516666650772095, 0.7486110925674438, 0.7433333396911621, 0.7422221899032593, 0.7430555820465088, 0.7427777647972107, 0.7430555820465088, 0.7347221970558167,]
