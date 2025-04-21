@@ -1664,9 +1664,9 @@ cache_data = true
 
 [exp_084]
 start_from_checkpoint = "model/exp_084/checkpoint_last.pth"
-dataset_size = 200
+dataset_size = -1
 learning_rate = 0.0001
-lr_exponentiallr_gamma = 0.96
+lr_exponentiallr_gamma = 0.999258
 weight_decay = 0.0
 dropout = 0.1
 cnn_dropout = 0.1
@@ -1677,7 +1677,6 @@ num_img_init_features = 64
 batch_size = 20
 num_epochs = 20
 num_steps_gradient_accumulation = 1
-steps_per_epoch = 10
 use_ffn = false
 num_attn_heads = 8
 num_encoder_layers = 2
@@ -1692,6 +1691,7 @@ img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "Brea
 img_metadata_num_cols = [ "KVP", "BodyPartThickness", "CompressionForce", "Exposure",]
 cnn_use_group_norm = true
 cnn_use_weight_standardization = true
+cnn_resnet_n_blocks = 5
 comment = "Based on exp_070, added group norm and weight standardization, entire dataset."
 
 [exp_001.training_curves]
@@ -2804,16 +2804,16 @@ val_loss = [ 1.7720659494400024, 1.8625347137451171, 1.7071442604064941, 1.57031
 val_auc = [ 0.4451388716697693, 0.6405555009841919, 0.7283332943916321, 0.7224999666213989, 0.7291666865348816, 0.7491666674613953, 0.7563889026641846, 0.746666669845581, 0.7516666650772095, 0.7486110925674438, 0.7433333396911621, 0.7422221899032593, 0.7430555820465088, 0.7427777647972107, 0.7430555820465088, 0.7347221970558167, 0.7430555820465088,]
 
 [exp_084.best_results]
-best_epoch = 0.0
-best_val_loss = inf
-best_val_auc = 0.0
-time_elapsed_min = 4.0
-time_elapsed_sec = 40.75460124015808
-time_elapsed_per_epoch_min = 4.0
-time_elapsed_per_epoch_sec = 40.75460124015808
+best_epoch = 2
+best_val_loss = 0.9177570164203643
+best_val_auc = 0.6608333587646484
+time_elapsed_min = 54.0
+time_elapsed_sec = 41.505465269088745
+time_elapsed_per_epoch_min = 13.0
+time_elapsed_per_epoch_sec = 40.376366317272186
 
 [exp_084.training_curves]
-train_loss = []
-train_auc = []
-val_loss = []
-val_auc = []
+train_loss = [ 1.2614010930061341, 1.0790714979171754, 1.1289000153541564,]
+train_auc = [ 0.5212477445602417, 0.4570755660533905, 0.46478334069252014,]
+val_loss = [ 1.0462105810642242, 0.9038725376129151, 0.9177570164203643,]
+val_auc = [ 0.6130555868148804, 0.6291666626930237, 0.6608333587646484,]
