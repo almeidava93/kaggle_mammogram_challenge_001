@@ -1827,6 +1827,7 @@ img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "Brea
 img_metadata_num_cols = [ "KVP", "BodyPartThickness", "CompressionForce", "Exposure",]
 
 [exp_090]
+start_from_checkpoint = "model/exp_090/checkpoint_last.pth"
 dataset_size = 20
 learning_rate = 0.0001
 lr_exponentiallr_gamma = 0.96
@@ -1849,7 +1850,7 @@ add_padding_pixels = false
 save_every_step = true
 save_after_n_steps = 2
 sampler_pos_prob = 0.5
-img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "BreastImplantPresent", "PatientOrientation_0", "PatientOrientation_1", "FilterMaterial", "img_width", "img_height", "BreastDensity"]
+img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "BreastImplantPresent", "PatientOrientation_0", "PatientOrientation_1", "FilterMaterial", "img_width", "img_height", "BreastDensity",]
 img_metadata_num_cols = [ "KVP", "BodyPartThickness", "CompressionForce", "Exposure",]
 
 [exp_001.training_curves]
@@ -3052,16 +3053,16 @@ val_loss = [ 0.20953185260295867, 0.22698042720556258, 0.23803584307432174, 0.24
 val_auc = [ 0.6819444894790649, 0.6899999976158142, 0.7019444704055786, 0.7074999809265137, 0.707777738571167,]
 
 [exp_090.best_results]
-best_epoch = 2
-best_val_loss = 0.3298674123825821
-best_val_auc = 0.7085229158401489
-time_elapsed_min = 1022.0
-time_elapsed_sec = 8.080069065093994
-time_elapsed_per_epoch_min = 255.0
-time_elapsed_per_epoch_sec = 32.0200172662735
+best_epoch = 3.0
+best_val_loss = 0.17264939546585084
+best_val_auc = 0.8461537957191467
+time_elapsed_min = 1030.0
+time_elapsed_sec = 48.31406044960022
+time_elapsed_per_epoch_min = 147.0
+time_elapsed_per_epoch_sec = 15.473437207085226
 
 [exp_090.training_curves]
-train_loss = [ 0.27100165984064134, 0.2639423781357166, 0.2606494664301895,]
-train_auc = [ 0.6355654001235962, 0.678525447845459, 0.6858410835266113,]
-val_loss = [ 0.3153431331893534, 0.3111791187940642, 0.3298674123825821,]
-val_auc = [ 0.69676673412323, 0.7050853967666626, 0.7085229158401489,]
+train_loss = [ 0.27100165984064134, 0.2639423781357166, 0.2606494664301895, 0.1821826219558716, 0.16196525394916533, 0.164153653383255, 0.16131258010864258, 0.16945188343524933, 0.15596584975719452,]
+train_auc = [ 0.6355654001235962, 0.678525447845459, 0.6858410835266113, 0.5454545021057129, 0.7272727489471436, 0.6499999761581421, 0.6599999666213989, 0.6363636255264282, 0.7070707082748413,]
+val_loss = [ 0.3153431331893534, 0.3111791187940642, 0.3298674123825821, 0.1593454211950302, 0.17737905085086822, 0.17432961463928223, 0.17264939546585084, 0.16531291604042053, 0.17255769670009613,]
+val_auc = [ 0.69676673412323, 0.7050853967666626, 0.7085229158401489, 0.8421052694320679, 0.8421052694320679, 0.7894736528396606, 0.8461537957191467, 0.8461537957191467, 0.7368420958518982,]

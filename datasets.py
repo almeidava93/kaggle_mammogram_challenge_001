@@ -22,11 +22,6 @@ logger = get_logger(__name__, log_level=logging.DEBUG, log_to_file=True)
 
 from config import MammogramClassifierConfig
 
-# Create relevant directories if they don't exist
-dataset_cache_path = Path('datasets_cache')
-Path(dataset_cache_path, 'train').mkdir(parents=True, exist_ok=True)
-Path(dataset_cache_path, 'val').mkdir(parents=True, exist_ok=True)
-Path(dataset_cache_path, 'test').mkdir(parents=True, exist_ok=True)
 
 def collate_fn(batch):
     """
@@ -244,6 +239,12 @@ class MammogramDataset(Dataset):
         ):
 
         assert split in ['train', 'val', 'test'], "split must be one of ['train', 'val', 'test']"
+
+        # Create relevant directories if they don't exist
+        dataset_cache_path = Path(f'datasets_cache_{config.img_size}')
+        Path(dataset_cache_path, 'train').mkdir(parents=True, exist_ok=True)
+        Path(dataset_cache_path, 'val').mkdir(parents=True, exist_ok=True)
+        Path(dataset_cache_path, 'test').mkdir(parents=True, exist_ok=True)
         
         if split == 'test':
             self.df = pd.read_csv(config.test_split_path, usecols=['AccessionNumber'])
@@ -402,7 +403,6 @@ class MammogramDataset(Dataset):
                     'imgs': imgs,
                     'target': accession_number,
                     'mask': mask,
-                    'imgs_metadata': imgs_metadata
                 }, cache_path)
             return imgs, accession_number, mask, imgs_metadata
         else:
@@ -413,7 +413,6 @@ class MammogramDataset(Dataset):
                     'imgs': imgs,
                     'target': target,
                     'mask': mask,
-                    'imgs_metadata': imgs_metadata
                 }, cache_path)
             return imgs, target, mask, imgs_metadata
         
