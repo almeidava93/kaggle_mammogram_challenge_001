@@ -14,23 +14,9 @@ import argparse
 from model import MammogramScreeningClassifier
 from logs import get_logger
 
+from datasets import collate_fn
+
 logger = get_logger(__name__, log_level=logging.DEBUG, log_to_file=True)
-
-
-def collate_fn(batch):
-    """
-    batch: list of tuples (imgs, target, mask)
-      imgs: [max_images, C, H, W]
-      target: scalar
-      mask: [max_images]
-    """
-    images = torch.stack([item[0] for item in batch], dim=0)      # [B, max_images, C, H, W]
-    targets = torch.stack([item[1] for item in batch], dim=0)     # [B]
-    masks = torch.stack([item[2] for item in batch], dim=0)       # [B, max_images]
-    imgs_metadata = torch.stack([item[3] for item in batch], dim=0)
-
-    return images, targets, masks, imgs_metadata
-
 
 def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, criterion, optimizer, scheduler, config: MammogramClassifierConfig):
     since = time.time()

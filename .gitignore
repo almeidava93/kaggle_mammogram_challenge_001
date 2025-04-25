@@ -17,3 +17,5 @@ img_with_errors.csv
 sample_submissionA.csv
 train.csv
 submissions
+datasets_cache_256
+breast_density_categories

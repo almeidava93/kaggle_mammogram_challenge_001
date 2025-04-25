@@ -1694,6 +1694,164 @@ cnn_use_weight_standardization = true
 cnn_resnet_n_blocks = 5
 comment = "Based on exp_070, added group norm and weight standardization, entire dataset."
 
+[exp_085]
+dataset_size = 200
+learning_rate = 0.0001
+lr_exponentiallr_gamma = 0.96
+weight_decay = 0.0
+dropout = 0.1
+cnn_dropout = 0.1
+feature_dim = 256
+img_size = 300
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 10
+num_epochs = 20
+num_steps_gradient_accumulation = 2
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+remove_dark_pixels = true
+invert_background = true
+add_padding_pixels = false
+save_every_step = true
+save_after_n_steps = 2
+sampler_pos_prob = 0.5
+img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "BreastImplantPresent", "PatientOrientation_0", "PatientOrientation_1", "FilterMaterial", "img_width", "img_height",]
+img_metadata_num_cols = [ "KVP", "BodyPartThickness", "CompressionForce", "Exposure",]
+comment = "Based on exp_064, higher image resolution."
+
+[exp_086]
+dataset_size = 200
+learning_rate = 0.0001
+lr_exponentiallr_gamma = 0.96
+weight_decay = 0.0
+dropout = 0.1
+cnn_dropout = 0.1
+feature_dim = 256
+img_size = 256
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 10
+num_epochs = 20
+num_steps_gradient_accumulation = 2
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+remove_dark_pixels = true
+invert_background = true
+add_padding_pixels = false
+save_every_step = true
+save_after_n_steps = 2
+sampler_pos_prob = 0.5
+img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "BreastImplantPresent", "PatientOrientation_0", "PatientOrientation_1", "FilterMaterial", "img_width", "img_height",]
+img_metadata_num_cols = [ "KVP", "BodyPartThickness", "CompressionForce", "Exposure",]
+comment = "Based on exp_085, lower image resolution."
+
+[exp_087]
+dataset_size = 200
+learning_rate = 0.0001
+lr_exponentiallr_gamma = 0.96
+weight_decay = 0.0
+dropout = 0.1
+cnn_dropout = 0.1
+feature_dim = 256
+img_size = 350
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 4
+num_epochs = 20
+num_steps_gradient_accumulation = 5
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+remove_dark_pixels = true
+invert_background = true
+add_padding_pixels = false
+save_every_step = true
+save_after_n_steps = 2
+sampler_pos_prob = 0.5
+img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "BreastImplantPresent", "PatientOrientation_0", "PatientOrientation_1", "FilterMaterial", "img_width", "img_height",]
+img_metadata_num_cols = [ "KVP", "BodyPartThickness", "CompressionForce", "Exposure",]
+
+[exp_088]
+dataset_size = 200
+learning_rate = 0.0001
+lr_exponentiallr_gamma = 0.96
+weight_decay = 0.0
+dropout = 0.1
+cnn_dropout = 0.1
+feature_dim = 256
+img_size = 400
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 4
+num_epochs = 20
+num_steps_gradient_accumulation = 5
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+remove_dark_pixels = true
+invert_background = true
+add_padding_pixels = false
+save_every_step = true
+save_after_n_steps = 2
+sampler_pos_prob = 0.5
+img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "BreastImplantPresent", "PatientOrientation_0", "PatientOrientation_1", "FilterMaterial", "img_width", "img_height",]
+img_metadata_num_cols = [ "KVP", "BodyPartThickness", "CompressionForce", "Exposure",]
+
+[exp_089]
+dataset_size = 200
+learning_rate = 1e-5
+lr_exponentiallr_gamma = 0.96
+weight_decay = 0.0
+dropout = 0.1
+cnn_dropout = 0.1
+feature_dim = 256
+img_size = 400
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 4
+num_epochs = 20
+num_steps_gradient_accumulation = 5
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+remove_dark_pixels = true
+invert_background = true
+add_padding_pixels = false
+save_every_step = true
+save_after_n_steps = 2
+sampler_pos_prob = 0.5
+img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "BreastImplantPresent", "PatientOrientation_0", "PatientOrientation_1", "FilterMaterial", "img_width", "img_height",]
+img_metadata_num_cols = [ "KVP", "BodyPartThickness", "CompressionForce", "Exposure",]
+
+[exp_090]
+dataset_size = -1
+learning_rate = 0.0001
+lr_exponentiallr_gamma = 0.999258
+weight_decay = 0.0
+dropout = 0.1
+cnn_dropout = 0.1
+feature_dim = 256
+img_size = 400
+num_img_channels = 1
+num_img_init_features = 64
+batch_size = 4
+num_epochs = 20
+num_steps_gradient_accumulation = 5
+use_ffn = false
+num_attn_heads = 8
+num_encoder_layers = 2
+remove_dark_pixels = true
+invert_background = true
+add_padding_pixels = false
+save_every_step = true
+save_after_n_steps = 2
+sampler_pos_prob = 0.5
+img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "BreastImplantPresent", "PatientOrientation_0", "PatientOrientation_1", "FilterMaterial", "img_width", "img_height",]
+img_metadata_num_cols = [ "KVP", "BodyPartThickness", "CompressionForce", "Exposure",]
+
 [exp_001.training_curves]
 train_loss = [ 1.4409383893013001, 1.3320579648017883, 1.2525875091552734, 1.2942439079284669, 1.2189216017723083, 1.2805424809455872, 1.1712888658046723, 1.1360002696514129, 1.1142919540405274, 1.0006040692329408,]
 train_acc = [ 0.5049999952316284, 0.5049999952316284, 0.5299999713897705, 0.48500001430511475, 0.5199999809265137, 0.47999998927116394, 0.5550000071525574, 0.5600000023841858, 0.5249999761581421, 0.5849999785423279,]
@@ -2817,3 +2975,93 @@ train_loss = [ 1.2614010930061341, 1.0790714979171754, 1.1289000153541564,]
 train_auc = [ 0.5212477445602417, 0.4570755660533905, 0.46478334069252014,]
 val_loss = [ 1.0462105810642242, 0.9038725376129151, 0.9177570164203643,]
 val_auc = [ 0.6130555868148804, 0.6291666626930237, 0.6608333587646484,]
+
+[exp_085.best_results]
+best_epoch = 2
+best_val_loss = 0.7547632694244385
+best_val_auc = 0.7427777647972107
+time_elapsed_min = 120.0
+time_elapsed_sec = 12.886606454849243
+time_elapsed_per_epoch_min = 20.0
+time_elapsed_per_epoch_sec = 2.147767742474798
+
+[exp_085.training_curves]
+train_loss = [ 0.7148874580860138, 0.6486605554819107, 0.6491803139448166, 0.653051096200943, 0.6508116081357003,]
+train_auc = [ 0.48113301396369934, 0.6880751848220825, 0.6436643600463867, 0.6113501787185669, 0.6332131624221802,]
+val_loss = [ 0.8982361286878586, 0.8350791424512863, 0.7547632694244385, 0.7754732578992843, 0.7548923641443253,]
+val_auc = [ 0.6013888716697693, 0.7311111092567444, 0.7427777647972107, 0.7425000071525574, 0.7311111092567444,]
+
+[exp_086.best_results]
+best_epoch = 1
+best_val_loss = 0.6781445980072022
+best_val_auc = 0.6933333277702332
+time_elapsed_min = 55.0
+time_elapsed_sec = 15.211345434188843
+time_elapsed_per_epoch_min = 9.0
+time_elapsed_per_epoch_sec = 12.535224239031436
+
+[exp_086.training_curves]
+train_loss = [ 0.7052545756101608, 0.6601030737161636, 0.6506494224071503, 0.6261896625161171, 0.6549349263310432,]
+train_auc = [ 0.5346215963363647, 0.6458312273025513, 0.6681740283966064, 0.6085933446884155, 0.7012361288070679,]
+val_loss = [ 0.8424389004707337, 0.6781445980072022, 0.6871048301458359, 0.8845641702413559, 0.8699967175722122,]
+val_auc = [ 0.5616666674613953, 0.6933333277702332, 0.6933333277702332, 0.684166669845581, 0.6861110925674438,]
+
+[exp_087.best_results]
+best_epoch = 0
+best_val_loss = 0.38219519913196565
+best_val_auc = 0.7566666603088379
+time_elapsed_min = 111.0
+time_elapsed_sec = 38.73918890953064
+time_elapsed_per_epoch_min = 12.0
+time_elapsed_per_epoch_sec = 24.30435432328113
+
+[exp_087.training_curves]
+train_loss = [ 0.7945723861455918, 0.3000223049521446, 0.27180773437023165, 0.25965342432260513, 0.2633155372738838, 0.2644773682951927, 0.2666231521964073, 0.2594876071810722, 0.2587306544184685,]
+train_auc = [ 0.4695005714893341, 0.4545363485813141, 0.5770425796508789, 0.5651381611824036, 0.6749799251556396, 0.5865586996078491, 0.6776523590087891, 0.6533653736114502, 0.6444578170776367,]
+val_loss = [ 0.9364070206880569, 0.38219519913196565, 0.3156568858027458, 0.3245973360538483, 0.32564173251390455, 0.3138708445429802, 0.30334430664777756, 0.29760547161102296, 0.30306964546442033,]
+val_auc = [ 0.4680555462837219, 0.7566666603088379, 0.7194443941116333, 0.707777738571167, 0.7019444704055786, 0.6974999904632568, 0.701388955116272, 0.706944465637207, 0.7008333206176758,]
+
+[exp_088.best_results]
+best_epoch = 0
+best_val_loss = 0.37669294238090517
+best_val_auc = 0.7630555629730225
+time_elapsed_min = 65.0
+time_elapsed_sec = 2.8433117866516113
+time_elapsed_per_epoch_min = 10.0
+time_elapsed_per_epoch_sec = 50.47388529777527
+
+[exp_088.training_curves]
+train_loss = [ 0.30158535212278365, 0.27247116655111314, 0.26285668671131135, 0.267472009062767, 0.26021440148353575,]
+train_auc = [ 0.4647182822227478, 0.5296766757965088, 0.5864278078079224, 0.5560556054115295, 0.632269024848938,]
+val_loss = [ 0.37669294238090517, 0.33652352780103684, 0.3313641506433487, 0.31704491525888445, 0.3242051750421524,]
+val_auc = [ 0.7630555629730225, 0.7276389002799988, 0.7280555963516235, 0.7274999618530273, 0.7216666340827942,]
+
+[exp_089.best_results]
+best_epoch = 4
+best_val_loss = 0.24713193953037263
+best_val_auc = 0.707777738571167
+time_elapsed_min = 92.0
+time_elapsed_sec = 46.550822019577026
+time_elapsed_per_epoch_min = 15.0
+time_elapsed_per_epoch_sec = 27.758470336596133
+
+[exp_089.training_curves]
+train_loss = [ 0.36984998017549514, 0.33350657105445863, 0.2995466279983521, 0.29350647658109663, 0.28885358273983003,]
+train_auc = [ 0.5306775569915771, 0.521604061126709, 0.6424278616905212, 0.6297630071640015, 0.5890424847602844,]
+val_loss = [ 0.20953185260295867, 0.22698042720556258, 0.23803584307432174, 0.24309978008270264, 0.24713193953037263,]
+val_auc = [ 0.6819444894790649, 0.6899999976158142, 0.7019444704055786, 0.7074999809265137, 0.707777738571167,]
+
+[exp_090.best_results]
+best_epoch = 2
+best_val_loss = 0.3298674123825821
+best_val_auc = 0.7085229158401489
+time_elapsed_min = 1022.0
+time_elapsed_sec = 8.080069065093994
+time_elapsed_per_epoch_min = 255.0
+time_elapsed_per_epoch_sec = 32.0200172662735
+
+[exp_090.training_curves]
+train_loss = [ 0.27100165984064134, 0.2639423781357166, 0.2606494664301895,]
+train_auc = [ 0.6355654001235962, 0.678525447845459, 0.6858410835266113,]
+val_loss = [ 0.3153431331893534, 0.3111791187940642, 0.3298674123825821,]
+val_auc = [ 0.69676673412323, 0.7050853967666626, 0.7085229158401489,]

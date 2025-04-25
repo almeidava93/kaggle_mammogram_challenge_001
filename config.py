@@ -86,6 +86,10 @@ class MammogramClassifierConfig(BaseModel):
 
     # Use pretrained models
     use_vit_b_16: bool = Field(False, description="Use ViT-B/16 pretrained model")
+    use_vit_b_32: bool = Field(False, description="Use ViT-B/32 pretrained model")
+    use_vit_l_16: bool = Field(False, description="Use ViT-L/16 pretrained model")
+    use_vit_l_32: bool = Field(False, description="Use ViT-L/32 pretrained model")
+    use_vit_h_14: bool = Field(False, description="Use ViT-H/14 pretrained model")
     freeze_pretrained_weights: bool = Field(False, description="Freeze pretrained weights")
     load_pretrained_weights: bool = Field(False, description="Load pretrained weights")
 

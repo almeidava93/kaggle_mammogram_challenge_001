@@ -34,11 +34,46 @@ def collate_fn(batch):
       imgs: [max_images, C, H, W]
       target: scalar
       mask: [max_images]
+      imgs_metadata: [max_images, num_metadata]
     """
-    images = torch.stack([item[0] for item in batch], dim=0)      # [B, max_images, C, H, W]
+    # Get max images per study
+    max_images = max([len(item[0]) for item in batch])
+
+    # Padding
+    images = []
+    masks = []
+    imgs_metadata = []
+
+    for i in range(len(batch)):
+    # Pad images to max_images
+        img = batch[i][0]
+        if len(img) < max_images:
+            padding_img = torch.zeros_like(img[0].unsqueeze(0))
+            for _ in range(max_images - len(img)):
+                img = torch.cat((img, padding_img), dim=0)
+        images.append(img)
+
+        # Pad masks to max_images
+        mask = batch[i][2]
+        if len(mask) < max_images:
+            padding_mask = torch.zeros_like(mask[0].unsqueeze(0))
+            for _ in range(max_images - len(mask)):
+                mask = torch.cat((mask, padding_mask), dim=0)
+        masks.append(mask)
+
+        # Pad metadata to max_images
+        img_metadata = batch[i][3]
+        if len(img_metadata) < max_images:
+            padding_metadata = torch.zeros_like(img_metadata[0].unsqueeze(0))
+            for _ in range(max_images - len(img_metadata)):
+                img_metadata = torch.cat((img_metadata, padding_metadata), dim=0)
+        imgs_metadata.append(img_metadata)
+
+    # Stack images and masks
+    images = torch.stack(images, dim=0)  # [B, max_images, C, H, W]
+    masks = torch.stack(masks, dim=0)  # [B, max_images]
+    imgs_metadata = torch.stack(imgs_metadata, dim=0)  # [B, max_images, num_metadata]
     targets = torch.stack([item[1] for item in batch], dim=0)     # [B]
-    masks = torch.stack([item[2] for item in batch], dim=0)       # [B, max_images]
-    imgs_metadata = torch.stack([item[3] for item in batch], dim=0)
 
     return images, targets, masks, imgs_metadata
 
@@ -85,7 +120,6 @@ def load_metadata(config: MammogramClassifierConfig) -> Tuple[pd.DataFrame, Mamm
     config.max_images_per_study = images_metadata_df.groupby(by=['AccessionNumber'])['PatientID'].count().max()
 
     return images_metadata_df, config
-
 
 available_transforms = [
     'RandomPerspective', 
@@ -297,7 +331,6 @@ class MammogramDataset(Dataset):
         if self.split == 'train':
             if self.config.randomize_image_order:
                 images_metadata = images_metadata.sample(frac=1)
-
         study_images_path = images_metadata['path']
 
         # Prepare images
@@ -344,12 +377,7 @@ class MammogramDataset(Dataset):
 
         # Padding if fewer than max_images
         num_images = len(imgs)
-        mask = [1] * num_images + [0] * (self.config.max_images_per_study - num_images)
-
-        if num_images < self.config.max_images_per_study:
-            padding_img = torch.zeros_like(imgs[0])
-            for _ in range(self.config.max_images_per_study - num_images):
-                imgs.append(padding_img)
+        mask = [1] * num_images
 
         # Prepare images metadata [img_idx, num_metadata]
         imgs_metadata = images_metadata[
@@ -357,7 +385,6 @@ class MammogramDataset(Dataset):
             self.config.img_metadata_num_cols +
             ['PatientAge']
             ].to_numpy()
-        imgs_metadata = np.pad(imgs_metadata, ((0, self.config.max_images_per_study - num_images), (0, 0)))
 
         imgs = torch.stack(imgs, dim=0)  # [max_images, C, H, W]
 
