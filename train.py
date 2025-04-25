@@ -139,6 +139,7 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
                                 'epoch': epoch,
                                 'model_state_dict': model.state_dict(),
                                 'optimizer_state_dict': optimizer.state_dict(),
+                                'scheduler_state_dict': scheduler.state_dict(),
                                 'loss': running_loss,
                                 'last_step': step,
                                 'last_auc': binary_auc,
@@ -185,6 +186,7 @@ def train_classification_model(curr_exp, model, dataloaders, dataset_sizes, crit
                             'epoch': epoch,
                             'model_state_dict': model.state_dict(),
                             'optimizer_state_dict': optimizer.state_dict(),
+                            'scheduler_state_dict': scheduler.state_dict(),
                             'loss': epoch_loss,
                             'last_step': step,
                             'last_auc': binary_auc,
@@ -340,6 +342,14 @@ if __name__ == "__main__":
     criterion = nn.BCEWithLogitsLoss(pos_weight=train_dataset.pos_weight) # For binary classification
     optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate, weight_decay=config.weight_decay, eps=config.eps)
 
+    # Define learning rate scheduler
+    schedulers = {
+        'ExponentialLR': torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=config.lr_exponentiallr_gamma),
+        'CyclicLR': torch.optim.lr_scheduler.CyclicLR(optimizer, base_lr=config.learning_rate, max_lr=config.lr_cycliclr_max_lr, step_size_up=len(train_dataset)//config.batch_size, mode='exp_range'),
+    }
+
+    scheduler = schedulers[config.learning_rate_scheduler]
+
     if config.start_from_checkpoint is not None:
         try:
             logger.debug(f"Loading checkpoint from {config.start_from_checkpoint}.")
@@ -350,6 +360,9 @@ if __name__ == "__main__":
 
             # Load optimizer state
             optimizer.load_state_dict(state_dict['optimizer_state_dict'])
+
+            # Load scheduler state
+            scheduler.load_state_dict(state_dict['scheduler_state_dict'])
 
             # Set starting epoch
             config.start_epoch = state_dict['epoch']
@@ -371,14 +384,6 @@ if __name__ == "__main__":
             config.training_curves = None
         finally:
             pass
-
-    # Define learning rate scheduler
-    schedulers = {
-        'ExponentialLR': torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=config.lr_exponentiallr_gamma),
-        'CyclicLR': torch.optim.lr_scheduler.CyclicLR(optimizer, base_lr=config.learning_rate, max_lr=config.lr_cycliclr_max_lr, step_size_up=len(train_dataset)//config.batch_size, mode='exp_range'),
-    }
-
-    scheduler = schedulers[config.learning_rate_scheduler]
 
     # Train the model. We also will store the results of training to visualize
     model, training_curves = train_classification_model(

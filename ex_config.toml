@@ -1827,9 +1827,9 @@ img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "Brea
 img_metadata_num_cols = [ "KVP", "BodyPartThickness", "CompressionForce", "Exposure",]
 
 [exp_090]
-dataset_size = -1
+dataset_size = 20
 learning_rate = 0.0001
-lr_exponentiallr_gamma = 0.999258
+lr_exponentiallr_gamma = 0.96
 weight_decay = 0.0
 dropout = 0.1
 cnn_dropout = 0.1
@@ -1838,7 +1838,7 @@ img_size = 400
 num_img_channels = 1
 num_img_init_features = 64
 batch_size = 4
-num_epochs = 20
+num_epochs = 10
 num_steps_gradient_accumulation = 5
 use_ffn = false
 num_attn_heads = 8
@@ -1849,7 +1849,7 @@ add_padding_pixels = false
 save_every_step = true
 save_after_n_steps = 2
 sampler_pos_prob = 0.5
-img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "BreastImplantPresent", "PatientOrientation_0", "PatientOrientation_1", "FilterMaterial", "img_width", "img_height",]
+img_metadata_cat_cols = [ "ViewPosition", "PatientSex", "ImageLaterality", "BreastImplantPresent", "PatientOrientation_0", "PatientOrientation_1", "FilterMaterial", "img_width", "img_height", "BreastDensity"]
 img_metadata_num_cols = [ "KVP", "BodyPartThickness", "CompressionForce", "Exposure",]
 
 [exp_001.training_curves]

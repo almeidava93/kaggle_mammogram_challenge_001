@@ -78,7 +78,7 @@ def collate_fn(batch):
     return images, targets, masks, imgs_metadata
 
 def load_metadata(config: MammogramClassifierConfig) -> Tuple[pd.DataFrame, MammogramClassifierConfig]:
-    images_metadata_df = pd.read_csv(config.images_metadata_path, index_col=0, low_memory=False)
+    images_metadata_df = pd.read_csv(config.images_metadata_path, low_memory=False)
     train_split_df = pd.read_csv(config.train_split_path, index_col=0)
 
     ## PatientAge
